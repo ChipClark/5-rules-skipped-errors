@@ -1,1 +1,81 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";  
+
+.main-body {
+    padding-left: 50px;
+    padding-right: 50px;
+    min-height: 500px;
+}
+
+.Odd {
+    background-color: #efefef;
+    display: block;
+}
+.Odd:hover {
+    background-color: #dfdfff;
+}
+
+.Even {
+    background-color: #dfdfdf;
+    display: block;
+}
+
+.Even:hover {
+    background-color: #dfdfff;
+}
+
+.PaginationBar {
+    width: 100%;
+    display: block;
+}
+
+.pagecontrols { 
+    float: left;
+}
+
+.table-header {
+    display:block;
+}
+
+
+.name-title, .committee-title, .location-title {
+    font-weight: bold;
+    font-size: 14pt;
+    display: inline-block;
+}
+
+.name {
+    vertical-align: top;
+    font-weight: 500;
+    display: inline-block;
+    text-align: left;
+}
+
+.name a {
+    color: #666;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.name:hover {
+    color: #002a5f;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.location {
+    font-size: 10pt;
+    display: inline-block;
+}
+
+.committee {
+    display: inline-block;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1200px;
+    }
+}

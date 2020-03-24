@@ -1,0 +1,51 @@
+.header-bar {
+    padding-top:2px;
+    background: #002a5f;
+    text-align: center;
+    height: 80x;
+    width: 100%;
+}
+
+.header-img {
+    display: inline-block;
+    height:100px;
+    padding-right:20px;
+    position: relative;
+    left: -30px;
+    vertical-align: middle;
+}
+
+.header-tag {
+    display: inline-block;
+    width:400px;
+    color:#fff;
+    font-size: 42pt;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 200;
+    vertical-align: middle;
+    top: 15px;
+}
+
+.headerrow {
+    width: 100%;
+}
+
+.confidential {
+    display: inline-block;
+    color: #bbb;
+    font-size: 18pt;
+    vertical-align: middle;
+    top: 15px;
+}
+
+.bugcontact {
+    color: #999;
+}
+
+.bugcontact a {
+    color: #ddd
+}
+
+.bugcontact a:hover {
+    color: #FFF;
+}
