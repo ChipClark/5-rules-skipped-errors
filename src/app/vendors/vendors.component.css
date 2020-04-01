@@ -1,0 +1,23 @@
+.vendorname {
+    font-weight: bold;
+}
+
+.invoice {
+    font-weight: 400;
+} 
+
+.address {
+    font-weight: 400;
+}
+
+.payment {
+    font-weight: 400;
+}
+
+.total {
+    font-weight: 400;
+} 
+
+.title {
+    font-weight: bold;
+}
