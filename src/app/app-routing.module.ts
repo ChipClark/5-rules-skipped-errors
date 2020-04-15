@@ -1,11 +1,10 @@
 import { NgModule, Input } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { VendorsComponent } from './vendors/vendors.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  { path: 'root', component: VendorsComponent },
-  { path: '', component: VendorsComponent, pathMatch: 'full' },
-  { path: 'vendors', component: VendorsComponent }
+  { path: 'root', component: AppComponent },
+  { path: '', component: AppComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
@@ -13,5 +12,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {
-  @Input() vendors: VendorsComponent;
  }

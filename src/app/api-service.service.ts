@@ -4,25 +4,57 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpHandler, HttpRequest } from 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap, concat } from 'rxjs/operators';
 
-import { Vendor } from './datatables/vendor';
+import { Vendor, InvoiceTransaction, InvoiceCheck } from './datatables/data';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiServiceService {
+export class ApiService {
 
   public baseURL = 'http://am-web05:3040/api/v1/'; 
+  public tempDATA = '/assets/';
+  public debug: boolean;
+  public datatype: string;
 
   constructor( private http: HttpClient ) { }
 
-  getDATA (url): Observable<Vendor[]> {
-    url = this.baseURL + url;
-    // if (this.debug == true) console.log(url);
-    return this.http.get<Vendor[]>(url)
+  setDataLocation() {
+    if ( this.datatype == 'local' ) {
+      this.baseURL = this.tempDATA;
+    }
+  }
+
+  getVendor (): Observable<Vendor[]> {
+    this.setDataLocation();
+    this.baseURL += 'vendor.json';
+    // if (this.debug == true) console.log(this.baseURL);
+    return this.http.get<Vendor[]>(this.baseURL)
       .pipe(
         tap(people => console.log("API data retrieved successully")),
-        catchError(this.handleError('getPeople', [])),
+        catchError(this.handleError('Vendor data', [])),
+      );
+  }
+
+  getInvoice (): Observable<InvoiceTransaction[]> {
+    this.setDataLocation();
+    this.baseURL += 'invoicetransaction.json';
+    // if (this.debug == true) console.log(this.baseURL);
+    return this.http.get<InvoiceTransaction[]>(this.baseURL)
+      .pipe(
+        tap(people => console.log("API data retrieved successully")),
+        catchError(this.handleError('Invoice data', [])),
+      );
+  }
+
+  getCheck (): Observable<InvoiceCheck[]> {
+    this.setDataLocation();
+    this.baseURL += 'invoicecheck.json';
+    // if (this.debug == true) console.log(this.baseURL);
+    return this.http.get<InvoiceCheck[]>(this.baseURL)
+      .pipe(
+        tap(people => console.log("API data retrieved successully")),
+        catchError(this.handleError('InvoiceCheck data', [])),
       );
   }
 
