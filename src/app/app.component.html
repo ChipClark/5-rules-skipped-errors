@@ -44,7 +44,7 @@
           
           <div class="row" id="dataTable">
             <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
-              <div *cdkVirtualFor="let vendor of vendors  ; let i = index; odd as isOdd; even as isEven" >
+              <div *cdkVirtualFor="let vendor of vendors ; let i = index; odd as isOdd; even as isEven" >
                   <!--| search: searchTerm-->
                 <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
                   <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
@@ -65,7 +65,7 @@
     <div *ngIf="displayTransactions">
         <div class="row" id="idHeaders">
             <div class="vendorname title col-4">Vendor</div>
-            <div class="invoice title col-2">Invoice</div>
+            <div class="invoice title col-3">Invoice</div>
             <div class="title col-1">Date</div>
             <div class="title col-2">Amount</div>
             <div class="total title col-1">Total</div>
@@ -79,11 +79,11 @@
                 <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
                   <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
                     <div class="col-4 columndata">{{t.vendorname}}</div>
-                    <div class="col-2 columndata">{{t.invoicenumber}}</div>
+                    <div class="col-3 columndata">{{t.invoicenumber}}</div>
                     <div class="col-1 columndata">
                         {{t.transactionpostdate  | date:'shortDate' }}
                     </div>
-                    <div class="col-2 columndata financial">$ {{t.invoiceamount}}</div>
+                    <div class="col-2 columndata financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</div>
                     <div class="col-1 columndata">TBD</div>
                   <!-- </button> -->
                     
