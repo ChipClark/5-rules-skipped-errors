@@ -2,11 +2,11 @@ import { ɵangular_packages_platform_browser_dynamic_platform_browser_dynamic_a 
 
 export class Vendor {
   vendorpKid: number;
-  vendorUno: number;
+  vendoruno: number;
   vendornumber: number;
   vendorid: string;
   vendorname: string;
-  nameUno: number;
+  nameuno: number;
   vendortypecode: string;
   addressUno: number;
   address1: string;
@@ -23,13 +23,14 @@ export class Vendor {
 
 export class InvoiceTransaction {
   invoicetransactionid: number;
-  invoicetransactionUno: number;
-  vendorUno: number;
+  invoicetransactionuno: number;
+  vendoruno: number;
+  vendorname: string;
   invoicenumber: string;
-  invoiceamount: Float32Array;
+  invoiceamount: number;
   invoicedate: string;
   invoicepaiddate: string;
-  transactionpostdate: string;
+  transactionpostdate: Date;
   invoiceStatus: string;
   aptypecode: string;
   transactiontype: string;
@@ -44,8 +45,8 @@ export class InvoiceTransaction {
 
 export class InvoiceCheck {
   invoicecheckid: number;
-  checktransactionUno: number;
-  vendorUno: number;
+  checktransactionuno: number;
+  vendoruno: number;
   invoicetransactionUno: number;
   invoiceamount: Float32Array;
   checknumber: number;
@@ -53,7 +54,7 @@ export class InvoiceCheck {
   invoicetransactiondate: Date;
   documenttype: string;
   checkStatus: string;
-  checknameUno: number;
+  checknameuno: number;
   wirenumber: string;
   paymenttype: string;
   note: string;

@@ -18,11 +18,14 @@ import { Vendor, InvoiceCheck, InvoiceTransaction} from './datatables/data';
 export class AppComponent {
   title = 'AM-Vendors';
   public vendors: Vendor[];
-  public invoiceTransaction: InvoiceTransaction[];
-  public invoiceCheck: InvoiceCheck[];
+  public transactions: InvoiceTransaction[];
+  public checks: InvoiceCheck[];
 
   public searchTerm = null;
   private today = new Date;
+
+  public displayTransactions = false;
+  public displayVendors = true;
   // private currentDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
 
   
@@ -42,14 +45,33 @@ export class AppComponent {
     await this.apiService.getVendor().subscribe( vendors => {
       this.vendors = vendors;
       if (this.apiService.debug == true) console.log(this.vendors);
-      // this.apiService.getInvoice().toPromise().then( invoiceTransaction => {
-      //   this.invoiceTransaction = invoiceTransaction;
+      this.apiService.getInvoice().toPromise().then( transactions => {
+        console.log("vendors should be done");
+        this.transactions = transactions;
+        this.buildTransactions();
       //   this.apiService.getCheck().toPromise().then( invoiceCheck => {
       //     this.invoiceCheck = invoiceCheck;
           
       //   })
-      // })
+      })
     })
+    return;
+  }
+
+  async buildTransactions(): Promise<any> {
+    for ( let i = 0; i < this.transactions.length; i++ ) {
+      // this.transactions[i].invoiceamount = (Math.round(this.transactions[i].invoiceamount * 100) / 100).toFixed(2);
+
+      let tempVendor = await this.vendors.find( v => {
+        v.vendoruno === this.transactions[i].vendoruno;
+      })
+      if ( tempVendor ) {
+        this.transactions[i].vendorname = tempVendor.vendorname;
+      }
+      // console.log(tempVendor);
+      // console.log(this.transactions[i].vendoruno);
+      // this.transactions[i].vendorname = tempVendor.vendorname;
+    }
     return;
   }
 
@@ -120,8 +142,8 @@ export class AppComponent {
   executeQueryParams(queryStrings): void {
     const queries = Object.entries(queryStrings);
     this.clearFilters();
-    // for (const q of queries) {
-    //   switch (q[0]) {
+    for (const q of queries) {
+      switch (q[0]) {
     //     case 'role':
     //       this.materials.staffMenu.controls.staffController.setValue(+q[1]);
     //       this.roleid = +q[1];
@@ -130,9 +152,9 @@ export class AppComponent {
     //       this.materials.cityMenu.controls.cityController.setValue(+q[1]);
     //       this.cityid = +q[1];
     //       break;
-    //     case 'search':
-    //       this.searchTerm = q[1];
-    //       break;
+        case 'search':
+          this.searchTerm = q[1];
+          break;
     //     case 'cities':
     //       this.cityidArray = (q[1] as string).split(',').map(Number);
     //       this.showAdvFilter = true;
@@ -149,8 +171,8 @@ export class AppComponent {
     //       this.timekeeperDeptId = (q[1] as string);
     //       this.showAdvFilter = true;
     //       break;
-    //   }
-    // }
+      }
+    }
   }
 
   // includeCities(cityid): void {
