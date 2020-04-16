@@ -12,8 +12,10 @@ import { Vendor, InvoiceTransaction, InvoiceCheck } from './datatables/data';
 })
 export class ApiService {
 
-  public baseURL = 'http://am-web05:3040/api/v1/'; 
+  public baseURL = 'http://am-web05:3035/api/v1/';  //http://am-web05:3035/api/v1/vendors  
   public tempDATA = '/assets/';
+  private vendorFilter = '?filter[order]=vendorname ASC'
+  public transactionFilter = "?filter[where][transactionpostdate][gt]=2019-01-01T18:30:00.000Z"
   public debug: boolean;
   public datatype: string;
 
@@ -27,9 +29,9 @@ export class ApiService {
 
   getVendor (): Observable<Vendor[]> {
     this.setDataLocation();
-    this.baseURL += 'vendor.json';
+    let url = this.baseURL + 'vendors' + this.vendorFilter;
     // if (this.debug == true) console.log(this.baseURL);
-    return this.http.get<Vendor[]>(this.baseURL)
+    return this.http.get<Vendor[]>(url)
       .pipe(
         tap(people => console.log("API data retrieved successully")),
         catchError(this.handleError('Vendor data', [])),
@@ -38,9 +40,9 @@ export class ApiService {
 
   getInvoice (): Observable<InvoiceTransaction[]> {
     this.setDataLocation();
-    this.baseURL += 'invoicetransaction.json';
+    let url = this.baseURL + 'invoicetransactions'+ this.transactionFilter
     // if (this.debug == true) console.log(this.baseURL);
-    return this.http.get<InvoiceTransaction[]>(this.baseURL)
+    return this.http.get<InvoiceTransaction[]>(url)
       .pipe(
         tap(people => console.log("API data retrieved successully")),
         catchError(this.handleError('Invoice data', [])),
@@ -49,7 +51,7 @@ export class ApiService {
 
   getCheck (): Observable<InvoiceCheck[]> {
     this.setDataLocation();
-    this.baseURL += 'invoicecheck.json';
+    this.baseURL += 'invoicecheck';
     // if (this.debug == true) console.log(this.baseURL);
     return this.http.get<InvoiceCheck[]>(this.baseURL)
       .pipe(

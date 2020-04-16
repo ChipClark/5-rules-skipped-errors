@@ -1,0 +1,27 @@
+.cdk-virtual-scroll-viewport {
+    height: 400px;
+    width: 100%;
+    margin-right:0;
+}
+
+.cdk-virtual-scroll-content-wrapper {
+    width: 100%;
+}
+
+.cdk-row {
+    width:100%
+}
+
+.vendorname .invoice  {
+    background: transparent;
+    display: inline-block;
+}
+
+.address {
+    font-weight: 200;
+    display: inline-block;
+}
+
+.columndata {
+    display: inline-block;
+}

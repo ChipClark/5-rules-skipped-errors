@@ -2,9 +2,18 @@
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";  
 
 .main-body {
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
     min-height: 500px;
+}
+
+.vendorpage {
+    height: 500px;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .Odd {
@@ -22,6 +31,10 @@
 
 .Even:hover {
     background-color: #dfdfff;
+}
+
+.columndata {
+    display: inline-block;
 }
 
 .PaginationBar {

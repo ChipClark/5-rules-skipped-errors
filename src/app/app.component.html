@@ -4,9 +4,8 @@
 <div class="main-body container">
     <div class="row filtercontrols" id="filtercontrols">
       <div class="col-4" id="searchbar">
-        SEARCH BAR TO GO HERE
-              <!-- <input class="form-control searchbar" id="SearchBar" placeholder="Search by vendor or description" value="" autofocus 
-              [(ngModel)]="searchTerm" (input)="searchTerm ? addQueryParams({search: searchTerm}) : addQueryParams({search: null})"><br> -->
+        <input class="form-control searchbar" id="SearchBar" placeholder="Search by vendor or description" value="" autofocus 
+        [(ngModel)]="searchTerm" (input)="searchTerm ? addQueryParams({search: searchTerm}) : addQueryParams({search: null})"><br>
               
     
       </div>
@@ -30,33 +29,31 @@
     
     </div>
     <div class="row" id="idHeaders">
-      <div class="vendorname title col-3">Name </div>
-      <div class="invoice title col-2">Invoices / (% Coded) </div>
-      <div class="address title col-3">Address</div>
-      <div class="payment title col-2">Last Payment</div>
+      <div class="vendorname title col-4">Name </div>
+      <div class="invoice title col-2">Invoices / (vendorpkid) </div>
+      <div class="title col-3">City</div>
+      <div class="title col-2">Last Payment</div>
       <div class="total title col-1">Total</div>
       <div class="links title col-1"></div>
     </div>
     
     <div class="row" id="dataTable">
-      <cdk-virtual-scroll-viewport itemSize="20" style="height: 500px">
-        <div *cdkVirtualFor="let vendor of vendors; let i = index; odd as isOdd; even as isEven" > -->
-          <!--| search: searchTerm -->
+      <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
+        <div *cdkVirtualFor="let vendor of vendors  ; let i = index; odd as isOdd; even as isEven" >
+            <!--| search: searchTerm-->
           <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
             <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
-              <div class="vendorname col-3">{{vendor.vendorname}}</div>
-              <div class="invoice col-2">{{vendor.vendorpkid}}</div>
-              <div class="address col-3">{{vendor.addressuno}} {{vendor.address1}} {{vendor.address2}}</div>
-              <div class="payment col-2">TBD</div>
-              <div class="total col-1">TBD</div>
-              <div class="links col-1"></div>
+              <div class="col-4 columndata">{{vendor.vendorname}}</div>
+              <div class="col-2 columndata">{{vendor.vendorpkid}}</div>
+              <div class="col-3 address">
+                  <div *ngIf="vendor.addressuno > 0" >{{vendor.city}}</div>
+              </div>
+              <div class="col-1 columndata">TBD</div>
             <!-- </button> -->
               
           </div>
         </div>
       </cdk-virtual-scroll-viewport>
-
-      {{vendors[5].vendorname}}
   </div>
 
 </div>
