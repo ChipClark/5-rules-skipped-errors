@@ -19,6 +19,7 @@ export class AppComponent {
   title = 'AM-Vendors';
   public vendors: Vendor[];
   public transactions: InvoiceTransaction[];
+  public vendorTransactions: InvoiceTransaction[];
   public checks: InvoiceCheck[];
 
   public searchTerm = null;
@@ -44,9 +45,9 @@ export class AppComponent {
 
     await this.apiService.getVendor().subscribe( vendors => {
       this.vendors = vendors;
-      if (this.apiService.debug == true) console.log(this.vendors);
+      // if (this.apiService.debug == true) console.log(this.vendors);
       this.apiService.getInvoice().toPromise().then( transactions => {
-        console.log("vendors should be done");
+        // if (this.apiService.debug == true) console.log("vendors should be done");
         this.transactions = transactions;
         this.buildTransactions();
       //   this.apiService.getCheck().toPromise().then( invoiceCheck => {
@@ -77,11 +78,34 @@ export class AppComponent {
   }
 
   //******************************************* */
+  //   Maniuplating data
+  //******************************************* */
+
+  async getTransactions(uno: number): Promise<any> {
+    this.vendorTransactions = [];
+    this.displayTransactions = true;
+    this.displayVendors = false;
+    this.apiService.getInvoiceByUno(uno).toPromise().then( transactions => {
+      // if (this.apiService.debug == true) console.log("vendors should be done");
+      this.vendorTransactions = transactions;
+    })
+    // this.vendorTransactions = await this.transactions.filter( t => {
+    //   return t.vendoruno === uno;
+    // })
+    if ( this.apiService.debug ) {
+      console.log("in getTransactions()")
+      console.log(this.vendorTransactions);
+    }
+    return;
+  }
+
+
+  //******************************************* */
   //   Navigation and Parameters
   //******************************************* */
 
   accessParameters() {
-    if (this.apiService.debug == true) console.log("in accessParameters()");
+    // if (this.apiService.debug == true) console.log("in accessParameters()");
     this.route.queryParamMap.subscribe(params => {
       const queryStrings: any = this.route.queryParamMap;
       // if (this.apiService.debug == true) console.log(queryStrings.source.value);
@@ -142,7 +166,7 @@ export class AppComponent {
   }
 
   executeQueryParams(queryStrings): void {
-    if (this.apiService.debug == true) console.log(queryStrings);
+    // if (this.apiService.debug == true) console.log(queryStrings);
     const queries = Object.entries(queryStrings);
     this.clearFilters();
     for (const q of queries) {

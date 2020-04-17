@@ -2,33 +2,54 @@
 <app-header></app-header>
 
 <div class="main-body container">
-    <div class="row filtercontrols" id="filtercontrols">
-      <div class="col-4" id="searchbar">
-        <input class="form-control searchbar" id="SearchBar" placeholder="Search by vendor or description" value="" autofocus 
-        [(ngModel)]="searchTerm" (input)="searchTerm ? addQueryParams({search: searchTerm}) : addQueryParams({search: null})"><br>
-              
+    <div *ngIf="displayVendors" class="filtercontrols" id="Vendor filtercontrols">
+      <h2 class="row">Vendors</h2>
+      <div class="row">
+        <div class="col-4 searchbar" id="searchbar">
+            <input class="form-control searchbar" id="SearchBar" placeholder="Search by vendor or description" value="" autofocus 
+            [(ngModel)]="searchTerm" (input)="searchTerm ? addQueryParams({search: searchTerm}) : addQueryParams({search: null})"><br>
+                  
+        
+          </div>
+          <div class="col-2" id="navigation">
+              <button mat-raised-button (click)="displayVendors = false; displayTransactions = true;">&nbsp;Transactions&nbsp;</button>
+          </div>
+          <div class="col-2" id="navigation">
+            <a href="" (click)="clearFilters()">Clear</a>
+        </div>
+          
+          
+          <!-- <div class="col-2 moveup10">
+                  <form  class="moveup10" id="citymenu">
+                          <mat-form-field ng-cloak id="citydropdown" [formGroup]="materials.cityMenu" >
+                                  <mat-select placeholder="Office" class="useroptions" name="office" formControlName="cityController" [value]="cityid" >
+                                          <mat-option (click)="addQueryParams({city: null});" [value]="">Firm-wide</mat-option>
+                                          <mat-option (click)="addQueryParams({city: 4});" [value]="4" >Century City</mat-option>
+                                          <mat-option (click)="addQueryParams({city: 1});" [value]="1" >Los Angeles</mat-option>
+                                          <mat-option (click)="addQueryParams({city: 2});" [value]="2" >Orange County</mat-option>
+                                          <mat-option (click)="addQueryParams({city: 3});" [value]="3" >San Diego</mat-option>
+                                          <mat-option (click)="addQueryParams({city: 5});" [value]="5" >San Francisco</mat-option>
+                                  </mat-select>
+                          </mat-form-field>
+                  </form>
+          </div> -->
+          
     
       </div>
-      <div class="col-2" id="navigation">
-          <button *ngIf="displayVendors" mat-raised-button (click)="displayVendors = false; displayTransactions = true;">&nbsp;Transactions&nbsp;</button>
-          <button *ngIf="displayTransactions" mat-raised-button (click)="displayVendors = true; displayTransactions = false;">&nbsp;Vendors&nbsp;</button>
-      </div>
+    
+    </div>
+    <div *ngIf="displayTransactions" class="filtercontrols" id="Transaction filtercontrols">
+        <h2 class="row">Transactions</h2>
+        <div class="row">
+            <div class="col-4" id="searchbar">
+    
+            </div>
+            <div class="col-2" id="navigation">
+                <button mat-raised-button (click)="displayVendors = true; displayTransactions = false;">&nbsp;Vendors&nbsp;</button>
+            </div>
       
+        </div>
       
-      <!-- <div class="col-2 moveup10">
-              <form  class="moveup10" id="citymenu">
-                      <mat-form-field ng-cloak id="citydropdown" [formGroup]="materials.cityMenu" >
-                              <mat-select placeholder="Office" class="useroptions" name="office" formControlName="cityController" [value]="cityid" >
-                                      <mat-option (click)="addQueryParams({city: null});" [value]="">Firm-wide</mat-option>
-                                      <mat-option (click)="addQueryParams({city: 4});" [value]="4" >Century City</mat-option>
-                                      <mat-option (click)="addQueryParams({city: 1});" [value]="1" >Los Angeles</mat-option>
-                                      <mat-option (click)="addQueryParams({city: 2});" [value]="2" >Orange County</mat-option>
-                                      <mat-option (click)="addQueryParams({city: 3});" [value]="3" >San Diego</mat-option>
-                                      <mat-option (click)="addQueryParams({city: 5});" [value]="5" >San Francisco</mat-option>
-                              </mat-select>
-                      </mat-form-field>
-              </form>
-      </div> -->
       
     
     </div>
@@ -36,9 +57,9 @@
         <div class="row" id="idHeaders">
             <div class="vendorname title col-4">Name </div>
             <div class="invoice title col-2">Invoices / (vendorpkid) </div>
-            <div class="title col-3">City</div>
+            <div class="title col-2">City</div>
             <div class="title col-2">Last Payment</div>
-            <div class="total title col-1">Total</div>
+            <div class="title col-1">Total</div>
             <div class="links title col-1"></div>
           </div>
           
@@ -50,10 +71,12 @@
                   <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
                     <div class="col-4 columndata">{{vendor.vendorname}}</div>
                     <div class="col-2 columndata">{{vendor.vendorpkid}}</div>
-                    <div class="col-3 address">
-                        <div *ngIf="vendor.addressuno > 0" >{{vendor.city}}</div>
-                    </div>
+                    <div class="col-2 address">{{vendor.city}}</div>
+                    <div class="col-2 columndata">TBD</div>
                     <div class="col-1 columndata">TBD</div>
+                    <div class="col-1 payments">
+                        <button class="transdetail" (click)="vendorname = vendor.vendorname; getTransactions(vendor.vendoruno)" >Payments</button>
+                    </div>
                   <!-- </button> -->
                     
                 </div>
@@ -74,11 +97,11 @@
           
           <div class="row" id="dataTable">
             <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
-              <div *cdkVirtualFor="let t of transactions  ; let i = index; odd as isOdd; even as isEven" >
+              <div *cdkVirtualFor="let t of vendorTransactions  ; let i = index; odd as isOdd; even as isEven" >
                   <!--| search: searchTerm-->
                 <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
                   <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
-                    <div class="col-4 columndata">{{t.vendorname}}</div>
+                    <div class="col-4 columndata">{{vendorname}}</div>
                     <div class="col-3 columndata">{{t.invoicenumber}}</div>
                     <div class="col-1 columndata">
                         {{t.transactionpostdate  | date:'shortDate' }}
