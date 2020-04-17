@@ -44,7 +44,7 @@
           
           <div class="row" id="dataTable">
             <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
-              <div *cdkVirtualFor="let vendor of vendors ; let i = index; odd as isOdd; even as isEven" >
+              <div *cdkVirtualFor="let vendor of vendors | search: searchTerm; let i = index; odd as isOdd; even as isEven" >
                   <!--| search: searchTerm-->
                 <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
                   <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->

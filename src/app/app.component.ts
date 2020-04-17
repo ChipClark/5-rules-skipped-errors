@@ -55,6 +55,7 @@ export class AppComponent {
       //   })
       })
     })
+    this.accessParameters();
     return;
   }
 
@@ -80,6 +81,7 @@ export class AppComponent {
   //******************************************* */
 
   accessParameters() {
+    if (this.apiService.debug == true) console.log("in accessParameters()");
     this.route.queryParamMap.subscribe(params => {
       const queryStrings: any = this.route.queryParamMap;
       // if (this.apiService.debug == true) console.log(queryStrings.source.value);
@@ -104,7 +106,7 @@ export class AppComponent {
     //       break;
     //   }
     // }
-    //if (this.apiService.debug == true) console.log(query);
+    if (this.apiService.debug == true) console.log(query);
     if (query === "") {
       query = null;
     }
@@ -140,6 +142,7 @@ export class AppComponent {
   }
 
   executeQueryParams(queryStrings): void {
+    if (this.apiService.debug == true) console.log(queryStrings);
     const queries = Object.entries(queryStrings);
     this.clearFilters();
     for (const q of queries) {
