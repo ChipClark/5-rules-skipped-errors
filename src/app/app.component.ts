@@ -48,15 +48,15 @@ export class AppComponent {
     await this.apiService.getVendor().subscribe( vendors => {
       this.vendors = vendors;
       // if (this.apiService.debug == true) console.log(this.vendors);
-      this.apiService.getInvoice().toPromise().then( transactions => {
-        // if (this.apiService.debug == true) console.log("vendors should be done");
-        this.transactions = transactions;
-        this.buildTransactions();
+      // this.apiService.getInvoice().toPromise().then( transactions => {
+      //   // if (this.apiService.debug == true) console.log("vendors should be done");
+      //   this.transactions = transactions;
+      //   this.buildTransactions();
       //   this.apiService.getCheck().toPromise().then( invoiceCheck => {
       //     this.invoiceCheck = invoiceCheck;
           
       //   })
-      })
+      // })
     })
     this.accessParameters();
     return;
@@ -67,7 +67,7 @@ export class AppComponent {
       // this.transactions[i].invoiceamount = (Math.round(this.transactions[i].invoiceamount * 100) / 100).toFixed(2);
 
       let tempVendor = await this.vendors.find( v => {
-        v.vendoruno === this.transactions[i].vendoruno;
+        return v.vendoruno === this.transactions[i].vendoruno;
       })
       if ( tempVendor ) {
         this.transactions[i].vendorname = tempVendor.vendorname;
