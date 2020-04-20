@@ -29,7 +29,7 @@ export class ApiService {
 
   getVendor (): Observable<Vendor[]> {
     this.setDataLocation();
-    let url = this.baseURL + 'vendors?' + this.vendorFilter;
+    let url = this.baseURL + 'vendortransactions?' + this.vendorFilter;
     // if (this.debug == true) console.log(this.baseURL);
     return this.http.get<Vendor[]>(url)
       .pipe(

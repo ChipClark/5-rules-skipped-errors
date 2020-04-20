@@ -6,7 +6,7 @@
       <h2 class="row">Vendors</h2>
       <div class="row">
         <div class="col-4 searchbar" id="searchbar">
-            <input class="form-control searchbar" id="SearchBar" placeholder="Search by vendor or description" value="" autofocus 
+            <input class="form-control searchbar" id="SearchBar" placeholder="Search by vendor" value="" autofocus 
             [(ngModel)]="searchTerm" (input)="searchTerm ? addQueryParams({search: searchTerm}) : addQueryParams({search: null})"><br>
                   
         
@@ -39,27 +39,34 @@
     
     </div>
     <div *ngIf="displayTransactions" class="filtercontrols" id="Transaction filtercontrols">
-        <h2 class="row">Transactions</h2>
         <div class="row">
-            <div class="col-4" id="searchbar">
-    
+            <div id="address" class="col-8">
+                <h4>{{currentVendor.vendorname}}</h4>
+                {{currentVendor.address1}}<br>
+                {{currentVendor.citystatezip}}
             </div>
+            <div class="col-2" id="spacer">      </div>
             <div class="col-2" id="navigation">
-                <button mat-raised-button (click)="displayVendors = true; displayTransactions = false;">&nbsp;Vendors&nbsp;</button>
+                <button mat-raised-button (click)="displayVendors = true; displayTransactions = false; currentVendor = null;">&nbsp;Back&nbsp;</button>
             </div>
-      
+            
         </div>
-      
+        <div class="row">
+            <div class="col-12"><hr></div>
+        </div>
+
+        <h3 class="row">Transactions</h3>
+        
       
     
     </div>
     <div *ngIf="displayVendors">
         <div class="row" id="idHeaders">
             <div class="vendorname title col-4">Name </div>
-            <div class="invoice title col-2">Invoices / (vendorpkid) </div>
-            <div class="title col-2">City</div>
-            <div class="title col-2">Last Payment</div>
-            <div class="title col-1">Total</div>
+            <div class="invoice title col-1">Invoices</div>
+            <div class="title address col-2">City</div>
+            <div class="title col-2 paymentdate">Last Payment</div>
+            <div class="title invoiceamount col-2">Total</div>
             <div class="links title col-1"></div>
           </div>
           
@@ -70,12 +77,12 @@
                 <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
                   <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
                     <div class="col-4 columndata">{{vendor.vendorname}}</div>
-                    <div class="col-2 columndata">{{vendor.vendorpkid}}</div>
+                    <div class="col-1 invoicecount">{{vendor.invoices}}</div>
                     <div class="col-2 address">{{vendor.city}}</div>
-                    <div class="col-2 columndata">TBD</div>
-                    <div class="col-1 columndata">TBD</div>
+                    <div class="col-2 paymentdate">{{vendor.lastpayment | date:'shortDate'}}</div>
+                    <div class="col-2 invoiceamount">{{vendor.totalinvoiceamount  | currency :'USD':'symbol':'1.2-2' }}</div>
                     <div class="col-1 payments">
-                        <button class="transdetail" (click)="vendorname = vendor.vendorname; getTransactions(vendor.vendoruno)" >Payments</button>
+                        <button class="transdetail" (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno)" >Payments</button>
                     </div>
                   <!-- </button> -->
                     

@@ -36,6 +36,11 @@
     background-color: #dfdfff;
 }
 
+.title {
+    font-size: 14pt;
+    color: #000;
+}
+
 
 .filtercontrols {
     padding-top: 15px;
@@ -52,7 +57,7 @@
 }
 
 .address {
-    font-weight: 200;
+    text-align: center;    
     display: inline-block;
 }
 
@@ -62,6 +67,23 @@
 
 .columndata {
     display: inline-block;
+}
+
+.paymentdate {
+    text-align: center;
+    display: inline-block;
+}
+
+.invoicecount {
+    text-align: center;
+    display: inline-block;
+}
+
+.invoiceamount {
+    text-align: right;
+    display: inline-block;
+    padding-right:5px;
+    max-width:130px;
 }
 
 .payments {

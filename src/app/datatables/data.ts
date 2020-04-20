@@ -1,24 +1,15 @@
 import { ɵangular_packages_platform_browser_dynamic_platform_browser_dynamic_a } from '@angular/platform-browser-dynamic';
 
 export class Vendor {
-  vendorpKid: number;
-  vendoruno: number;
-  vendornumber: number;
-  vendorid: string;
+  vendortransactionid: number;
   vendorname: string;
-  nameuno: number;
-  vendortypecode: string;
-  addressUno: number;
+  vendoruno: number;
+  invoices: string;
   address1: string;
-  address2: string;
   city: string;
-  State: string;
-  postalcode: string;
-  note: string;
-  active: boolean;
-  activefromdate: Date;
-  modifieddate: Date;
-  modifiedBy: string;
+  citystatezip: string;
+  lastpayment: Date;
+  toalinvoiceamount: number;
 }
 
 export class InvoiceTransaction {

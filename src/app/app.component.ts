@@ -18,12 +18,14 @@ import { Vendor, InvoiceCheck, InvoiceTransaction} from './datatables/data';
 export class AppComponent {
   title = 'AM-Vendors';
   public vendors: Vendor[];
+  public currentVendor: Vendor;
   public transactions: InvoiceTransaction[];
   public vendorTransactions: InvoiceTransaction[];
   public checks: InvoiceCheck[];
 
   public searchTerm = null;
   private today = new Date;
+  public vendorname;
 
   public displayTransactions = false;
   public displayVendors = true;
