@@ -22,10 +22,14 @@ export class AppComponent {
   public transactions: InvoiceTransaction[];
   public vendorTransactions: InvoiceTransaction[];
   public checks: InvoiceCheck[];
+  public datedirection = false;
+  public sortamount = false;
+  public sortByDate = true;
 
   public searchTerm = null;
   private today = new Date;
   public vendorname;
+  public vendoruno;
 
   public displayTransactions = false;
   public displayVendors = true;
@@ -83,14 +87,24 @@ export class AppComponent {
   //   Maniuplating data
   //******************************************* */
 
-  async getTransactions(uno: number): Promise<any> {
+  async getTransactions(uno: number, sort: string): Promise<any> {
     this.vendorTransactions = [];
     this.displayTransactions = true;
     this.displayVendors = false;
-    this.apiService.getInvoiceByUno(uno).toPromise().then( transactions => {
+    if ( sort == "date" ) {
+      this.datedirection = !this.datedirection;
+      this.sortByDate = true;
+    }
+    if ( sort == "amount" ) {
+      this.sortamount = !this.sortamount;
+      this.sortByDate = false;
+    }
+    
+    await this.apiService.getInvoiceByUno(uno, sort).toPromise().then( transactions => {
       // if (this.apiService.debug == true) console.log("vendors should be done");
       this.vendorTransactions = transactions;
     })
+    // this.vendorTransactions.sort((a, b) => (a.transactionpostdate < b.transactionpostdate) ? 1 : -1)
     // this.vendorTransactions = await this.transactions.filter( t => {
     //   return t.vendoruno === uno;
     // })
@@ -99,6 +113,17 @@ export class AppComponent {
       console.log(this.vendorTransactions);
     }
     return;
+  }
+
+  sortDate() {
+    this.datedirection = !this.datedirection;
+    if ( this.datedirection == false ) {
+      this.vendorTransactions.sort((a, b) => (a.transactionpostdate > b.transactionpostdate) ? 1 : -1)
+    }
+    else {
+      this.vendorTransactions.sort((a, b) => (a.transactionpostdate < b.transactionpostdate) ? 1 : -1)
+    }
+
   }
 
 

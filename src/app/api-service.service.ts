@@ -18,6 +18,8 @@ export class ApiService {
   public transactionFilter = "filter[where][transactionpostdate][gt]=2019-01-01T18:30:00.000Z"
   public debug: boolean;
   public datatype: string;
+  public datedirection = true;
+  public sortAmount = true;
 
   constructor( private http: HttpClient ) { }
 
@@ -49,11 +51,32 @@ export class ApiService {
       );
   }
 
-  getInvoiceByUno(uno: number): Observable<InvoiceTransaction[]> {
+  getInvoiceByUno(uno: number, sort: string): Observable<InvoiceTransaction[]> {
 
     // ?filter[where][and][1][vendoruno]=8555&filter[where][and][1][transactionpostdate][gt]=2020-04-01T18:30:00.000Z
     this.setDataLocation();
-    let url = this.baseURL + 'invoicetransactions?' + 'filter[where][vendoruno]=' + uno; 
+    var orderFilter;
+    switch (sort) {
+      case 'date':
+        this.datedirection = !this.datedirection;
+        if ( this.datedirection == false ) {
+          orderFilter = 'transactionpostdate asc';  
+        }
+        else {
+          orderFilter = 'transactionpostdate desc'; 
+        }
+        break;
+      case 'amount':
+        this.sortAmount = !this.sortAmount;
+        if ( this.sortAmount == false ) {
+          orderFilter = 'invoiceamount asc';
+        }
+        else {
+          orderFilter = 'invoiceamount desc';
+        }
+        break;
+    }
+    let url = this.baseURL + 'invoicetransactions?' + 'filter[where][vendoruno]=' + uno + '&filter[order]=' + orderFilter; 
     // + uno + this.transactionFilter;
     if (this.debug == true) console.log(url);
     return this.http.get<InvoiceTransaction[]>(url)
@@ -61,7 +84,6 @@ export class ApiService {
         tap(transactions => console.log("API data retrieved successully")),
         catchError(this.handleError('Invoice data', [])),
       );
-
   }
 
   getCheck (): Observable<InvoiceCheck[]> {

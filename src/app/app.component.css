@@ -13,6 +13,24 @@
     width:100%
 }
 
+.datebutton {
+    border: none;
+    border-style: none;
+    background: transparent;
+}
+
+.amountbutton {
+    border: none;
+    border-style: none;
+    background: transparent;
+    text-align: left;
+    margin-right:20px;
+}
+
+.arrow {
+    display: inline-block;
+}
+
 .Odd {
     background-color: #efefef;
     display: block;
