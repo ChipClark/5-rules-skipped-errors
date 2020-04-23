@@ -75,12 +75,15 @@
               <div *cdkVirtualFor="let vendor of vendors | search: searchTerm; let i = index; odd as isOdd; even as isEven" >
                   <!--| search: searchTerm-->
                 <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
-                  <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
-                    <div class="col-4 columndata">{{vendor.vendorname}}</div>
-                    <div class="col-1 invoicecount">{{vendor.invoices}}</div>
-                    <div class="col-2 address">{{vendor.city}}</div>
-                    <div class="col-2 paymentdate">{{vendor.lastpayment | date:'shortDate'}}</div>
-                    <div class="col-2 invoiceamount">{{vendor.totalinvoiceamount  | currency :'USD':'symbol':'1.2-2' }}</div>
+                    <button class="vendorrow col-11"  (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno, 'date')">
+                      <div class="row">
+                        <div class="col-4 vendorname">{{vendor.vendorname}}</div>
+                        <div class="col-2 invoicecount">{{vendor.invoices}}</div>
+                        <div class="col-2 address">{{vendor.city}}</div>
+                        <div class="col-2 paymentdate">{{vendor.lastpayment | date:'shortDate'}}</div>
+                        <div class="col-2 invoiceamount">{{vendor.totalinvoiceamount  | currency :'USD':'symbol':'1.2-2' }}</div>
+                      </div>
+                    </button>
                     <div class="col-1 payments">
                         <button class="transdetail" (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno, 'date')" >Payments</button>
                     </div>
@@ -92,6 +95,10 @@
         </div>
 
     </div>
+
+    <!--  *************************************************  
+          Display Transactions 
+          *************************************************-->
     <div *ngIf="displayTransactions">
         <div class="row" id="idHeaders">
             <div class="vendorname title col-4">Vendor</div>

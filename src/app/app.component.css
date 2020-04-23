@@ -13,6 +13,17 @@
     width:100%
 }
 
+.vendorrow {
+    border: none;
+    border-style: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.vendorname {
+    text-align: left;
+}
+
 .datebutton {
     border: none;
     border-style: none;

@@ -12,7 +12,7 @@ import { Vendor, InvoiceTransaction, InvoiceCheck } from './datatables/data';
 })
 export class ApiService {
 
-  public baseURL = 'http://am-web05:3035/api/v1/';  //http://am-web05:3035/api/v1/vendors  
+  public baseURL = 'http://am-web12:3035/api/v1/';  //http://am-web05:3035/api/v1/vendors  am-web12:3035
   public tempDATA = '/assets/';
   private vendorFilter = 'filter[order]=vendorname ASC'
   public transactionFilter = "filter[where][transactionpostdate][gt]=2019-01-01T18:30:00.000Z"
