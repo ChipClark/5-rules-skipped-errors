@@ -101,17 +101,17 @@
           *************************************************-->
     <div *ngIf="displayTransactions">
         <div class="row" id="idHeaders">
-            <div class="vendorname title col-4">Vendor</div>
-            <div class="invoice title col-3">Invoice</div>
+            <div class="vendorname title col-3">Vendor</div>
+            <div class="invoice title col-1">Invoice</div>
             <button class="title datebutton col-1" (click)="getTransactions(currentVendor.vendoruno, 'date')" >
                 Date <div *ngIf="datedirection && sortByDate" class="arrow">&darr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&uarr;</div>
             </button>
-            <div class="links title col-1"></div>
+            <!-- <div class="links title col-1"></div> -->
             <button class="title col-2 amountbutton" (click)="getTransactions(currentVendor.vendoruno, 'amount')" >
                 Amount<div *ngIf="sortamount && !sortByDate" class="arrow">&darr;</div><div *ngIf="!sortamount && !sortByDate" class="arrow">&uarr;</div>
             </button>
             <!-- <div class="total title col-1">Total</div> -->
-            <div class="links title col-1"></div>
+            <div class="links title col-5">Description</div>
           </div>
           
           <div class="row" id="dataTable">
@@ -120,13 +120,13 @@
                   <!--| search: searchTerm-->
                 <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
                   <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
-                    <div class="col-4 columndata">{{vendorname}}</div>
-                    <div class="col-3 columndata">{{t.invoicenumber}}</div>
+                    <div class="col-3 columndata">{{vendorname}}</div>
+                    <div class="col-1 columndata">{{t.invoicenumber}}</div>
                     <div class="col-1 columndata">
                         {{t.transactionpostdate  | date:'shortDate'}}
                     </div>
                     <div class="col-2 columndata financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</div>
-                    <!-- <div class="col-1 columndata">TBD</div> -->
+                    <div class="col-5 columndata">{{t.invoicenarrative}}</div>
                   <!-- </button> -->
                     
                 </div>
