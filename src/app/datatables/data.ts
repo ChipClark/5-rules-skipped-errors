@@ -12,6 +12,20 @@ export class Vendor {
   toalinvoiceamount: number;
 }
 
+export class VendorSearch {
+  vendortransactionid: number;
+  vendorname: string;
+  vendoruno: number;
+  invoices: string;
+  address1: string;
+  city: string;
+  citystatezip: string;
+  lastpayment: Date;
+  invoiceamount: number;
+  invoicenumber: number;
+  invoicenarrative: string;
+}
+
 export class InvoiceTransaction {
   invoicetransactionid: number;
   invoicetransactionuno: number;

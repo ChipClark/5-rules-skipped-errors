@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpHandler, HttpRequest } from 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap, concat } from 'rxjs/operators';
 
-import { Vendor, InvoiceTransaction, InvoiceCheck } from './datatables/data';
+import { Vendor, VendorSearch, InvoiceTransaction, InvoiceCheck } from './datatables/data';
 
 
 @Injectable({
@@ -16,6 +16,7 @@ export class ApiService {
   public tempDATA = '/assets/';
   private vendorFilter = 'filter[order]=vendorname ASC'
   public transactionFilter = "filter[where][transactionpostdate][gt]=2019-01-01T18:30:00.000Z"
+  // public vendorTransactionSearch = 'find({where: {or: [{invoicenarrative: 'search string'}, { vendorname: 'search string'}]}},'
   public debug: boolean;
   public datatype: string;
   public datedirection = true;
@@ -84,6 +85,18 @@ export class ApiService {
         tap(transactions => console.log("API data retrieved successully")),
         catchError(this.handleError('Invoice data', [])),
       );
+  }
+
+  getVendorTransactionBySearch(searchString: string): Observable<VendorSearch[]> {
+    this.setDataLocation();
+    
+    //  This url does NOT work
+    let url = this.baseURL + "vwvendortransactionsearches?" + 'find({where: {or: [{invoicenarrative: ' + "'" + searchString + "'" + '}, { vendorname: ' + "'" + searchString + "'" + '}]}},' ;
+
+
+    if (this.debug == true) console.log(url);
+    // return this.http.get<VendorSearch[]>(url)
+    return;
   }
 
   getCheck (): Observable<InvoiceCheck[]> {

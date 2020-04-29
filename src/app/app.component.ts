@@ -5,7 +5,7 @@ import { FormsModule, FormGroup, FormArray, FormControl, ReactiveFormsModule, Fo
 import { HttpClient, HttpHeaders, HttpHandler, HttpRequest } from '@angular/common/http';
 
 import { ApiService } from './api-service.service';
-import { Vendor, InvoiceCheck, InvoiceTransaction} from './datatables/data';
+import { Vendor, VendorSearch, InvoiceCheck, InvoiceTransaction} from './datatables/data';
 
 
 @Input() 
@@ -25,6 +25,8 @@ export class AppComponent {
   public datedirection = false;
   public sortamount = false;
   public sortByDate = true;
+  public searchString: string;
+  public searchDescriptions: VendorSearch[];
 
   public searchTerm = null;
   private today = new Date;
@@ -86,6 +88,14 @@ export class AppComponent {
   //******************************************* */
   //   Maniuplating data
   //******************************************* */
+
+  async displaySearch(): Promise<any> {
+    if (this.apiService.debug == true) console.log(this.searchString);
+    await this.apiService.getVendorTransactionBySearch(this.searchString).toPromise().then( searchDescriptions => {
+      this.searchDescriptions = searchDescriptions;
+    });
+    return;
+  }
 
   async getTransactions(uno: number, sort: string): Promise<any> {
     this.vendorTransactions = [];
