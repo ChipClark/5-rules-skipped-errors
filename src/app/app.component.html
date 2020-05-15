@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <app-header></app-header>
 
-<div class="main-body container">
+<div class="main-body container" >
     <div *ngIf="displayVendors" class="filtercontrols" id="Vendor filtercontrols">
       <h2 class="row">Vendors</h2>
       <div class="row">
@@ -64,7 +64,7 @@
     </div>
     <div *ngIf="displayVendors">
         <div class="row" id="idHeaders">
-            <div class="vendorname title col-4">Name </div>
+            <div class="vendorname title col-3">Name </div>
             <div class="invoice title col-1">Invoices</div>
             <div class="title address col-2">City</div>
             <div class="title col-2 paymentdate">Last Payment</div>
@@ -79,7 +79,7 @@
                 <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
                     <button class="vendorrow col-11"  (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno, 'date')">
                       <div class="row">
-                        <div class="col-4 vendorname">{{vendor.vendorname}}</div>
+                        <div class="col-3 vendorname">{{vendor.vendorname}}</div>
                         <div class="col-2 invoicecount">{{vendor.invoices}}</div>
                         <div class="col-2 address">{{vendor.city}}</div>
                         <div class="col-2 paymentdate">{{vendor.lastpayment | date:'shortDate'}}</div>
@@ -101,43 +101,47 @@
     <!--  *************************************************  
           Display Transactions 
           *************************************************-->
-    <div *ngIf="displayTransactions">
-        <div class="row" id="idHeaders">
-            <div class="vendorname title col-3">Vendor</div>
-            <div class="invoice title col-1">Invoice</div>
-            <button class="title datebutton col-1" (click)="getTransactions(currentVendor.vendoruno, 'date')" >
-                Date <div *ngIf="datedirection && sortByDate" class="arrow">&darr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&uarr;</div>
-            </button>
-            <!-- <div class="links title col-1"></div> -->
-            <button class="title col-2 amountbutton" (click)="getTransactions(currentVendor.vendoruno, 'amount')" >
-                Amount<div *ngIf="sortamount && !sortByDate" class="arrow">&darr;</div><div *ngIf="!sortamount && !sortByDate" class="arrow">&uarr;</div>
-            </button>
-            <!-- <div class="total title col-1">Total</div> -->
-            <div class="links title col-5">Description</div>
-          </div>
+    <table *ngIf="displayTransactions" class="container">
+      <tbody>
+        <tr class="titleheaders row" id="idHeaders" >
+          <th class="ckbox" ></th>
+          <th class="vendor title col-2">Vendor</th>
+          <th class="invoice title col-1">Invoice</th>
+          <th class="title datebutton col-1" (click)="getTransactions(currentVendor.vendoruno, 'date')" >
+              Date <div *ngIf="datedirection && sortByDate" class="arrow">&darr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&uarr;</div>
+          </th>
+          <!-- <div class="links title col-1"></div> -->
+          <th class="title col-1 amountbutton" (click)="getTransactions(currentVendor.vendoruno, 'amount')" >
+              Amount<div *ngIf="sortamount && !sortByDate" class="arrow">&darr;</div><div *ngIf="!sortamount && !sortByDate" class="arrow">&uarr;</div>
+          </th>
+          <!-- <div class="total title col-1">Total</div> -->
+          <th class="col-2 links title">Description</th>
+          <th class="col-3 links title">&nbsp;</th>
+        </tr>
           
-          <div class="row" id="dataTable">
-            <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
-              <div *cdkVirtualFor="let t of vendorTransactions  ; let i = index; odd as isOdd; even as isEven" >
-                  <!--| search: searchTerm-->
-                <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
-                  <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
-                    <div class="col-3 columndata">{{vendorname}}</div>
-                    <div class="col-1 columndata">{{t.invoicenumber}}</div>
-                    <div class="col-1 columndata">
-                        {{t.transactionpostdate  | date:'shortDate'}}
-                    </div>
-                    <div class="col-2 columndata financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</div>
-                    <div class="col-5 columndata">{{t.invoicenarrative}}</div>
-                  <!-- </button> -->
-                    
-                </div>
+        <tr class="row" id="dataTable">
+          <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
+            <div *cdkVirtualFor="let t of vendorTransactions  ; let i = index; odd as isOdd; even as isEven" class="datatable">
+                <!--| search: searchTerm-->
+              <div [class.Odd]="isOdd" [class.Even]="isEven"  >
+                <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
+                  <td class="ckbox">x</td>
+                  <td class="col-2 vendordata">{{vendorname}}</td>
+                  <td class="col-1 invoicedata">{{t.invoicenumber}}</td>
+                  <td class="col-1 datedata">
+                      {{t.transactionpostdate  | date:'shortDate'}}
+                  </td>
+                  <td class="col-1 columndata financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
+                  <td class="col-6 descriptiondata">{{t.invoicenarrative}}</td>
+                <!-- </button> -->
+                  
               </div>
-            </cdk-virtual-scroll-viewport>
-        </div>
+            </div>
+          </cdk-virtual-scroll-viewport>
+        </tr>
 
-
-    </div>
+      </tbody>
+    </table>
     
 
 </div>

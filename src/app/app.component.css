@@ -13,11 +13,24 @@
     width:100%
 }
 
+.vendor {
+    margin-left: 30px;
+}
+
 .vendorrow {
     border: none;
     border-style: none;
     background: transparent;
     cursor: pointer;
+}
+
+.columndata {
+    display: inline-block;
+}
+
+.invoicedata {
+    display: inline-block;
+    font-size: 9pt;
 }
 
 .vendorname {
@@ -28,14 +41,30 @@
     border: none;
     border-style: none;
     background: transparent;
+    text-align: left;
 }
 
 .amountbutton {
     border: none;
     border-style: none;
     background: transparent;
-    text-align: left;
+    text-align: right;
     margin-right:20px;
+}
+
+.datedata {
+    display: inline-block;
+    font-size: 9pt;
+}
+
+.financial {
+    text-align: right;
+    font-size: 9pt;
+}
+
+.descriptiondata {
+    display: inline-block;
+    text-align: left;
 }
 
 .arrow {
@@ -44,10 +73,10 @@
 
 .Odd {
     background-color: #efefef;
-    display: block;
+    display: flex;
     width: 100%;
     float: left;
-    padding-right:2px;
+    left: 30px;
 }
 .Odd:hover {
     background-color: #dfdfff;
@@ -55,19 +84,29 @@
 
 .Even {
     background-color: #dfdfdf;
-    display: block;
+    display: flex;
     width: 100%;
     float: left;
-    padding-right:2px;
+    left: 30px;
 }
 
 .Even:hover {
     background-color: #dfdfff;
 }
 
+.transactions {  width: 100%; }
+.datatable { display:flex; }
+
 .title {
     font-size: 14pt;
     color: #000;
+    float: left;
+    text-align: left;
+}
+
+.col-1 {
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 
@@ -80,9 +119,21 @@
     padding-right: 0px;
 }
 
-.vendorname .invoice  {
+.ckbox {
+    width: 5px;
+    min-width: 5px;
+    display: inline-block;
+}
+
+
+.vendorname {
+    padding-left: 10px;
+}
+
+.invoice {
     background: transparent;
     display: inline-block;
+    /* text-align: center; */
 }
 
 .address {
@@ -90,14 +141,11 @@
     display: inline-block;
 }
 
-.financial {
-    text-align: right;
-}
-
-.columndata {
+.vendordata {
     display: inline-block;
+    padding-left: 2px;
+    padding-right: 5px;
 }
-
 .paymentdate {
     text-align: center;
     display: inline-block;

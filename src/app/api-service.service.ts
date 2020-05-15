@@ -45,11 +45,13 @@ export class ApiService {
     this.setDataLocation();
     let url = this.baseURL + 'invoicetransactions?'+ this.transactionFilter
     // if (this.debug == true) console.log(this.baseURL);
-    return this.http.get<InvoiceTransaction[]>(url)
+    let invoiceResults = this.http.get<InvoiceTransaction[]>(url)
       .pipe(
         tap(people => console.log("API data retrieved successully")),
         catchError(this.handleError('Invoice data', [])),
       );
+    if (this.debug == true) console.log(invoiceResults);
+    return invoiceResults;
   }
 
   getInvoiceByUno(uno: number, sort: string): Observable<InvoiceTransaction[]> {
@@ -87,16 +89,17 @@ export class ApiService {
       );
   }
 
-  getVendorTransactionBySearch(searchString: string): Observable<VendorSearch[]> {
+  getVendorTransactionBySearch(searchString: string): Observable<any> {
     this.setDataLocation();
     
     //  This url does NOT work
     let url = this.baseURL + "vwvendortransactionsearches?" + 'find({where: {or: [{invoicenarrative: ' + "'" + searchString + "'" + '}, { vendorname: ' + "'" + searchString + "'" + '}]}},' ;
 
 
-    if (this.debug == true) console.log(url);
-    // return this.http.get<VendorSearch[]>(url)
-    return;
+    let searchResults = this.http.get<VendorSearch[]>(url)
+    if (this.debug == true) console.log(searchResults);
+    
+    return searchResults;
   }
 
   getCheck (): Observable<InvoiceCheck[]> {
