@@ -26,12 +26,13 @@ import { SearchPipe } from './pipe/search.pipe';
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     ScrollDispatchModule,
     MatButtonModule, MatCheckboxModule, MatRadioModule, MatSelectModule, MatTooltipModule, MatMenuModule, MatTabsModule,
     NgbModule.forRoot(),
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

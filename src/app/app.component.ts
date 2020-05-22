@@ -41,17 +41,19 @@ export class AppComponent {
   public modalTotal;
   // private currentDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
 
-
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
     private _route: Router,
+    private transactionControls: FormBuilder,
     private modalService: NgbModal,
-    private transactionControls: FormBuilder
     // private datePipe: DatePipe,
 
-  ) { this.loadData(); }
+  ) {  }
 
+  ngOnInit() {
+    this.loadData();
+  }
 
   async loadData(): Promise<any> {
     this.apiService.debug = true;
