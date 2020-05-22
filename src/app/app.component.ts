@@ -1,11 +1,7 @@
 import { Component, OnInit, Injectable, ViewChildren, Output, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-// import { DatePipe } from '@angular/common';
-import { FormsModule, FormGroup, FormArray, FormControl, ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import { HttpClient, HttpHeaders, HttpHandler, HttpRequest } from '@angular/common/http';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { MaterialModule } from './material/material.module';  // Checkbox and dropdown menus
+import { FormsModule, FormGroup, FormArray, FormControl, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 
 import { ApiService } from './api-service.service';
 import { Vendor, VendorSearch, InvoiceCheck, InvoiceTransaction} from './datatables/data';
@@ -50,9 +46,8 @@ export class AppComponent {
     private apiService: ApiService,
     private route: ActivatedRoute,
     private _route: Router,
-    public materials: MaterialModule,
-    private transactionControls: FormBuilder,
     private modalService: NgbModal,
+    private transactionControls: FormBuilder
     // private datePipe: DatePipe,
 
   ) { this.loadData(); }
@@ -74,9 +69,9 @@ export class AppComponent {
 
         // })
       // })
-    })
+      });
     this.accessParameters();
-    return;
+    return null;
   }
 
   async buildTransactions(): Promise<any> {
@@ -112,6 +107,7 @@ export class AppComponent {
     this.vendorTransactions = [];
     this.displayTransactions = true;
     this.displayVendors = false;
+    this.selectTrans = false;
     if ( sort == "date" ) {
       this.datedirection = !this.datedirection;
       this.sortByDate = true;
@@ -157,11 +153,16 @@ export class AppComponent {
     for ( let i = 0; i < this.transInclude.length; i++ ) {
       if ( this.transInclude[i].value.update == true ) {
         this.selectedTransactions.push(this.vendorTransactions[i]);
-        console.log(this.vendorTransactions[i]);
-        this.modalTotal = this.modalTotal + this.vendorTransactions[i].invoiceamount;
+        if ( this.vendorTransactions[i].invoiceamount ) {
+          this.modalTotal = this.modalTotal + this.vendorTransactions[i].invoiceamount;
+        }
+        else {
+          console.log("no transaction amount");
+          console.log(this.vendorTransactions[i]);
+        }
       }
     }
-    console.log(this.modalTotal);
+    // console.log(this.modalTotal);
     tempTransactions = this.selectedTransactions;
     return tempTransactions;
   }
