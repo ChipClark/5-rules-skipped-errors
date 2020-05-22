@@ -3,12 +3,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 // import { DatePipe } from '@angular/common';
 import { FormsModule, FormGroup, FormArray, FormControl, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { HttpClient, HttpHeaders, HttpHandler, HttpRequest } from '@angular/common/http';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { MaterialModule } from './material/material.module';  // Checkbox and dropdown menus
 
 import { ApiService } from './api-service.service';
 import { Vendor, VendorSearch, InvoiceCheck, InvoiceTransaction} from './datatables/data';
 
 
-@Input() 
+@Input()
 
 @Component({
   selector: 'app-root',
@@ -21,6 +24,7 @@ export class AppComponent {
   public currentVendor: Vendor;
   public transactions: InvoiceTransaction[];
   public vendorTransactions: InvoiceTransaction[];
+  public selectedTransactions: InvoiceTransaction[];
   public checks: InvoiceCheck[];
   public datedirection = false;
   public sortamount = false;
@@ -35,15 +39,22 @@ export class AppComponent {
 
   public displayTransactions = false;
   public displayVendors = true;
+
+  public transInclude: FormGroup[] = [];
+  public selectTrans = false;
+  public modalTotal;
   // private currentDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
 
-  
+
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
     private _route: Router,
+    public materials: MaterialModule,
+    private transactionControls: FormBuilder,
+    private modalService: NgbModal,
     // private datePipe: DatePipe,
-    
+
   ) { this.loadData(); }
 
 
@@ -55,13 +66,13 @@ export class AppComponent {
       this.vendors = vendors;
       // if (this.apiService.debug == true) console.log(this.vendors);
       // this.apiService.getInvoice().toPromise().then( transactions => {
-      //   // if (this.apiService.debug == true) console.log("vendors should be done");
-      //   this.transactions = transactions;
-      //   this.buildTransactions();
-      //   this.apiService.getCheck().toPromise().then( invoiceCheck => {
-      //     this.invoiceCheck = invoiceCheck;
-          
-      //   })
+        // if (this.apiService.debug == true) console.log("vendors should be done");
+        // this.transactions = transactions;
+        // this.buildTransactions();
+        // this.apiService.getCheck().toPromise().then( invoiceCheck => {
+        //   this.invoiceCheck = invoiceCheck;
+
+        // })
       // })
     })
     this.accessParameters();
@@ -109,7 +120,7 @@ export class AppComponent {
       this.sortamount = !this.sortamount;
       this.sortByDate = false;
     }
-    
+
     await this.apiService.getInvoiceByUno(uno, sort).toPromise().then( transactions => {
       // if (this.apiService.debug == true) console.log("vendors should be done");
       this.vendorTransactions = transactions;
@@ -118,11 +129,53 @@ export class AppComponent {
     // this.vendorTransactions = await this.transactions.filter( t => {
     //   return t.vendoruno === uno;
     // })
+    for ( let i = 0; i < this.vendorTransactions.length; i++ ) {
+      this.transInclude[i] = this.transactionControls.group({
+        vendortransactionid: new FormControl,
+        vendorname: new FormControl,
+        lastpayment: new FormControl,
+        invoiceamount: new FormControl,
+        invoicenumber: new FormControl,
+        invoicenarrative: new FormControl,
+        update: new FormControl
+      });
+      // this.transInclude[i].controls.update.setValue("true");
+    }
+
     if ( this.apiService.debug ) {
-      console.log("in getTransactions()")
-      console.log(this.vendorTransactions);
+      // console.log("in getTransactions()")
+      // console.log(this.vendorTransactions);
+      // console.log(this.transInclude);
     }
     return;
+  }
+
+  selectTransactions(): Promise<any> {
+    let tempTransactions;
+    this.modalTotal = 0;
+    this.selectedTransactions = [];
+    for ( let i = 0; i < this.transInclude.length; i++ ) {
+      if ( this.transInclude[i].value.update == true ) {
+        this.selectedTransactions.push(this.vendorTransactions[i]);
+        console.log(this.vendorTransactions[i]);
+        this.modalTotal = this.modalTotal + this.vendorTransactions[i].invoiceamount;
+      }
+    }
+    console.log(this.modalTotal);
+    tempTransactions = this.selectedTransactions;
+    return tempTransactions;
+  }
+
+  setAll() {
+    this.selectTrans = !this.selectTrans;
+    for ( let i = 0 ; i < this.vendorTransactions.length; i ++ ) {
+      if ( this.selectTrans == true ) {
+        this.transInclude[i].controls.update.setValue(true);
+      }
+      else {
+        this.transInclude[i].controls.update.setValue(false);
+      }
+    }
   }
 
   sortDate() {
@@ -239,15 +292,9 @@ export class AppComponent {
     }
   }
 
-  // includeCities(cityid): void {
-  //   const index = this.cityidArray.indexOf(cityid);
-  //   if (index == -1) {
-  //     this.cityidArray.push(cityid);
-  //   } else {
-  //     this.cityidArray.splice(index, 1);
-  //   }
-  //   this.addQueryParams({ cities: this.cityidArray.toString() })
-  // }
+  openWindow(content): void {
+    this.modalService.open(content, { size: 'lg'});
+  }
 
 
 }

@@ -63,10 +63,10 @@ export class ApiService {
       case 'date':
         this.datedirection = !this.datedirection;
         if ( this.datedirection == false ) {
-          orderFilter = 'transactionpostdate asc';  
+          orderFilter = 'transactionpostdate asc';
         }
         else {
-          orderFilter = 'transactionpostdate desc'; 
+          orderFilter = 'transactionpostdate desc';
         }
         break;
       case 'amount':
@@ -79,7 +79,7 @@ export class ApiService {
         }
         break;
     }
-    let url = this.baseURL + 'invoicetransactions?' + 'filter[where][vendoruno]=' + uno + '&filter[order]=' + orderFilter; 
+    let url = this.baseURL + 'invoicetransactions?' + 'filter[where][vendoruno]=' + uno + '&filter[order]=' + orderFilter;
     // + uno + this.transactionFilter;
     if (this.debug == true) console.log(url);
     return this.http.get<InvoiceTransaction[]>(url)
@@ -91,14 +91,14 @@ export class ApiService {
 
   getVendorTransactionBySearch(searchString: string): Observable<any> {
     this.setDataLocation();
-    
+
     //  This url does NOT work
     let url = this.baseURL + "vwvendortransactionsearches?" + 'find({where: {or: [{invoicenarrative: ' + "'" + searchString + "'" + '}, { vendorname: ' + "'" + searchString + "'" + '}]}},' ;
 
 
     let searchResults = this.http.get<VendorSearch[]>(url)
     if (this.debug == true) console.log(searchResults);
-    
+
     return searchResults;
   }
 
@@ -115,17 +115,17 @@ export class ApiService {
 
 
   //  ************************************************
-  //  ERROR HANDLING  
+  //  ERROR HANDLING
 
   private handleError<T> (operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
- 
+
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
- 
+
       // TODO: better job of transforming error for user consumption
       console.log(`${operation} failed: ${error.message}`);
- 
+
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };

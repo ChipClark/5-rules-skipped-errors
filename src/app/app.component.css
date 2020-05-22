@@ -13,6 +13,15 @@
     width:100%
 }
 
+.pagetitle {
+  text-align:left;
+  float: left;
+}
+
+.modalheaders {
+  width: 700px;
+}
+
 .vendor {
     margin-left: 30px;
 }
@@ -82,6 +91,14 @@
     background-color: #dfdfff;
 }
 
+.OddModal {
+  background-color: #efefef;
+  display: flex;
+  width: 710px;
+  float: left;
+  left: 30px;
+}
+
 .Even {
     background-color: #dfdfdf;
     display: flex;
@@ -93,6 +110,15 @@
 .Even:hover {
     background-color: #dfdfff;
 }
+
+.EvenModal {
+  background-color: #dfdfdf;
+  display: flex;
+  width: 710px;
+  float: left;
+  left: 30px;
+}
+
 
 .transactions {  width: 100%; }
 .datatable { display:flex; }
@@ -120,11 +146,11 @@
 }
 
 .ckbox {
-    width: 5px;
-    min-width: 5px;
+    width: 15px;
+    min-width: 15px;
+    margin-left: 5px;
     display: inline-block;
 }
-
 
 .vendorname {
     padding-left: 10px;
@@ -137,7 +163,7 @@
 }
 
 .address {
-    text-align: center;    
+    text-align: center;
     display: inline-block;
 }
 

@@ -6,12 +6,12 @@
       <h2 class="row">Vendors</h2>
       <div class="row">
         <div class="col-4 searchbar" id="searchbar">
-            <!-- <input class="form-control searchbar" id="SearchBar" placeholder="Search by vendor" value="" autofocus 
+            <!-- <input class="form-control searchbar" id="SearchBar" placeholder="Search by vendor" value="" autofocus
             [(ngModel)]="searchTerm" (input)="searchTerm ? addQueryParams({search: searchTerm}) : addQueryParams({search: null})"><br> -->
-            <input class="form-control searchbar" id="SearchBar" placeholder="Search by vendor or description" value="" autofocus 
+            <input class="form-control searchbar" id="SearchBar" placeholder="Search by vendor or description" value="" autofocus
             [(ngModel)]="searchString" ><br>
-                  
-        
+
+
           </div>
           <div class="col-2" id="navigation">
               <button mat-raised-button (click)="displaySearch()">&nbsp;Search&nbsp;</button>
@@ -19,8 +19,8 @@
           <div class="col-2" id="navigation">
             <a href="" (click)="clearFilters()">Clear</a>
         </div>
-          
-          
+
+
           <!-- <div class="col-2 moveup10">
                   <form  class="moveup10" id="citymenu">
                           <mat-form-field ng-cloak id="citydropdown" [formGroup]="materials.cityMenu" >
@@ -35,10 +35,10 @@
                           </mat-form-field>
                   </form>
           </div> -->
-          
-    
+
+
       </div>
-    
+
     </div>
     <div *ngIf="displayTransactions" class="filtercontrols" id="Transaction filtercontrols">
         <div class="row">
@@ -51,16 +51,28 @@
             <div class="col-2" id="navigation">
                 <button mat-raised-button (click)="displayVendors = true; displayTransactions = false; currentVendor = null;">&nbsp;Back&nbsp;</button>
             </div>
-            
+
         </div>
         <div class="row">
             <div class="col-12"><hr></div>
         </div>
 
-        <h3 class="row">Transactions</h3>
-        
-      
-    
+        <div class="row">
+          <h3 class="col-8 pagetitle">Transactions</h3>
+          <div class="col-1">&nbsp;</div>
+          <div class="col-1">
+            <button *ngIf="!this.selectTrans" mat-raised-button (click)="setAll()">&nbsp;Select&nbsp;</button>
+            <button *ngIf="this.selectTrans" mat-raised-button (click)="setAll()">&nbsp;De-select&nbsp;</button>
+
+          </div>
+          <div class="col-1">
+            <button mat-raised-button (click)="selectTransactions(); openWindow(viewSelectedTransactions)" >&nbsp;Calculate&nbsp;</button>
+            <!-- <button mat-raised-button (click)="displayVendors = true; displayTransactions = false; currentVendor = null;">&nbsp;Calculate&nbsp;</button> -->
+          </div>
+        </div>
+
+
+
     </div>
     <div *ngIf="displayVendors">
         <div class="row" id="idHeaders">
@@ -71,7 +83,7 @@
             <div class="title total col-1">Total</div>
             <div class="links title col-1"></div>
           </div>
-          
+
           <div class="row" id="dataTable">
             <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
               <div *cdkVirtualFor="let vendor of vendors | search: searchTerm; let i = index; odd as isOdd; even as isEven" >
@@ -90,7 +102,7 @@
                         <button class="transdetail" (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno, 'date')" >Payments</button>
                     </div>
                   <!-- </button> -->
-                    
+
                 </div>
               </div>
             </cdk-virtual-scroll-viewport>
@@ -98,8 +110,8 @@
 
     </div>
 
-    <!--  *************************************************  
-          Display Transactions 
+    <!--  *************************************************
+          Display Transactions
           *************************************************-->
     <table *ngIf="displayTransactions" class="container">
       <tbody>
@@ -118,14 +130,17 @@
           <th class="col-2 links title">Description</th>
           <th class="col-3 links title">&nbsp;</th>
         </tr>
-          
+
         <tr class="row" id="dataTable">
           <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
             <div *cdkVirtualFor="let t of vendorTransactions  ; let i = index; odd as isOdd; even as isEven" class="datatable">
                 <!--| search: searchTerm-->
               <div [class.Odd]="isOdd" [class.Even]="isEven"  >
                 <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
-                  <td class="ckbox">x</td>
+                  <td class="ckbox">
+                    <input type="checkbox" [formControl]="transInclude[i].controls.update">
+                      <!-- (click)="setMembership(c.committeeid)"> -->
+                  </td>
                   <td class="vendordata col-2">{{vendorname}}</td>
                   <td class="col-1 invoicedata">{{t.invoicenumber}}</td>
                   <td class="col-1 datedata">
@@ -134,7 +149,7 @@
                   <td class="col-1 columndata financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
                   <td class="col-6 descriptiondata">{{t.invoicenarrative}}</td>
                 <!-- </button> -->
-                  
+
               </div>
             </div>
           </cdk-virtual-scroll-viewport>
@@ -142,8 +157,59 @@
 
       </tbody>
     </table>
-    
+
 
 </div>
 
 <app-footer></app-footer>
+
+<!-- model windows -->
+<ng-template #viewSelectedTransactions let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title">Selected Transactions</h3>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('click close')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+  <div class="modal-body">
+    <table class="container">
+      <tbody>
+        <tr class="modalheaders row" id="idHeaders" >
+          <th class="vendor title col-5">Vendor</th>
+          <th class="invoice title col-2">Invoice</th>
+          <th class="title col-2" >Date</th>
+          <!-- <div class="links title col-1"></div> -->
+          <th class="title col-2 "  >Amount</th>
+          <!-- <div class="total title col-1">Total</div> -->
+         </tr>
+
+        <tr class="row" id="selectedTransactionsTable">
+          <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
+            <div *cdkVirtualFor="let t of selectedTransactions  ; let i = index; odd as isOdd; even as isEven" >
+                <!--| search: searchTerm-->
+              <div [class.OddModal]="isOdd" [class.EvenModal]="isEven"  >
+                <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
+                  <td class="vendordata col-5">{{vendorname}}</td>
+                  <td class="col-2 invoicedata">{{t.invoicenumber}}</td>
+                  <td class="col-2 datedata">
+                      {{t.transactionpostdate  | date:'shortDate'}}
+                  </td>
+                  <td class="col-2 columndata financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
+                <!-- </button> -->
+
+              </div>
+            </div>
+          </cdk-virtual-scroll-viewport>
+        </tr>
+        <tr class="row" >
+          <div class="col-2">Total</div>
+          <!-- <div class="col-7">&nbsp;</div> -->
+          <div class="col-2">{{modalTotal  | currency :'USD':'symbol':'1.2-2' }}</div>
+        </tr>
+
+      </tbody>
+    </table>
+
+
+  </div>
+</ng-template>
