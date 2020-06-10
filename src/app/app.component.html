@@ -178,7 +178,7 @@
 
         </div>
         <div class="col-1">
-          <button mat-raised-button (click)="selectTransactions(); openWindow(viewSelectedTransactions)" >&nbsp;Calculate&nbsp;</button>
+          <button mat-raised-button (click)="selectSearchedItems(); openWindow(viewSelectedSearches)" >&nbsp;Calculate&nbsp;</button>
           <!-- <button mat-raised-button (click)="displayVendors = true; displayTransactions = false; currentVendor = null;">&nbsp;Calculate&nbsp;</button> -->
         </div>
       </div>
@@ -236,7 +236,7 @@
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('click close')">
         <span aria-hidden="true">&times;</span>
     </button>
-</div>
+  </div>
   <div class="modal-body">
     <table class="container">
       <tbody>
@@ -261,6 +261,58 @@
                       {{t.transactionpostdate  | date:'shortDate'}}
                   </td>
                   <td class="col-2 columndata financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
+                <!-- </button> -->
+
+              </div>
+            </div>
+          </cdk-virtual-scroll-viewport>
+        </tr>
+        <tr class="row" >
+          <div class="col-2">Total</div>
+          <!-- <div class="col-7">&nbsp;</div> -->
+          <div class="col-2">{{modalTotal  | currency :'USD':'symbol':'1.2-2' }}</div>
+        </tr>
+
+      </tbody>
+    </table>
+
+
+  </div>
+</ng-template>
+
+
+
+<ng-template #viewSelectedSearches let-modal>
+  <div class="modal-header">
+    <h3 class="modal-title">Selected Invoices</h3>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('click close')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <table class="container">
+      <tbody>
+        <tr class="modalheaders row" id="idHeaders" >
+          <th class="vendor title col-4">Vendor</th>
+          <th class="invoice title col-3">Invoice</th>
+          <th class="title col-2" >Date</th>
+          <!-- <div class="links title col-1"></div> -->
+          <th class="title col-2 "  >Amount</th>
+          <!-- <div class="total title col-1">Total</div> -->
+         </tr>
+
+        <tr class="row" id="selectedTransactionsTable">
+          <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
+            <div *cdkVirtualFor="let s of selectedSearches  ; let i = index; odd as isOdd; even as isEven" >
+                <!--| search: searchTerm-->
+              <div [class.OddModal]="isOdd" [class.EvenModal]="isEven"  >
+                <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
+                  <td class="vendordata col-4">{{s.vendorname}}</td>
+                  <td class="col-3 invoicedata">{{s.invoicenumber}}</td>
+                  <td class="col-2 datedata">
+                      {{s.transactionpostdate  | date:'shortDate'}}
+                  </td>
+                  <td class="col-2 columndata financial">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
                 <!-- </button> -->
 
               </div>

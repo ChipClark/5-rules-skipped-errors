@@ -22,12 +22,13 @@ export class AppComponent {
   public transactions: InvoiceTransaction[];
   public vendorTransactions: InvoiceTransaction[];
   public selectedTransactions: InvoiceTransaction[];
+  public searchDescriptions: VendorSearch[];
+  public selectedSearches: VendorSearch[];
   public checks: InvoiceCheck[];
   public datedirection = false;
   public sortamount = false;
   public sortByDate = true;
   public searchString: string;
-  public searchDescriptions: VendorSearch[];
 
   public searchTerm = null;
   private today = new Date;
@@ -171,6 +172,27 @@ export class AppComponent {
       // console.log(this.transInclude);
     }
     return;
+  }
+
+  selectSearchedItems(): Promise<any> {
+    let tempSearches;
+    this.modalTotal = 0;
+    this.selectedSearches = [];
+    for ( let i = 0; i < this.transInclude.length; i++ ) {
+      if ( this.transInclude[i].value.update == true ) {
+        this.selectedSearches.push(this.searchDescriptions[i]);
+        if ( this.searchDescriptions[i].invoiceamount ) {
+          this.modalTotal = this.modalTotal + this.searchDescriptions[i].invoiceamount;
+        }
+        else {
+          console.log("no transaction amount");
+          console.log(this.searchDescriptions[i]);
+        }
+      }
+    }
+    // console.log(this.modalTotal);
+    tempSearches = this.selectedSearches;
+    return tempSearches;
   }
 
   selectTransactions(): Promise<any> {
