@@ -99,7 +99,7 @@ export class ApiService {
   getVendorTransactionBySearch(searchString: string): Observable<any> {
     this.setDataLocation();
     this.loadingIndicator = true;
-    searchString = searchString.replace(" ", "%20");
+    searchString = searchString.split(" ").join("%20");
     //  This url does NOT work
     let url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString;
     if (this.debug == true) console.log(url);
