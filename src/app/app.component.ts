@@ -5,6 +5,7 @@ import { FormsModule, FormGroup, FormArray, FormControl, ReactiveFormsModule, Fo
 
 import { ApiService } from './api-service.service';
 import { Vendor, VendorSearch, InvoiceCheck, InvoiceTransaction} from './datatables/data';
+import { CloseScrollStrategy } from '@angular/cdk/overlay';
 
 
 @Input()
@@ -35,6 +36,8 @@ export class AppComponent {
 
   public displayTransactions = false;
   public displayVendors = true;
+  public displaySearchResults = false;
+  public loadingIndicator = true;
 
   public transInclude: FormGroup[] = [];
   public selectTrans = false;
@@ -59,7 +62,9 @@ export class AppComponent {
     this.apiService.debug = true;
     this.apiService.datatype = 'remote';
 
+    this.loadingIndicator = true;
     await this.apiService.getVendor().subscribe( vendors => {
+      this.loadingIndicator = true;
       this.vendors = vendors;
       // if (this.apiService.debug == true) console.log(this.vendors);
       // this.apiService.getInvoice().toPromise().then( transactions => {
@@ -71,6 +76,7 @@ export class AppComponent {
 
         // })
       // })
+      this.loadingIndicator = false;
       });
     this.accessParameters();
     return null;
@@ -98,10 +104,29 @@ export class AppComponent {
   //******************************************* */
 
   async displaySearch(): Promise<any> {
+    this.loadingIndicator = true;
+    this.searchDescriptions = [];
+    this.displaySearchResults = true;
+    this.displayVendors = false;
     if (this.apiService.debug == true) console.log(this.searchString);
-    await this.apiService.getVendorTransactionBySearch(this.searchString).toPromise().then( searchDescriptions => {
-      this.searchDescriptions = searchDescriptions;
+
+    await this.apiService.getVendorTransactionBySearch(this.searchString).subscribe( searchReturn => {
+      this.searchDescriptions = searchReturn.data;
+      for ( let i = 0; i < this.searchDescriptions.length; i++ ) {
+        this.transInclude[i] = this.transactionControls.group({
+          vendorinvoicetransactionid: new FormControl,
+          vendorname: new FormControl,
+          invoicenumber: new FormControl,
+          invoiceamount: new FormControl,
+          transactionpostdate: new FormControl,
+          costcode: new FormControl,
+          narrative: new FormControl,
+          update: new FormControl
+        });
+      }
+      this.loadingIndicator = false;
     });
+
     return;
   }
 

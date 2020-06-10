@@ -21,6 +21,7 @@ export class ApiService {
   public datatype: string;
   public datedirection = true;
   public sortAmount = true;
+  public loadingIndicator = true;
 
   constructor( private http: HttpClient ) { }
 
@@ -31,23 +32,29 @@ export class ApiService {
   }
 
   getVendor (): Observable<Vendor[]> {
-    this.setDataLocation();
-    let url = this.baseURL + 'vendortransactions?' + this.vendorFilter;
+    // this.setDataLocation();
+    let url = this.baseURL + 'vwvendorinvoicesummaries?' + this.vendorFilter;
     // if (this.debug == true) console.log(this.baseURL);
     return this.http.get<Vendor[]>(url)
       .pipe(
-        tap(people => console.log("API data retrieved successully")),
+        tap(people => {
+          console.log("API data retrieved successully")
+          this.loadingIndicator = false
+        }),
         catchError(this.handleError('Vendor data', [])),
       );
   }
 
   getInvoice(): Observable<InvoiceTransaction[]> {
-    this.setDataLocation();
+    // this.setDataLocation();
     let url = this.baseURL + 'invoicetransactions?'+ this.transactionFilter
     // if (this.debug == true) console.log(this.baseURL);
     let invoiceResults = this.http.get<InvoiceTransaction[]>(url)
       .pipe(
-        tap(people => console.log("API data retrieved successully")),
+        tap(people => {
+          console.log("API data retrieved successully")
+          this.loadingIndicator = false
+        }),
         catchError(this.handleError('Invoice data', [])),
       );
     if (this.debug == true) console.log(invoiceResults);
@@ -91,24 +98,33 @@ export class ApiService {
 
   getVendorTransactionBySearch(searchString: string): Observable<any> {
     this.setDataLocation();
-
+    this.loadingIndicator = true;
+    searchString = searchString.replace(" ", "%20");
     //  This url does NOT work
-    let url = this.baseURL + "vwvendortransactionsearches?" + 'find({where: {or: [{invoicenarrative: ' + "'" + searchString + "'" + '}, { vendorname: ' + "'" + searchString + "'" + '}]}},' ;
+    let url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString;
+    if (this.debug == true) console.log(url);
 
-
-    let searchResults = this.http.get<VendorSearch[]>(url)
-    if (this.debug == true) console.log(searchResults);
-
+    let searchResults =  this.http.get<VendorSearch[]>(url).pipe(
+      tap(searchResults => {
+        console.log("searchResults retrieved successully")
+        this.loadingIndicator = false
+      }),
+      catchError(this.handleError('vendorsearch data', [])),
+    );
     return searchResults;
   }
 
   getCheck (): Observable<InvoiceCheck[]> {
     this.setDataLocation();
+    this.loadingIndicator = true;
     this.baseURL += 'invoicecheck';
     // if (this.debug == true) console.log(this.baseURL);
     return this.http.get<InvoiceCheck[]>(this.baseURL)
       .pipe(
-        tap(people => console.log("API data retrieved successully")),
+        tap(people => {
+          console.log("API data retrieved successully")
+          this.loadingIndicator = false
+        }),
         catchError(this.handleError('InvoiceCheck data', [])),
       );
   }
