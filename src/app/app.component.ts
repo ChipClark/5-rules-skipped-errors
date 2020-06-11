@@ -41,6 +41,7 @@ export class AppComponent {
   public loadingIndicator = true;
 
   public transInclude: FormGroup[] = [];
+  public searchInclude: FormGroup[] = [];
   public selectTrans = false;
   public modalTotal;
   // private currentDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
@@ -97,7 +98,7 @@ export class AppComponent {
     await this.apiService.getVendorTransactionBySearch(this.searchString).subscribe( searchReturn => {
       this.searchDescriptions = searchReturn.data;
       for ( let i = 0; i < this.searchDescriptions.length; i++ ) {
-        this.transInclude[i] = this.transactionControls.group({
+        this.searchInclude[i] = this.transactionControls.group({
           vendorinvoicetransactionid: new FormControl,
           vendorname: new FormControl,
           invoicenumber: new FormControl,
@@ -146,14 +147,8 @@ export class AppComponent {
         invoicenarrative: new FormControl,
         update: new FormControl
       });
-      // this.transInclude[i].controls.update.setValue("true");
     }
 
-    if ( this.apiService.debug ) {
-      // console.log("in getTransactions()")
-      // console.log(this.vendorTransactions);
-      // console.log(this.transInclude);
-    }
     return;
   }
 
@@ -161,8 +156,8 @@ export class AppComponent {
     let tempSearches;
     this.modalTotal = 0;
     this.selectedSearches = [];
-    for ( let i = 0; i < this.transInclude.length; i++ ) {
-      if ( this.transInclude[i].value.update == true ) {
+    for ( let i = 0; i < this.searchInclude.length; i++ ) {
+      if ( this.searchInclude[i].value.update == true ) {
         this.selectedSearches.push(this.searchDescriptions[i]);
         if ( this.searchDescriptions[i].invoiceamount ) {
           this.modalTotal = this.modalTotal + this.searchDescriptions[i].invoiceamount;
@@ -207,6 +202,18 @@ export class AppComponent {
       }
       else {
         this.transInclude[i].controls.update.setValue(false);
+      }
+    }
+  }
+
+  setSearchAll() {
+    this.selectTrans = !this.selectTrans;
+    for ( let i = 0 ; i < this.searchDescriptions.length; i ++ ) {
+      if ( this.selectTrans == true ) {
+        this.searchInclude[i].controls.update.setValue(true);
+      }
+      else {
+        this.searchInclude[i].controls.update.setValue(false);
       }
     }
   }
