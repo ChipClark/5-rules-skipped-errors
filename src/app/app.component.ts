@@ -25,15 +25,19 @@ export class AppComponent {
   public searchDescriptions: VendorSearch[];
   public selectedSearches: VendorSearch[];
   public checks: InvoiceCheck[];
-  public datedirection = false;
-  public sortamount = false;
-  public sortByDate = true;
   public searchString: string;
 
   public searchTerm = null;
   private today = new Date;
   public vendorname;
   public vendoruno;
+
+  public datedirection = false;
+  public amountdirection = false;
+  public sortnameASC: boolean;
+  public sortByName = true;
+  public sortByDate = false;
+  public sortByAmount = false;
 
   public displayTransactions = false;
   public displayVendors = true;
@@ -52,6 +56,7 @@ export class AppComponent {
     private _route: Router,
     private transactionControls: FormBuilder,
     private modalService: NgbModal,
+
     // private datePipe: DatePipe,
 
   ) {  }
@@ -90,6 +95,9 @@ export class AppComponent {
 
   async displaySearch(): Promise<any> {
     this.loadingIndicator = true;
+    this.sortnameASC = false;
+    this.amountdirection = false;
+    this.datedirection = false;
     this.searchDescriptions = [];
     this.displaySearchResults = true;
     this.displayVendors = false;
@@ -105,6 +113,7 @@ export class AppComponent {
           invoiceamount: new FormControl,
           transactionpostdate: new FormControl,
           costcode: new FormControl,
+          officelocation: new FormControl,
           narrative: new FormControl,
           update: new FormControl
         });
@@ -112,8 +121,12 @@ export class AppComponent {
       this.loadingIndicator = false;
     });
 
+
+
     return;
   }
+
+
 
   async getTransactions(uno: number, sort: string): Promise<any> {
     this.vendorTransactions = [];
@@ -125,7 +138,7 @@ export class AppComponent {
       this.sortByDate = true;
     }
     if ( sort == "amount" ) {
-      this.sortamount = !this.sortamount;
+      this.amountdirection = !this.amountdirection;
       this.sortByDate = false;
     }
 
@@ -218,15 +231,94 @@ export class AppComponent {
     }
   }
 
-  sortDate() {
-    this.datedirection = !this.datedirection;
-    if ( this.datedirection == false ) {
-      this.vendorTransactions.sort((a, b) => (a.transactionpostdate > b.transactionpostdate) ? 1 : -1)
+  sortAmount() {
+    this.sortByDate = false;
+    this.sortByAmount = true;
+    this.sortByName = false;
+    this.selectedSearches = this.searchDescriptions;
+    this.searchDescriptions = [];
+    console.log("amountdirection is " + this.amountdirection);
+
+    this.amountdirection = !this.amountdirection;
+    if ( this.amountdirection == false ) {
+      this.selectedSearches.sort( function(a, b) {
+      let key1 = a.invoiceamount;
+      let key2 = b.invoiceamount;
+        if ( key1 > key2 ) return 1;
+        else if ( key1 == key2 ) return 0;
+        else return -1;
+      })
     }
     else {
-      this.vendorTransactions.sort((a, b) => (a.transactionpostdate < b.transactionpostdate) ? 1 : -1)
+      this.selectedSearches.sort( function(a, b) {
+        let key1 = a.invoiceamount;
+        let key2 = b.invoiceamount;
+        if ( key1 > key2 ) return -1;
+        else if ( key1 == key2 ) return 0;
+        else return 1;
+      })
+    }
+    for ( let i = 0; i < this.selectedSearches.length; i++ ) {
+      this.searchDescriptions.push(this.selectedSearches[i]);
+    }
+  }
+
+  sortDate() {
+      this.sortByDate = true;
+      this.sortByAmount = false;
+      this.sortByName = false;
+      this.selectedSearches = this.searchDescriptions;
+      console.log(this.selectedSearches[2]);
+      this.searchDescriptions = [];
+      console.log(this.searchDescriptions);
+      console.log(this.selectedSearches[2]);
+
+    this.datedirection = !this.datedirection;
+    if ( this.datedirection == false ) {
+      this.selectedSearches.sort((a, b) => (a.transactionpostdate > b.transactionpostdate) ? 1 : -1)
+    }
+    else {
+      this.selectedSearches.sort((a, b) => (a.transactionpostdate < b.transactionpostdate) ? 1 : -1)
+    }
+    for ( let i = 0; i < this.selectedSearches.length; i++ ) {
+      this.searchDescriptions.push(this.selectedSearches[i]);
+    }
+    console.log(this.searchDescriptions[2]);
+
+  }
+
+  sortName() {
+    this.sortByDate = false;
+    this.sortByAmount = false;
+    this.sortByName = true;
+    this.selectedSearches = this.searchDescriptions;
+    this.searchDescriptions = [];
+
+    this.sortnameASC = !this.sortnameASC;
+    console.log("sortnameASC is " + this.sortnameASC);
+    if ( this.sortnameASC == false ) {
+      this.selectedSearches.sort( function(a, b) {
+        let key1 = a.vendorname;
+        let key2 = b.vendorname;
+        if ( key1 > key2 ) return 1;
+        else if ( key1 == key2 ) return 0;
+        else return -1;
+      })
+    }
+    else {
+      this.selectedSearches.sort( function(a, b) {
+        let key1 = a.vendorname;
+        let key2 = b.vendorname;
+        if ( key1 > key2 ) return -1;
+        else if ( key1 == key2 ) return 0;
+        else return 1;
+      })
     }
 
+
+    for ( let i = 0; i < this.selectedSearches.length; i++ ) {
+      this.searchDescriptions.push(this.selectedSearches[i]);
+    }
   }
 
 

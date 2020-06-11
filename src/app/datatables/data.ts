@@ -13,17 +13,15 @@ export class Vendor {
 }
 
 export class VendorSearch {
-  vendortransactionid: number;
+  vendorinvoicetransactionid: number;
   vendorname: string;
   vendoruno: number;
-  invoices: string;
-  address1: string;
-  city: string;
-  citystatezip: string;
-  lastpayment: Date;
   invoiceamount: number;
-  invoicenumber: number;
-  invoicenarrative: string;
+  invoicenumber: string;
+  transactionpostdate: Date;
+  officelocation: string;
+  costcode: string;
+  narrative: string;
 }
 
 export class InvoiceTransaction {

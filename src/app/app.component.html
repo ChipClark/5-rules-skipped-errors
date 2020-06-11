@@ -126,7 +126,7 @@
               </th>
               <!-- <div class="links title col-1"></div> -->
               <th class="title col-1 amountbutton" (click)="getTransactions(currentVendor.vendoruno, 'amount')" >
-                  Amount<div *ngIf="sortamount && !sortByDate" class="arrow">&darr;</div><div *ngIf="!sortamount && !sortByDate" class="arrow">&uarr;</div>
+                  Amount<div *ngIf="amountdirection&& !sortByDate" class="arrow">&darr;</div><div *ngIf="!amountdirection&& !sortByDate" class="arrow">&uarr;</div>
               </th>
               <!-- <div class="total title col-1">Total</div> -->
               <th class="col-2 links title">Description</th>
@@ -187,12 +187,19 @@
         <tbody>
           <tr class="titleheaders row" id="SearchHeaders" >
             <th class="ckbox" ></th>
-            <th class="vendor title col-2">Vendor</th>
-            <th class="invoice title col-1">Invoice</th>
-            <th class="financial title col-1">Amount</th>
-            <th class="title col-1">Post Date</th>
-            <th class="costcode title col-1">Cost Code</th>
-            <th class="col-5 links title">Description</th>
+            <th class="vendordata title vendorbutton" (click)="sortName()" >
+              Vendor<div *ngIf="sortnameASC && sortByName" class="arrow">&darr;</div><div *ngIf="!sortnameASC && sortByName" class="arrow">&uarr;</div>
+            </th>
+            <th class="invoicedata title ">Invoice</th>
+            <th class="financialdata title amountbutton additionalpadding " (click)="sortAmount()" >
+              Amount<div *ngIf="amountdirection && sortByAmount" class="arrow">&darr;</div><div *ngIf="!amountdirection && sortByAmount" class="arrow">&uarr;</div>
+            </th>
+            <th class="datedata title datebutton " (click)="sortDate()">
+              Post Date <div *ngIf="datedirection && sortByDate" class="arrow">&darr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&uarr;</div>
+            </th>
+            <th class="costcode title ">Cost Code</th>
+            <th class="officedata title ">Office</th>
+            <th class="descriptiondata title">Description</th>
           </tr>
 
           <tr class="row" id="dataTable">
@@ -205,12 +212,13 @@
                       <input type="checkbox" [formControl]="searchInclude[i].controls.update">
                         <!-- (click)="setMembership(c.committeeid)"> -->
                     </td>
-                    <td class="vendordata col-2">{{s.vendorname}}</td>
-                    <td class="col-1 invoicedata">{{s.invoicenumber}}</td>
-                    <td class="col-1 financial">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
-                    <td class="col-1 financial">{{s.transactionpostdate  | date:'shortDate'}}</td>
-                    <td class="col-1 financial">{{s.costcode}}</td>
-                    <td class="col-5 descriptiondata">{{s.narrative}}</td>
+                    <td class="vendordata">{{s.vendorname}}</td>
+                    <td class="invoicedata">{{s.invoicenumber}}</td>
+                    <td class="financialdata">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
+                    <td class="datedata">{{s.transactionpostdate  | date:'shortDate'}}</td>
+                    <td class="costcode">{{s.costcode}}</td>
+                    <td class="officedata">{{s.officelocation}}</td>
+                    <td class="descriptiondata">{{s.narrative}}</td>
                   <!-- </button> -->
 
                 </div>
