@@ -83,23 +83,6 @@ export class AppComponent {
     return null;
   }
 
-  async buildTransactions(): Promise<any> {
-    for ( let i = 0; i < this.transactions.length; i++ ) {
-      // this.transactions[i].invoiceamount = (Math.round(this.transactions[i].invoiceamount * 100) / 100).toFixed(2);
-
-      let tempVendor = await this.vendors.find( v => {
-        return v.vendoruno === this.transactions[i].vendoruno;
-      })
-      if ( tempVendor ) {
-        this.transactions[i].vendorname = tempVendor.vendorname;
-      }
-      // console.log(tempVendor);
-      // console.log(this.transactions[i].vendoruno);
-      // this.transactions[i].vendorname = tempVendor.vendorname;
-    }
-    return;
-  }
-
   //******************************************* */
   //   Maniuplating data
   //******************************************* */
@@ -254,22 +237,8 @@ export class AppComponent {
   }
 
   addQueryParams(query): void {
-    // if (this.apiService.debug == true) console.log("in addQueryParams()");
-    // if (this.apiService.debug == true) console.log(query);
     const keys = Object.keys(query);
     const values = Object.values(query);
-    // for (let i = 0; i < keys.length; i++ ) {
-    //   switch (keys[i]) {
-    //     case 'city':
-    //       this.cityid = values[0];
-    //       this.materials.cityMenu.controls.cityController.setValue(values[0]);
-    //       break;
-    //     case 'staff':
-    //       this.roleid = values[0];
-    //       this.materials.staffMenu.controls.staffController.setValue(values[0]);
-    //       break;
-    //   }
-    // }
     if (this.apiService.debug == true) console.log(query);
     if (query === "") {
       query = null;
@@ -291,18 +260,8 @@ export class AppComponent {
   }
 
   clearFilters() {
-    // this.materials.staffController = null;
-    // this.materials.cityController = null;
-    // this.staffController = this.materials.staffController;
-    // this.cityController = this.materials.cityController;
-    // this.staffDeptId = 0;
-    // this.timekeeperDeptId = '';
-    // this.cityidArray = [4, 1, 2, 3, 5];
-    // this.roleidArray = [13, 2, 1, 10, 20];
-    // this.roleCheckAll = true;
-    // this.cityid = null;
-    // this.roleid = null;
     this.searchTerm = null;
+    this.searchString = null;
   }
 
   executeQueryParams(queryStrings): void {
@@ -311,33 +270,9 @@ export class AppComponent {
     this.clearFilters();
     for (const q of queries) {
       switch (q[0]) {
-    //     case 'role':
-    //       this.materials.staffMenu.controls.staffController.setValue(+q[1]);
-    //       this.roleid = +q[1];
-    //       break;
-    //     case 'city':
-    //       this.materials.cityMenu.controls.cityController.setValue(+q[1]);
-    //       this.cityid = +q[1];
-    //       break;
         case 'search':
           this.searchTerm = q[1];
           break;
-    //     case 'cities':
-    //       this.cityidArray = (q[1] as string).split(',').map(Number);
-    //       this.showAdvFilter = true;
-    //       break;
-    //     case 'roles':
-    //       this.cityidArray = (q[1] as string).split(',').map(Number);
-    //       this.showAdvFilter = true;
-    //       break;
-    //     case 'staffdept':
-    //       this.staffDeptId = +q[1];
-    //       this.showAdvFilter = true;
-    //       break;
-    //     case 'timekeeperdept':
-    //       this.timekeeperDeptId = (q[1] as string);
-    //       this.showAdvFilter = true;
-    //       break;
       }
     }
   }
