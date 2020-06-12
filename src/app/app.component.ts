@@ -129,6 +129,7 @@ export class AppComponent {
 
 
   async getTransactions(uno: number, sort: string): Promise<any> {
+    this.loadingIndicator = true;
     this.vendorTransactions = [];
     this.displayTransactions = true;
     this.displayVendors = false;
@@ -161,6 +162,7 @@ export class AppComponent {
         update: new FormControl
       });
     }
+    this.loadingIndicator = true;
 
     return;
   }
