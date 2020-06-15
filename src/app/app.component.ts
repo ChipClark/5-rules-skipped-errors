@@ -97,7 +97,7 @@ export class AppComponent {
     this.loadingIndicator = true;
     this.sortnameASC = false;
     this.amountdirection = false;
-    this.datedirection = false;
+    this.datedirection = true;
     this.searchDescriptions = [];
     this.displaySearchResults = true;
     this.displayVendors = false;
@@ -118,6 +118,7 @@ export class AppComponent {
           update: new FormControl
         });
       }
+      this.sortDate();
       this.loadingIndicator = false;
     });
 
