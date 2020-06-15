@@ -123,7 +123,7 @@
               <th class="vendor title col-2">Vendor</th>
               <th class="invoice title col-2">Invoice</th>
               <th class="title datebutton col-2" (click)="sortTransaction('date')" >
-                  Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
+                  Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
               </th>
               <!-- <div class="links title col-1"></div> -->
               <th class="title col-1 amountbutton" (click)="sortTransaction('amount')" >
@@ -147,7 +147,7 @@
                       <td class="vendordata col-2">{{vendorname}}</td>
                       <td class="col-2 invoicedata">{{t.invoicenumber}}</td>
                       <td class="col-2 datedata">
-                          posted: {{t.transactionpostdate  | date:'shortDate'}}<br>
+                          {{t.invoicedate  | date:'shortDate'}}<br>
                           paid: {{t.invoicepaiddate  | date:'shortDate'}}
                       </td>
                       <td class="col-1 financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
@@ -197,7 +197,7 @@
               Amount<div *ngIf="amountdirection && sortByAmount" class="arrow">&darr;</div><div *ngIf="!amountdirection && sortByAmount" class="arrow">&uarr;</div>
             </th>
             <th class="datedata title datebutton " (click)="sortDate()">
-              Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
+              Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
             </th>
             <th class="costcode title ">Cost Code</th>
             <th class="officedata title ">Office</th>
@@ -217,7 +217,7 @@
                     <td class="vendordata">{{s.vendorname}}</td>
                     <td class="invoicedata">{{s.invoicenumber}}</td>
                     <td class="financialdata">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
-                    <td class="datedata">posted: {{s.transactionpostdate  | date:'shortDate'}}<br>
+                    <td class="datedata">{{s.invoicedate  | date:'shortDate'}}<br>
                           paid: {{s.invoicepaiddate  | date:'shortDate'}}
                     </td>
                     <td class="costcode">{{s.costcode}}</td>
@@ -270,7 +270,7 @@
                   <td class="vendordata col-5">{{vendorname}}</td>
                   <td class="col-2 invoicedata">{{t.invoicenumber}}</td>
                   <td class="col-2 datedata">
-                      posted: {{t.transactionpostdate  | date:'shortDate'}}<br>
+                      {{t.invoicedate  | date:'shortDate'}}<br>
                       paid: {{t.invoicepaiddate  | date:'shortDate'}}
                   </td>
                   <td class="col-2 columndata financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
@@ -308,7 +308,7 @@
         <tr class="modalheaders row" id="idHeaders" >
           <th class="vendor title col-4">Vendor</th>
           <th class="invoice title col-3">Invoice</th>
-          <th class="title col-2" >Date</th>
+          <th class="title col-2" >Invoice Date</th>
           <!-- <div class="links title col-1"></div> -->
           <th class="title col-2 "  >Amount</th>
           <!-- <div class="total title col-1">Total</div> -->
@@ -323,7 +323,7 @@
                   <td class="vendordata col-4">{{s.vendorname}}</td>
                   <td class="col-3 invoicedata">{{s.invoicenumber}}</td>
                   <td class="col-2 datedata">
-                      posted: {{s.transactionpostdate  | date:'shortDate'}}<br>
+                      {{s.invoicedate  | date:'shortDate'}}<br>
                       paid: {{s.invoicepaiddate  | date:'shortDate'}}
                   </td>
                   <td class="col-2 columndata financial">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
