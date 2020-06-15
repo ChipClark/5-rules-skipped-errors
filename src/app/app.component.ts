@@ -129,22 +129,16 @@ export class AppComponent {
 
 
 
-  async getTransactions(uno: number, sort: string): Promise<any> {
+  async getTransactions(uno: number): Promise<any> {
     this.loadingIndicator = true;
     this.vendorTransactions = [];
     this.displayTransactions = true;
     this.displayVendors = false;
     this.selectTrans = false;
-    if ( sort == "date" ) {
-      this.datedirection = !this.datedirection;
-      this.sortByDate = true;
-    }
-    if ( sort == "amount" ) {
-      this.amountdirection = !this.amountdirection;
-      this.sortByDate = false;
-    }
+    this.datedirection = true;
+    this.sortByDate = true;
 
-    await this.apiService.getInvoiceByUno(uno, sort).toPromise().then( transactions => {
+    await this.apiService.getInvoiceByUno(uno, 'date').toPromise().then( transactions => {
       // if (this.apiService.debug == true) console.log("vendors should be done");
       this.vendorTransactions = transactions;
     })

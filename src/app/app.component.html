@@ -57,7 +57,7 @@
           <div *cdkVirtualFor="let vendor of vendors | search: searchTerm; let i = index; odd as isOdd; even as isEven" >
               <!--| search: searchTerm-->
             <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
-                <button class="vendorrow col-11"  (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno, 'date'); ">
+                <button class="vendorrow col-11"  (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno); ">
                   <div class="row">
                     <div class="col-4 vendorname">{{vendor.vendorname}}</div>
                     <div class="col-2 invoicecount">{{vendor.invoices}}</div>
@@ -67,7 +67,7 @@
                   </div>
                 </button>
                 <div class="col-1 payments">
-                    <button class="transdetail" (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno, 'date')" >Payments</button>
+                    <button class="transdetail" (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno)" >Payments</button>
                 </div>
               <!-- </button> -->
 
