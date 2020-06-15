@@ -162,7 +162,7 @@ export class AppComponent {
         update: new FormControl
       });
     }
-    this.loadingIndicator = true;
+    this.loadingIndicator = false;
 
     return;
   }

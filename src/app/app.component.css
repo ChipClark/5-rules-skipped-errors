@@ -60,6 +60,7 @@
 
 .datadata, .financialdata {
   text-align: right;
+  padding-left: 5px;
 }
 
 
@@ -143,7 +144,7 @@
 .datatable { display:flex; }
 
 .title {
-    font-size: 14pt;
+    font-size: 12pt;
     color: #000;
     float: left;
     text-align: left;
