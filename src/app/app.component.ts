@@ -162,6 +162,7 @@ export class AppComponent {
         update: new FormControl
       });
     }
+    this.sortTransaction('date');
     this.loadingIndicator = false;
 
     return;
@@ -277,10 +278,10 @@ export class AppComponent {
 
     this.datedirection = !this.datedirection;
     if ( this.datedirection == false ) {
-      this.selectedSearches.sort((a, b) => (a.transactionpostdate > b.transactionpostdate) ? 1 : -1)
+      this.selectedSearches.sort((a, b) => (a.transactionpostdate > b.transactionpostdate) ? -1 : 1)
     }
     else {
-      this.selectedSearches.sort((a, b) => (a.transactionpostdate < b.transactionpostdate) ? 1 : -1)
+      this.selectedSearches.sort((a, b) => (a.transactionpostdate < b.transactionpostdate) ? -1 : 1)
     }
     for ( let i = 0; i < this.selectedSearches.length; i++ ) {
       this.searchDescriptions.push(this.selectedSearches[i]);
@@ -321,6 +322,53 @@ export class AppComponent {
     for ( let i = 0; i < this.selectedSearches.length; i++ ) {
       this.searchDescriptions.push(this.selectedSearches[i]);
     }
+  }
+
+  sortTransaction(sortby: string) {
+    this.selectedTransactions = this.vendorTransactions;
+    this.vendorTransactions = [];
+    if ( sortby == "date" ) {
+      this.datedirection = !this.datedirection;
+      this.sortByDate = true;
+      if ( this.datedirection == false ) {
+        this.selectedTransactions.sort((a, b) => (a.transactionpostdate > b.transactionpostdate) ? -1 : 1)
+      }
+      else {
+        this.selectedTransactions.sort((a, b) => (a.transactionpostdate < b.transactionpostdate) ? -1 : 1)
+      }
+    }
+    if ( sortby == "amount" ) {
+      this.amountdirection = !this.amountdirection;
+      this.sortByDate = false;
+      if ( this.amountdirection == false ) {
+        this.selectedTransactions.sort( function(a, b) {
+        let key1 = a.invoiceamount;
+        let key2 = b.invoiceamount;
+          if ( key1 > key2 ) return 1;
+          else if ( key1 == key2 ) return 0;
+          else return -1;
+        })
+      }
+      else {
+        this.selectedTransactions.sort( function(a, b) {
+          let key1 = a.invoiceamount;
+          let key2 = b.invoiceamount;
+          if ( key1 > key2 ) return -1;
+          else if ( key1 == key2 ) return 0;
+          else return 1;
+        })
+      }
+    }
+
+    for ( let i = 0; i < this.selectedTransactions.length; i++ ) {
+      this.vendorTransactions.push(this.selectedTransactions[i]);
+    }
+    this.selectedTransactions = [];
+
+
+
+    return;
+
   }
 
 

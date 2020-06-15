@@ -122,11 +122,11 @@
               <th class="ckbox" ></th>
               <th class="vendor title col-2">Vendor</th>
               <th class="invoice title col-2">Invoice</th>
-              <th class="title datebutton col-2" (click)="getTransactions(currentVendor.vendoruno, 'date')" >
-                  Date <div *ngIf="datedirection && sortByDate" class="arrow">&darr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&uarr;</div>
+              <th class="title datebutton col-2" (click)="sortTransaction('date')" >
+                  Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
               </th>
               <!-- <div class="links title col-1"></div> -->
-              <th class="title col-1 amountbutton" (click)="getTransactions(currentVendor.vendoruno, 'amount')" >
+              <th class="title col-1 amountbutton" (click)="sortTransaction('amount')" >
                   Amount<div *ngIf="amountdirection&& !sortByDate" class="arrow">&darr;</div><div *ngIf="!amountdirection&& !sortByDate" class="arrow">&uarr;</div>
               </th>
               <!-- <div class="total title col-1">Total</div> -->
