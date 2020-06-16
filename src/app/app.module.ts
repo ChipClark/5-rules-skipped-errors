@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatCheckboxModule, MatSelectModule, MatTabsModule, MatRadioModule, MatMenuModule, MatTooltipModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+//, MatCheckboxModule, MatSelectModule, MatTabsModule, MatRadioModule, MatMenuModule, MatTooltipModule
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,9 +29,9 @@ import { SearchPipe } from './pipe/search.pipe';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ScrollDispatchModule,
-    MatButtonModule, MatCheckboxModule, MatRadioModule, MatSelectModule, MatTooltipModule, MatMenuModule, MatTabsModule,
-    NgbModule.forRoot(),
+    ScrollingModule,
+    MatButtonModule,
+    NgbModule,
     AppRoutingModule,
 
   ],

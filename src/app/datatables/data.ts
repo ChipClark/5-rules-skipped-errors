@@ -1,4 +1,5 @@
 import { ɵangular_packages_platform_browser_dynamic_platform_browser_dynamic_a } from '@angular/platform-browser-dynamic';
+import { Component } from '@angular/core';
 
 export class Vendor {
   vendorinvoicesummaryid: number;

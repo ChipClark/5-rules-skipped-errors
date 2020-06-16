@@ -5,7 +5,6 @@ import { FormsModule, FormGroup, FormArray, FormControl, ReactiveFormsModule, Fo
 
 import { ApiService } from './api-service.service';
 import { Vendor, VendorSearch, InvoiceCheck, InvoiceTransaction} from './datatables/data';
-import { CloseScrollStrategy } from '@angular/cdk/overlay';
 
 
 @Input()

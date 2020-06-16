@@ -132,5 +132,8 @@
       }
     }
   },
-  "defaultProject": "AM-Vendors"
+  "defaultProject": "AM-Vendors",
+  "cli": {
+    "analytics": "00a81dbe-b142-4ac4-93b1-94987fe13b9d"
+  }
 }
