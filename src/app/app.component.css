@@ -34,7 +34,7 @@
 }
 
 .vendordata {
-  width: 20%;
+  width: 15%;
   display: inline-block;
   text-align: left;
   padding-left: 10px;
@@ -60,7 +60,7 @@
 
 .datadata, .financialdata {
   text-align: right;
-  padding-left: 5px;
+  margin-right: 10px;
 }
 
 
@@ -68,6 +68,7 @@
   width: 36%;
   display: inline-block;
   text-align: left;
+  margin-left: 10px;
 }
 
 .additionalpadding {
@@ -148,6 +149,19 @@
     color: #000;
     float: left;
     text-align: left;
+}
+
+.centertitle {
+  font-size: 12pt;
+  color: #000;
+  text-align: center;
+}
+
+.righttitle {
+  font-size: 12pt;
+  color: #000;
+  float: right;
+  text-align: right;
 }
 
 .col-1 {

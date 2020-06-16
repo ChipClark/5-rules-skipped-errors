@@ -175,14 +175,14 @@
               Vendor<div *ngIf="sortnameASC && sortByName" class="arrow">&darr;</div><div *ngIf="!sortnameASC && sortByName" class="arrow">&uarr;</div>
             </th>
             <th class="invoicedata title ">Invoice</th>
-            <th class="financialdata title amountbutton additionalpadding " (click)="sortAmount()" >
+            <th class="righttitle financialdata amountbutton additionalpadding " (click)="sortAmount()" >
               Amount<div *ngIf="amountdirection && sortByAmount" class="arrow">&darr;</div><div *ngIf="!amountdirection && sortByAmount" class="arrow">&uarr;</div>
             </th>
             <th class="datedata title datebutton " (click)="sortDate()">
               Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
             </th>
-            <th class="costcode title ">Cost Code</th>
-            <th class="officedata title ">Office</th>
+            <th class="costcode centertitle ">Cost Code</th>
+            <th class="officedata centertitle ">Office</th>
             <th class="descriptiondata title">Description</th>
           </tr>
 
