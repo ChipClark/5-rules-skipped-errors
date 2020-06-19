@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "AM-Vendors": {
+    "AM-Invoices": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
