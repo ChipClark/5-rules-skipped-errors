@@ -19,7 +19,8 @@ export class VendorSearch {
   vendoruno: number;
   invoiceamount: number;
   invoicenumber: string;
-  transactionpostdate: Date;
+  invoicedate: Date;
+  invoicepaiddate: Date;
   officelocation: string;
   costcode: string;
   narrative: string;

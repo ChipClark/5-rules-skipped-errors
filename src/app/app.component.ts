@@ -35,10 +35,12 @@ export class AppComponent {
   public parametersLoaded = false;
 
   public datedirection = false;
+  public paiddirection = false;
   public amountdirection = false;
   public sortnameASC: boolean;
   public sortByName = true;
   public sortByDate = false;
+  public sortByPaid = false;
   public sortByAmount = false;
 
   public displayTransactions = false;
@@ -119,7 +121,7 @@ export class AppComponent {
           update: new FormControl
         });
       }
-      this.sortDate();
+      this.sortDate('date');
       console.log("about to turn off indicator");
       this.loadingIndicator = false;
       this.startDisplayResults = false;
@@ -264,20 +266,38 @@ export class AppComponent {
     }
   }
 
-  sortDate() {
-      this.sortByDate = true;
+  sortDate(sortby: string) {
+      
       this.sortByAmount = false;
       this.sortByName = false;
       this.selectedSearches = this.searchDescriptions;
       this.searchDescriptions = [];
 
-    this.datedirection = !this.datedirection;
-    if ( this.datedirection == false ) {
-      this.selectedSearches.sort((a, b) => (a.transactionpostdate > b.transactionpostdate) ? -1 : 1)
-    }
-    else {
-      this.selectedSearches.sort((a, b) => (a.transactionpostdate < b.transactionpostdate) ? -1 : 1)
-    }
+      if ( sortby == "date" ) {
+        this.sortByDate = true;
+        this.sortByPaid = false;
+        this.datedirection = !this.datedirection;
+        this.paiddirection = false;
+        if ( this.datedirection == false ) {
+          this.selectedSearches.sort((a, b) => (a.invoicedate  > b.invoicedate ) ? -1 : 1)
+        }
+        else {
+          this.selectedSearches.sort((a, b) => (a.invoicedate  < b.invoicedate ) ? -1 : 1)
+        }
+      }
+      else {
+        this.sortByDate = false;
+        this.sortByPaid = true;
+        this.paiddirection = !this.paiddirection;
+        if ( this.paiddirection == false ) {
+          this.selectedSearches.sort((a, b) => (a.invoicepaiddate < b.invoicepaiddate) ? -1 : 1)
+        }
+        else {
+          this.selectedSearches.sort((a, b) => (a.invoicepaiddate > b.invoicepaiddate) ? -1 : 1)
+        }
+      }
+
+    
     for ( let i = 0; i < this.selectedSearches.length; i++ ) {
       this.searchDescriptions.push(this.selectedSearches[i]);
     }
@@ -323,16 +343,32 @@ export class AppComponent {
     if ( sortby == "date" ) {
       this.datedirection = !this.datedirection;
       this.sortByDate = true;
+      this.sortByPaid = false;
+      this.sortByAmount = false;
       if ( this.datedirection == false ) {
-        this.selectedTransactions.sort((a, b) => (a.transactionpostdate > b.transactionpostdate) ? -1 : 1)
+        this.selectedTransactions.sort((a, b) => (a.invoicedate > b.invoicedate) ? -1 : 1)
       }
       else {
-        this.selectedTransactions.sort((a, b) => (a.transactionpostdate < b.transactionpostdate) ? -1 : 1)
+        this.selectedTransactions.sort((a, b) => (a.invoicedate < b.invoicedate) ? -1 : 1)
       }
     }
-    if ( sortby == "amount" ) {
-      this.amountdirection = !this.amountdirection;
+    else if ( sortby == "paid" ) {
+      this.paiddirection = !this.paiddirection;
+      this.sortByPaid = true;
+      this.sortByAmount = false;
       this.sortByDate = false;
+      if ( this.paiddirection == false ) {
+        this.selectedTransactions.sort((a, b) => (a.invoicepaiddate > b.invoicepaiddate) ? -1 : 1)
+      }
+      else {
+        this.selectedTransactions.sort((a, b) => (a.invoicepaiddate < b.invoicepaiddate) ? -1 : 1)
+      }
+    }
+    else if ( sortby == "amount" ) {
+      this.amountdirection = !this.amountdirection;
+      this.sortByAmount = true;
+      this.sortByDate = false;
+      this.sortByPaid = false;
       if ( this.amountdirection == false ) {
         this.selectedTransactions.sort( function(a, b) {
         let key1 = a.invoiceamount;

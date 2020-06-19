@@ -22,9 +22,6 @@
   width: 700px;
 }
 
-.vendor {
-    margin-left: 30px;
-}
 
 .vendorrow {
     border: none;
@@ -33,19 +30,26 @@
     cursor: pointer;
 }
 
+.title {
+  font-size: 12pt;
+  color: #000;
+  float: left;
+  text-align: left;
+}
+
 .vendordata {
-  width: 15%;
+  width: 20%;
   display: inline-block;
   text-align: left;
   padding-left: 10px;
 }
 
-.invoicedata{
-  width: 10%;
+.invoicedata, .datedata, .financialdata, .costcode, .officedata {
+  width: 8%;
   display: inline-block;
 }
 
-.invoicedata {
+.invoicedata{
   text-align: left;
 }
 
@@ -53,47 +57,27 @@
   text-align: center;
 }
 
-.datedata, .financialdata, .costcode, .officedata {
-  width: 8%;
-  display: inline-block;
-}
-
-.datadata, .financialdata {
+.datedata, .financialdata {
   text-align: right;
-  margin-right: 10px;
+  padding-right: 20px;
 }
-
 
 .descriptiondata {
-  width: 36%;
+  width: 20%;
   display: inline-block;
   text-align: left;
   margin-left: 10px;
-}
-
-.additionalpadding {
-  padding-left: 20px;
 }
 
 .vendorname {
     text-align: left;
 }
 
-.vendorbutton, .databutton, .amountbutton {
+.button {
   border: none;
   border-style: none;
   background: transparent;
 }
-
-.vendorbutton .datebutton {
-    text-align: left;
-}
-
-.amountbutton {
-    text-align: right;
-}
-
-
 
 
 
@@ -143,13 +127,6 @@
 
 .transactions {  width: 100%; }
 .datatable { display:flex; }
-
-.title {
-    font-size: 12pt;
-    color: #000;
-    float: left;
-    text-align: left;
-}
 
 .centertitle {
   font-size: 12pt;

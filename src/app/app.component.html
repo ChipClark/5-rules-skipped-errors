@@ -43,7 +43,7 @@
                     <div class="col-4 vendorname">{{vendor.vendorname}}</div>
                     <div class="col-2 invoicecount">{{vendor.invoices}}</div>
                     <div class="col-2 address">{{vendor.city}}</div>
-                    <div class="col-2 paymentdate">{{vendor.lastpayment | date: "dd-MMM-yyyy"}}</div>
+                    <div class="col-2 paymentdate">{{vendor.lastpayment | date: "MMM-dd-yyyy"}}</div>
                     <div class="col-1 invoiceamount">{{vendor.totalinvoiceamount  | currency :'USD':'symbol':'1.2-2' }}</div>
                   </div>
                 </button>
@@ -101,18 +101,20 @@
           <tbody>
             <tr class="titleheaders row" id="idHeaders" >
               <th class="ckbox" ></th>
-              <th class="vendor title col-2">Vendor</th>
-              <th class="invoice title col-2">Invoice</th>
-              <th class="title datebutton col-2" (click)="sortTransaction('date')" >
-                  Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&darr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&uarr;</div>
+              <th class="vendordata title">Vendor</th>
+              <th class="invoicedata title">Invoice</th>
+              <th class="title financialdata button" (click)="sortTransaction('amount')" >
+                Amount<div *ngIf="amountdirection && sortByAmount" class="arrow">&darr;</div><div *ngIf="!amountdirection && sortByAmount" class="arrow">&uarr;</div>
               </th>
-              <!-- <div class="links title col-1"></div> -->
-              <th class="title col-1 amountbutton" (click)="sortTransaction('amount')" >
-                  Amount<div *ngIf="amountdirection&& !sortByDate" class="arrow">&darr;</div><div *ngIf="!amountdirection&& !sortByDate" class="arrow">&uarr;</div>
+              <th class="title datedata button" (click)="sortTransaction('date')" >
+                  Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
               </th>
-              <!-- <div class="total title col-1">Total</div> -->
-              <th class="col-2 links title">Description</th>
-              <th class="col-2 links title">&nbsp;</th>
+              <th class="title datedata button" (click)="sortTransaction('paid')" >
+                Paid Date <div *ngIf="paiddirection && sortByPaid" class="arrow">&uarr;</div><div *ngIf="!paiddirection && sortByPaid" class="arrow">&darr;</div>
+              </th>
+              <th class="costcode title">Cost Code</th>
+              <th class="officedata title">Office</th>
+              <th class="description title">Description</th>
             </tr>
 
             <tr class="row" id="dataTable">
@@ -121,18 +123,22 @@
                     <!--| search: searchTerm-->
                   <div [class.Odd]="isOdd" [class.Even]="isEven"  >
                     <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
-                      <td class="ckbox">
-                        <input type="checkbox" [formControl]="transInclude[i].controls.update">
-                          <!-- (click)="setMembership(c.committeeid)"> -->
-                      </td>
-                      <td class="vendordata col-2">{{vendorname}}</td>
-                      <td class="col-2 invoicedata">{{t.invoicenumber}}</td>
-                      <td class="col-2 datedata">
-                          {{t.invoicedate  | date:'dd-MMM-yyyy'}}<br>
-                          paid: {{t.invoicepaiddate  | date:'dd-MMM-yyyy'}}
-                      </td>
-                      <td class="col-1 financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
-                      <td class="col-4 descriptiondata">{{t.invoicenarrative}}</td>
+                    <td class="ckbox">
+                      <input type="checkbox" [formControl]="transInclude[i].controls.update">
+                        <!-- (click)="setMembership(c.committeeid)"> -->
+                    </td>
+                    <td class="vendordata">{{vendorname}}</td>
+                    <td class="invoicedata">{{t.invoicenumber}}</td>
+                    <td class="financialdata">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
+                    <td class="datedata">
+                        {{t.invoicedate  | date:'MMM-dd-yyyy'}}
+                    </td>
+                    <td class="datedata">
+                        {{t.invoicepaiddate  | date:'MMM-dd-yyyy'}}
+                    </td>
+                    <td class="costcode">{{t.costcode}}</td>
+                    <td class="officedata">{{t.officelocation}}</td>
+                    <td class="descriptiondata">{{t.invoicenarrative}}</td>
                     <!-- </button> -->
 
                   </div>
@@ -174,11 +180,14 @@
               Vendor<div *ngIf="sortnameASC && sortByName" class="arrow">&darr;</div><div *ngIf="!sortnameASC && sortByName" class="arrow">&uarr;</div>
             </th>
             <th class="invoicedata title ">Invoice</th>
-            <th class="righttitle financialdata amountbutton additionalpadding " (click)="sortAmount()" >
+            <th class="righttitle financialdata button additionalpadding " (click)="sortAmount()" >
               Amount<div *ngIf="amountdirection && sortByAmount" class="arrow">&darr;</div><div *ngIf="!amountdirection && sortByAmount" class="arrow">&uarr;</div>
             </th>
-            <th class="datedata title datebutton " (click)="sortDate()">
+            <th class="datedata title datedata button " (click)="sortDate('date')">
               Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
+            </th>
+            <th class="title datedata button" (click)="sortDate('paid')" >
+              Paid Date <div *ngIf="paiddirection && sortByPaid" class="arrow">&darr;</div><div *ngIf="!paiddirection && sortByPaid" class="arrow">&uarr;</div>
             </th>
             <th class="costcode centertitle ">Cost Code</th>
             <th class="officedata centertitle ">Office</th>
@@ -198,9 +207,8 @@
                     <td class="vendordata">{{s.vendorname}}</td>
                     <td class="invoicedata">{{s.invoicenumber}}</td>
                     <td class="financialdata">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
-                    <td class="datedata">{{s.invoicedate  | date:'dd-MMM-yyyy'}}<br>
-                          paid: {{s.invoicepaiddate  | date:"dd-MMM-yyyy"}}
-                    </td>
+                    <td class="datedata">{{s.invoicedate  | date:'MMM-dd-yyyy'}}
+                    <td class="datedata">{{s.invoicepaiddate  | date:"MMM-dd-yyyy"}} </td>
                     <td class="costcode">{{s.costcode}}</td>
                     <td class="officedata">{{s.officelocation}}</td>
                     <td class="descriptiondata">{{s.narrative}}</td>
@@ -251,8 +259,8 @@
                   <td class="vendordata col-5">{{vendorname}}</td>
                   <td class="col-2 invoicedata">{{t.invoicenumber}}</td>
                   <td class="col-2 datedata">
-                      {{t.invoicedate  | date:'dd-MMM-yyyy'}}<br>
-                      paid: {{t.invoicepaiddate  | date:'dd-MMM-yyyy'}}
+                      {{t.invoicedate  | date:'MMM-dd-yyyy'}}<br>
+                      paid: {{t.invoicepaiddate  | date:'MMM-dd-yyyy'}}
                   </td>
                   <td class="col-2 columndata financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
                 <!-- </button> -->
@@ -304,8 +312,8 @@
                   <td class="vendordata col-4">{{s.vendorname}}</td>
                   <td class="col-3 invoicedata">{{s.invoicenumber}}</td>
                   <td class="col-2 datedata">
-                      {{s.invoicedate  | date:'dd-MMM-yyyy'}}<br>
-                      paid: {{s.invoicepaiddate  | date:'dd-MMM-yyyy'}}
+                      {{s.invoicedate  | date:'MMM-dd-yyyy'}}<br>
+                      paid: {{s.invoicepaiddate  | date:'MMM-dd-yyyy'}}
                   </td>
                   <td class="col-2 columndata financial">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
                 <!-- </button> -->
