@@ -1,4 +1,4 @@
-﻿var serverType = 'AM-Vendors';
+﻿var serverType = 'AM-Invoices';
 var express = require('express');
 var http = require('http');
 var path = require('path');
@@ -14,7 +14,7 @@ app.use(function(req,res,next){
     });
 
 
-app.use(express.static(__dirname + '/dist/am-vendors'));
+app.use(express.static(__dirname + '/dist/am-invoices'));
 
 //body parse
 // parse application/x-www-form-urlencoded

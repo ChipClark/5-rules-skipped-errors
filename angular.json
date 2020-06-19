@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/AM-Vendors",
+            "outputPath": "dist/AM-Invoices",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -58,18 +58,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "AM-Vendors:build"
+            "browserTarget": "AM-Invoices:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "AM-Vendors:build:production"
+              "browserTarget": "AM-Invoices:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AM-Vendors:build"
+            "browserTarget": "AM-Invoices:build"
           }
         },
         "test": {
@@ -103,7 +103,7 @@
         }
       }
     },
-    "AM-Vendors-e2e": {
+    "AM-Invoices-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -112,11 +112,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "AM-Vendors:serve"
+            "devServerTarget": "AM-Invoices:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "AM-Vendors:serve:production"
+              "devServerTarget": "AM-Invoices:serve:production"
             }
           }
         },
@@ -132,7 +132,7 @@
       }
     }
   },
-  "defaultProject": "AM-Vendors",
+  "defaultProject": "AM-Invoices",
   "cli": {
     "analytics": "00a81dbe-b142-4ac4-93b1-94987fe13b9d"
   }

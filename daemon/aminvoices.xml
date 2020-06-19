@@ -6,7 +6,7 @@
 	<argument>--harmony</argument>
 	<argument>C:\Users\waam-cclark\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js</argument>
 	<argument>--file</argument>
-	<argument>C:\sites\am-vendors\server.js</argument>
+	<argument>C:\sites\am-invoices\server.js</argument>
 	<argument>--scriptoptions=</argument>
 	<argument>--log</argument>
 	<argument>AM-Invoices wrapper</argument>
@@ -27,5 +27,5 @@
 		<user>LocalSystem</user>
 		<password></password>
 	</serviceaccount>
-	<workingdirectory>C:\Sites\AM-Vendors</workingdirectory>
+	<workingdirectory>C:\Sites\AM-Invoices</workingdirectory>
 </service>
