@@ -17,7 +17,7 @@ export class ApiService {
   private vendorFilter = 'filter[order]=vendorname ASC'
   public transactionFilter = "filter[where][transactionpostdate][gt]=2019-01-01T18:30:00.000Z"
   // public vendorTransactionSearch = 'find({where: {or: [{invoicenarrative: 'search string'}, { vendorname: 'search string'}]}},'
-  public debug: boolean;
+  public debug = true;
   public datatype: string;
   public datedirection = true;
   public sortAmount = true;

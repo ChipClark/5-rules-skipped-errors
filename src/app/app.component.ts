@@ -24,12 +24,15 @@ export class AppComponent {
   public searchDescriptions: VendorSearch[];
   public selectedSearches: VendorSearch[];
   public checks: InvoiceCheck[];
-  public searchString: string;
-
+  
+  public searchString: any;
   public searchTerm = null;
+
   private today = new Date;
   public vendorname;
   public vendoruno;
+  public vendorsLoaded = false;
+  public parametersLoaded = false;
 
   public datedirection = false;
   public amountdirection = false;
@@ -41,6 +44,7 @@ export class AppComponent {
   public displayTransactions = false;
   public displayVendors = true;
   public displaySearchResults = false;
+  public startDisplayResults = false;
   public loadingIndicator = true;
 
   public transInclude: FormGroup[] = [];
@@ -55,36 +59,33 @@ export class AppComponent {
     private _route: Router,
     private transactionControls: FormBuilder,
     private modalService: NgbModal,
-
-    // private datePipe: DatePipe,
-
-  ) {  }
+  ) { }
 
   ngOnInit() {
-    this.loadData();
+    this.accessParameters();
+   }
+
+  ngDoCheck() {}
+
+  ngAfterContentInit()
+  {
+    if ( this.vendorsLoaded == false ) {
+      this.loadVendorData();
+    }
   }
 
-  async loadData(): Promise<any> {
+  async loadVendorData(): Promise<any> {
     this.apiService.debug = true;
     this.apiService.datatype = 'remote';
 
-    this.loadingIndicator = true;
-    await this.apiService.getVendor().subscribe( vendors => {
+    if ( this.vendorsLoaded == false ) {
       this.loadingIndicator = true;
-      this.vendors = vendors;
-      // if (this.apiService.debug == true) console.log(this.vendors);
-      // this.apiService.getInvoice().toPromise().then( transactions => {
-        // if (this.apiService.debug == true) console.log("vendors should be done");
-        // this.transactions = transactions;
-        // this.buildTransactions();
-        // this.apiService.getCheck().toPromise().then( invoiceCheck => {
-        //   this.invoiceCheck = invoiceCheck;
-
-        // })
-      // })
-      this.loadingIndicator = false;
-      });
-    this.accessParameters();
+      await this.apiService.getVendor().subscribe( vendors => {
+        this.vendors = vendors;
+        if ( this.startDisplayResults == false ) this.loadingIndicator = false;
+        this.vendorsLoaded = true;
+        });
+    }
     return null;
   }
 
@@ -93,6 +94,7 @@ export class AppComponent {
   //******************************************* */
 
   async displaySearch(): Promise<any> {
+    this.startDisplayResults = true;
     this.loadingIndicator = true;
     this.sortnameASC = false;
     this.amountdirection = false;
@@ -118,7 +120,9 @@ export class AppComponent {
         });
       }
       this.sortDate();
+      console.log("about to turn off indicator");
       this.loadingIndicator = false;
+      this.startDisplayResults = false;
     });
 
 
@@ -265,10 +269,7 @@ export class AppComponent {
       this.sortByAmount = false;
       this.sortByName = false;
       this.selectedSearches = this.searchDescriptions;
-      console.log(this.selectedSearches[2]);
       this.searchDescriptions = [];
-      console.log(this.searchDescriptions);
-      console.log(this.selectedSearches[2]);
 
     this.datedirection = !this.datedirection;
     if ( this.datedirection == false ) {
@@ -280,8 +281,6 @@ export class AppComponent {
     for ( let i = 0; i < this.selectedSearches.length; i++ ) {
       this.searchDescriptions.push(this.selectedSearches[i]);
     }
-    console.log(this.searchDescriptions[2]);
-
   }
 
   sortName() {
@@ -370,12 +369,13 @@ export class AppComponent {
   //   Navigation and Parameters
   //******************************************* */
 
-  accessParameters() {
-    // if (this.apiService.debug == true) console.log("in accessParameters()");
+  accessParameters(): void {
     this.route.queryParamMap.subscribe(params => {
       const queryStrings: any = this.route.queryParamMap;
-      // if (this.apiService.debug == true) console.log(queryStrings.source.value);
-      this.executeQueryParams(queryStrings.source.value);
+      this.executeQueryParams(queryStrings.source.value).then( results => {
+        console.log('parameters loaded');
+      });
+      
     });
   }
 
@@ -396,6 +396,7 @@ export class AppComponent {
 
   clearQueryParams(): void {
     this.clearFilters();
+    this.addQueryParams({vendors: null, search: null})
     this._route.navigate([''], {
       queryParams: {
       }
@@ -407,17 +408,24 @@ export class AppComponent {
     this.searchString = null;
   }
 
-  executeQueryParams(queryStrings): void {
-    // if (this.apiService.debug == true) console.log(queryStrings);
+  async executeQueryParams(queryStrings): Promise<any> {
     const queries = Object.entries(queryStrings);
     this.clearFilters();
+    console.log("queries"); console.log(queries);
     for (const q of queries) {
       switch (q[0]) {
-        case 'search':
+        case 'vendors':
           this.searchTerm = q[1];
+          if ( this.vendorsLoaded == false ) this.loadVendorData();
+          break;
+        case 'search':
+          this.searchString = q[1];
+          console.log("in executeQueryParams() for search");
+          this.displaySearch(); 
           break;
       }
     }
+    return;
   }
 
   openWindow(content): void {

@@ -14,6 +14,7 @@ import { FooterComponent } from './footer/footer.component';
 import { VendorPipe } from './pipe/vendor.pipe';
 import { DescriptionPipe } from './pipe/description.pipe';
 import { SearchPipe } from './pipe/search.pipe';
+import { VendorsPipe } from './pipe/vendors.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SearchPipe } from './pipe/search.pipe';
     FooterComponent,
     VendorPipe,
     DescriptionPipe,
-    SearchPipe
+    SearchPipe,
+    VendorsPipe
   ],
   imports: [
     BrowserModule,

@@ -12,17 +12,17 @@
       <div class="row"  id="searchbar">
         <div class="col-4 searchbar">
             <input class="form-control searchbar" id="SearchBar" placeholder="Search Vendor ONLY" value="" autofocus
-            [(ngModel)]="searchTerm" (input)="searchTerm ? addQueryParams({search: searchTerm}) : addQueryParams({search: null})"><br>
+            [(ngModel)]="searchTerm" (input)="searchTerm ? addQueryParams({vendors: searchTerm}) : addQueryParams({vendors: null})"><br>
         </div>
         <div class="col-1" id="navigation"></div>
         <div class="col-4 searchbar">
           <input class="form-control searchbar" placeholder="Search by vendor or description" value="" [(ngModel)]="searchString" ><br>
         </div>
         <div class="col-1" id="navigation">
-            <button mat-raised-button (click)="displaySearch()">&nbsp;Search&nbsp;</button>
+            <button mat-raised-button (click)="displaySearch(); addQueryParams({search: searchString})">&nbsp;Search&nbsp;</button>
         </div>
         <div class="col-1" id="navigation">
-          <button  mat-raised-button (click)="clearFilters()">Clear</button>
+          <button  mat-raised-button (click)="clearQueryParams()">Clear</button>
         </div>
       </div>
       <div class="row" id="idHeaders">
@@ -36,15 +36,14 @@
 
       <div class="row" id="dataTable">
         <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
-          <div *cdkVirtualFor="let vendor of vendors | search: searchTerm; let i = index; odd as isOdd; even as isEven" >
-              <!--| search: searchTerm-->
+          <div *cdkVirtualFor="let vendor of vendors | vendors: searchTerm; let i = index; odd as isOdd; even as isEven" >
             <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
                 <button class="vendorrow col-11"  (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno); ">
                   <div class="row">
                     <div class="col-4 vendorname">{{vendor.vendorname}}</div>
                     <div class="col-2 invoicecount">{{vendor.invoices}}</div>
                     <div class="col-2 address">{{vendor.city}}</div>
-                    <div class="col-2 paymentdate">{{vendor.lastpayment | date: "dd:MMM:yyyy"}}</div>
+                    <div class="col-2 paymentdate">{{vendor.lastpayment | date: "dd-MMM-yyyy"}}</div>
                     <div class="col-1 invoiceamount">{{vendor.totalinvoiceamount  | currency :'USD':'symbol':'1.2-2' }}</div>
                   </div>
                 </button>
@@ -76,7 +75,7 @@
             </div>
             <div class="col-2" id="spacer">      </div>
             <div class="col-2" id="navigation">
-                <button mat-raised-button (click)="displayVendors = true; displayTransactions = false; currentVendor = null;">&nbsp;Back&nbsp;</button>
+                <button mat-raised-button (click)="displayVendors = true; displayTransactions = false; currentVendor = null; ">&nbsp;Vendors&nbsp;</button>
             </div>
 
         </div>
@@ -129,8 +128,8 @@
                       <td class="vendordata col-2">{{vendorname}}</td>
                       <td class="col-2 invoicedata">{{t.invoicenumber}}</td>
                       <td class="col-2 datedata">
-                          {{t.invoicedate  | date:'shortDate'}}<br>
-                          paid: {{t.invoicepaiddate  | date:'shortDate'}}
+                          {{t.invoicedate  | date:'dd-MMM-yyyy'}}<br>
+                          paid: {{t.invoicepaiddate  | date:'dd-MMM-yyyy'}}
                       </td>
                       <td class="col-1 financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
                       <td class="col-4 descriptiondata">{{t.invoicenarrative}}</td>
@@ -155,7 +154,7 @@
 
       <div class="row">
         <h4 class="col-8 pagetitle">Search Results for: <strong>{{this.searchString}}</strong></h4>
-        <div class="col-1"><button mat-raised-button (click)="displayVendors = true; displayTransactions = false; displaySearchResults = false;">&nbsp;Back&nbsp;</button></div>
+        <div class="col-1"><button mat-raised-button (click)="this.startDisplayResults == false; loadVendorData(); displayVendors = true; displayTransactions = false; displaySearchResults = false;">&nbsp;Vendors&nbsp;</button></div>
         <div class="col-1">
           <button *ngIf="!this.selectTrans" mat-raised-button (click)="setSearchAll()">&nbsp;Select&nbsp;</button>
           <button *ngIf="this.selectTrans" mat-raised-button (click)="setSearchAll()">&nbsp;De-select&nbsp;</button>
@@ -199,8 +198,8 @@
                     <td class="vendordata">{{s.vendorname}}</td>
                     <td class="invoicedata">{{s.invoicenumber}}</td>
                     <td class="financialdata">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
-                    <td class="datedata">{{s.invoicedate  | date:'shortDate'}}<br>
-                          paid: {{s.invoicepaiddate  | date:'shortDate'}}
+                    <td class="datedata">{{s.invoicedate  | date:'dd-MMM-yyyy'}}<br>
+                          paid: {{s.invoicepaiddate  | date:"dd-MMM-yyyy"}}
                     </td>
                     <td class="costcode">{{s.costcode}}</td>
                     <td class="officedata">{{s.officelocation}}</td>
@@ -252,8 +251,8 @@
                   <td class="vendordata col-5">{{vendorname}}</td>
                   <td class="col-2 invoicedata">{{t.invoicenumber}}</td>
                   <td class="col-2 datedata">
-                      {{t.invoicedate  | date:'shortDate'}}<br>
-                      paid: {{t.invoicepaiddate  | date:'shortDate'}}
+                      {{t.invoicedate  | date:'dd-MMM-yyyy'}}<br>
+                      paid: {{t.invoicepaiddate  | date:'dd-MMM-yyyy'}}
                   </td>
                   <td class="col-2 columndata financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
                 <!-- </button> -->
@@ -305,8 +304,8 @@
                   <td class="vendordata col-4">{{s.vendorname}}</td>
                   <td class="col-3 invoicedata">{{s.invoicenumber}}</td>
                   <td class="col-2 datedata">
-                      {{s.invoicedate  | date:'shortDate'}}<br>
-                      paid: {{s.invoicepaiddate  | date:'shortDate'}}
+                      {{s.invoicedate  | date:'dd-MMM-yyyy'}}<br>
+                      paid: {{s.invoicepaiddate  | date:'dd-MMM-yyyy'}}
                   </td>
                   <td class="col-2 columndata financial">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
                 <!-- </button> -->
