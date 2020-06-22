@@ -14,8 +14,24 @@ export class ApiService {
 
   public baseURL = 'http://am-web12:3035/api/v1/';  //http://am-web05:3035/api/v1/vendors  am-web12:3035
   public tempDATA = '/assets/';
-  private vendorFilter = 'filter[order]=vendorname ASC'
-  public transactionFilter = "filter[where][transactionpostdate][gt]=2019-01-01T18:30:00.000Z"
+  
+  private filter3Years = 'filter[where][lastpayment][gt]=Fri%20Jan%2001%202018%2007:00:00%20GMT-0700%20(Pacific%20Daylight%20Time)'
+  private filter5Years = 'filter[where][lastpayment][gt]=Fri%20Jan%2001%202016%2007:00:00%20GMT-0700%20(Pacific%20Daylight%20Time)'
+
+  private orderVendorName = 'filter[order]=vendorname%20ASC';
+  private orderInvoiceDate = 'filter[order]=invoicedate%20DESC';
+  private lastpaymentFilter = '{"where":{"lastpayment":{"gt":"2017-06-19T23:16:36.635Z"}}';
+  private limitYears = ','
+
+  private today = new Date();
+  // private threeYearsAgo = this.today - (this.today.getFullYear() - 3);
+  private fiveYearsAgo = this.today.getFullYear() - 5;
+
+  
+  public transactionFilter = "filter[where][lastpayment][gt]=2017-01-01T18:30:00.000Z"
+  
+  // http://am-web12:3035/api/v1/invoicetransactions?filter[where][vendoruno]=2047&filter[order]=transactionpostdate
+  //http://am-web12:3035/api/v1/invoicetransactions?filter[where][vendoruno]=2047&filter[order]=transactionpostdate&filter[where][invoicedate][gt]==2017-01-01T18:30:00.000Z  
   // public vendorTransactionSearch = 'find({where: {or: [{invoicenarrative: 'search string'}, { vendorname: 'search string'}]}},'
   public debug = true;
   public datatype: string;
@@ -33,8 +49,8 @@ export class ApiService {
 
   getVendor (): Observable<Vendor[]> {
     // this.setDataLocation();
-    let url = this.baseURL + 'vwvendorinvoicesummaries?' + this.vendorFilter;
-    // if (this.debug == true) console.log(this.baseURL);
+    let url = this.baseURL + 'vwvendorinvoicesummaries?' + this.filter3Years + "&" + this.orderVendorName;
+    if (this.debug == true) console.log(this.baseURL);
     return this.http.get<Vendor[]>(url)
       .pipe(
         tap(people => {
@@ -45,6 +61,9 @@ export class ApiService {
       );
   }
 
+  //   *****************
+  //   CURRENTLY NOT IN USE  
+  //   *****************
   getInvoice(): Observable<InvoiceTransaction[]> {
     // this.setDataLocation();
     let url = this.baseURL + 'invoicetransactions?'+ this.transactionFilter
@@ -86,7 +105,8 @@ export class ApiService {
         }
         break;
     }
-    let url = this.baseURL + 'invoicetransactions?' + 'filter[where][vendoruno]=' + uno + '&filter[order]=' + orderFilter;
+    let url = this.baseURL + 'invoicetransactions?' + 'filter[where][vendoruno]=' + uno;
+    url = url + '&[invoicedate][gt]=2017-01-01T18:30:00.000Z' + '&filter[order]=' + orderFilter;
     // + uno + this.transactionFilter;
     if (this.debug == true) console.log(url);
     return this.http.get<InvoiceTransaction[]>(url)

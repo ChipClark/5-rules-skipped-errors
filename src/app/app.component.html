@@ -4,58 +4,76 @@
 <div class="main-body container" >
 
   <div *ngIf="loadingIndicator" class="spinner"></div>
+  <div id="titleBar" class="row">
+      <div class="col-8">
+        <h2 class="pagetitle">{{pageTitle}}</h2>
+      </div>
+      <div class="col-3">
+        <!-- <form  id="HistoryMenu" class="col-3">
+          <mat-form-field  id="history" [formGroup]="historyGroup"  >
+            <mat-select  placeholder="History" formControlName="historyController" [value]="3">
+              <mat-option  [value]="3">3 years</mat-option>
+              <mat-option  [value]="5" >5 years</mat-option>
+              <mat-option  [value]="All" >All</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form> -->
+      </div>
+        <!-- <button mat-raised-button (click)="displaySearch()">3 years</button>
+        <button mat-raised-button (click)="displaySearch()">5 years</button>
+        <button mat-raised-button (click)="displaySearch()">all</button> -->
+  </div>
     <!--  *************************************************
             Display VENDORS
     *************************************************-->
   <div *ngIf="displayVendors" class="filtercontrols" id="Vendor filtercontrols">
-      <h2 class="row">Vendors</h2>
-      <div class="row"  id="searchbar">
-        <div class="col-4 searchbar">
-            <input class="form-control searchbar" id="SearchBar" placeholder="Search Vendor ONLY" value="" autofocus
-            [(ngModel)]="searchTerm" (input)="searchTerm ? addQueryParams({vendors: searchTerm}) : addQueryParams({vendors: null})"><br>
-        </div>
-        <div class="col-1" id="navigation"></div>
-        <div class="col-4 searchbar">
-          <input class="form-control searchbar" placeholder="Search by vendor or description" value="" [(ngModel)]="searchString" ><br>
-        </div>
-        <div class="col-1" id="navigation">
-            <button mat-raised-button (click)="displaySearch(); addQueryParams({search: searchString})">&nbsp;Search&nbsp;</button>
-        </div>
-        <div class="col-1" id="navigation">
-          <button  mat-raised-button (click)="clearQueryParams()">Clear</button>
-        </div>
+    <div class="row"  id="searchbar">
+      <div class="col-4 searchbar">
+          <input class="form-control searchbar" id="SearchBar" placeholder="Search Vendor ONLY" value="" autofocus
+          [(ngModel)]="searchTerm" (input)="searchTerm ? addQueryParams({vendors: searchTerm}) : addQueryParams({vendors: null})"><br>
       </div>
-      <div class="row" id="idHeaders">
-        <div class="vendorname title col-4">Name </div>
-        <div class="invoice title col-1">Invoices</div>
-        <div class="title address col-2">City</div>
-        <div class="title col-2 paymentdate">Last Payment</div>
-        <div class="title total col-1">Total</div>
-        <div class="links title col-1"></div>
+      <div class="col-1" id="navigation"></div>
+      <div class="col-4 searchbar">
+        <input class="form-control searchbar" placeholder="Search by vendor or description" value="" [(ngModel)]="searchString" ><br>
       </div>
+      <div class="col-1" id="navigation">
+          <button mat-raised-button (click)="displaySearch(); addQueryParams({search: searchString})">&nbsp;Search&nbsp;</button>
+      </div>
+      <div class="col-1" id="navigation">
+        <button  mat-raised-button (click)="clearQueryParams()">Clear</button>
+      </div>
+    </div>
+    <div class="row" id="idHeaders">
+      <div class="vendorname title col-4">Name </div>
+      <div class="invoice title col-1">Invoices</div>
+      <div class="title address col-2">City</div>
+      <div class="title col-2 paymentdate">Last Payment</div>
+      <div class="title total col-1">Total</div>
+      <div class="links title col-1"></div>
+    </div>
 
-      <div class="row" id="dataTable">
-        <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
-          <div *cdkVirtualFor="let vendor of vendors | vendors: searchTerm; let i = index; odd as isOdd; even as isEven" >
-            <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
-                <button class="vendorrow col-11"  (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno); ">
-                  <div class="row">
-                    <div class="col-4 vendorname">{{vendor.vendorname}}</div>
-                    <div class="col-2 invoicecount">{{vendor.invoices}}</div>
-                    <div class="col-2 address">{{vendor.city}}</div>
-                    <div class="col-2 paymentdate">{{vendor.lastpayment | date: "MMM-dd-yyyy"}}</div>
-                    <div class="col-1 invoiceamount">{{vendor.totalinvoiceamount  | currency :'USD':'symbol':'1.2-2' }}</div>
-                  </div>
-                </button>
-                <div class="col-1 payments">
-                    <button class="transdetail" (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno)" >Payments</button>
+    <div class="row" id="dataTable">
+      <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
+        <div *cdkVirtualFor="let vendor of vendors | vendors: searchTerm; let i = index; odd as isOdd; even as isEven" >
+          <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
+              <button class="vendorrow col-11"  (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno); ">
+                <div class="row">
+                  <div class="col-4 vendorname">{{vendor.vendorname}}</div>
+                  <div class="col-2 invoicecount">{{vendor.invoices}}</div>
+                  <div class="col-2 address">{{vendor.city}}</div>
+                  <div class="col-2 paymentdate">{{vendor.lastpayment | date: "MMM-dd-yyyy"}}</div>
+                  <div class="col-1 invoiceamount">{{vendor.totalinvoiceamount  | currency :'USD':'symbol':'1.2-2' }}</div>
                 </div>
-              <!-- </button> -->
+              </button>
+              <div class="col-1 payments">
+                  <button class="transdetail" (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno)" >Payments</button>
+              </div>
+            <!-- </button> -->
 
-            </div>
           </div>
-        </cdk-virtual-scroll-viewport>
-      </div>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
 
   </div>
 
@@ -75,7 +93,7 @@
             </div>
             <div class="col-2" id="spacer">      </div>
             <div class="col-2" id="navigation">
-                <button mat-raised-button (click)="displayVendors = true; displayTransactions = false; currentVendor = null; ">&nbsp;Vendors&nbsp;</button>
+                <button mat-raised-button (click)="displayVendors = true; pageTitle= 'Vendors'; displayTransactions = false; currentVendor = null; ">&nbsp;Vendors&nbsp;</button>
             </div>
 
         </div>
@@ -156,71 +174,81 @@
             Display SearchResults
     *************************************************-->
 
-    <div *ngIf="displaySearchResults" class="filtercontrols" id="SeachResults">
+  <div *ngIf="displaySearchResults" class="filtercontrols" id="SeachResults">
 
-      <div class="row">
-        <h4 class="col-8 pagetitle">Search Results for: <strong>{{this.searchString}}</strong></h4>
-        <div class="col-1"><button mat-raised-button (click)="this.startDisplayResults == false; loadVendorData(); displayVendors = true; displayTransactions = false; displaySearchResults = false;">&nbsp;Vendors&nbsp;</button></div>
-        <div class="col-1">
-          <button *ngIf="!this.selectTrans" mat-raised-button (click)="setSearchAll()">&nbsp;Select&nbsp;</button>
-          <button *ngIf="this.selectTrans" mat-raised-button (click)="setSearchAll()">&nbsp;De-select&nbsp;</button>
-
-        </div>
-        <div class="col-1">
-          <button mat-raised-button (click)="selectSearchedItems(); openWindow(viewSelectedSearches)" >&nbsp;Calculate&nbsp;</button>
-          <!-- <button mat-raised-button (click)="displayVendors = true; displayTransactions = false; currentVendor = null;">&nbsp;Calculate&nbsp;</button> -->
-        </div>
+    <div class="row">
+      <div class="col-4 searchbar">
+        <input class="form-control searchbar" placeholder="Search by vendor or description" value="searchString" [(ngModel)]="searchString" ><br>
       </div>
+      <div class="col-1" id="navigation">
+          <button mat-raised-button (click)="displaySearch(); addQueryParams({search: searchString})">&nbsp;Search&nbsp;</button>
+      </div>
+      <div class="col-1" id="navigation">
+        <button  mat-raised-button (click)="clearQueryParams()">Clear</button>
+      </div>
+      <div class="col-3 searchbar">&nbsp;  </div>
 
-      <table class="container">
-        <tbody>
-          <tr class="titleheaders row" id="SearchHeaders" >
-            <th class="ckbox" ></th>
-            <th class="vendordata title vendorbutton" (click)="sortName()" >
-              Vendor<div *ngIf="sortnameASC && sortByName" class="arrow">&darr;</div><div *ngIf="!sortnameASC && sortByName" class="arrow">&uarr;</div>
-            </th>
-            <th class="invoicedata title ">Invoice</th>
-            <th class="righttitle financialdata button additionalpadding " (click)="sortAmount()" >
-              Amount<div *ngIf="amountdirection && sortByAmount" class="arrow">&darr;</div><div *ngIf="!amountdirection && sortByAmount" class="arrow">&uarr;</div>
-            </th>
-            <th class="datedata title datedata button " (click)="sortDate('date')">
-              Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
-            </th>
-            <th class="title datedata button" (click)="sortDate('paid')" >
-              Paid Date <div *ngIf="paiddirection && sortByPaid" class="arrow">&darr;</div><div *ngIf="!paiddirection && sortByPaid" class="arrow">&uarr;</div>
-            </th>
-            <th class="costcode centertitle ">Cost Code</th>
-            <th class="officedata centertitle ">Office</th>
-            <th class="descriptiondata title">Description</th>
-          </tr>
+      <div class="col-1"><button mat-raised-button (click)="clearQueryParams(); pageTitle = 'Vendors'; this.startDisplayResults == false; loadVendorData(); displayVendors = true; displayTransactions = false; displaySearchResults = false;">&nbsp;Vendors&nbsp;</button></div>
+      <div class="col-1">
+        <button *ngIf="!this.selectTrans" mat-raised-button (click)="setSearchAll()">&nbsp;Select&nbsp;</button>
+        <button *ngIf="this.selectTrans" mat-raised-button (click)="setSearchAll()">&nbsp;De-select&nbsp;</button>
 
-          <tr class="row" id="dataTable">
-            <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
-              <div *cdkVirtualFor="let s of searchDescriptions  ; let i = index; odd as isOdd; even as isEven" class="datatable">
-                  <!--| search: searchTerm-->
-                <div [class.Odd]="isOdd" [class.Even]="isEven"  >
-                  <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
-                    <td class="ckbox">
-                      <input type="checkbox" [formControl]="searchInclude[i].controls.update">
-                        <!-- (click)="setMembership(c.committeeid)"> -->
-                    </td>
-                    <td class="vendordata">{{s.vendorname}}</td>
-                    <td class="invoicedata">{{s.invoicenumber}}</td>
-                    <td class="financialdata">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
-                    <td class="datedata">{{s.invoicedate  | date:'MMM-dd-yyyy'}}
-                    <td class="datedata">{{s.invoicepaiddate  | date:"MMM-dd-yyyy"}} </td>
-                    <td class="costcode">{{s.costcode}}</td>
-                    <td class="officedata">{{s.officelocation}}</td>
-                    <td class="descriptiondata">{{s.narrative}}</td>
-                  <!-- </button> -->
+      </div>
+      <div class="col-1">
+        <button mat-raised-button (click)="selectSearchedItems(); openWindow(viewSelectedSearches)" >&nbsp;Calculate&nbsp;</button>
+        <!-- <button mat-raised-button (click)="displayVendors = true; displayTransactions = false; currentVendor = null;">&nbsp;Calculate&nbsp;</button> -->
+      </div>
+    </div>
 
-                </div>
+    <table class="container">
+      <tbody>
+        <tr class="titleheaders row" id="SearchHeaders" >
+          <th class="ckbox" ></th>
+          <th class="vendordata title vendorbutton" (click)="sortName()" >
+            Vendor<div *ngIf="sortnameASC && sortByName" class="arrow">&darr;</div><div *ngIf="!sortnameASC && sortByName" class="arrow">&uarr;</div>
+          </th>
+          <th class="invoicedata title ">Invoice</th>
+          <th class="righttitle financialdata button additionalpadding " (click)="sortAmount()" >
+            Amount<div *ngIf="amountdirection && sortByAmount" class="arrow">&darr;</div><div *ngIf="!amountdirection && sortByAmount" class="arrow">&uarr;</div>
+          </th>
+          <th class="datedata title datedata button " (click)="sortDate('date')">
+            Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
+          </th>
+          <th class="title datedata button" (click)="sortDate('paid')" >
+            Paid Date <div *ngIf="paiddirection && sortByPaid" class="arrow">&darr;</div><div *ngIf="!paiddirection && sortByPaid" class="arrow">&uarr;</div>
+          </th>
+          <th class="costcode centertitle ">Cost Code</th>
+          <th class="officedata centertitle ">Office</th>
+          <th class="descriptiondata title">Description</th>
+        </tr>
+
+        <tr class="row" id="dataTable">
+          <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
+            <div *cdkVirtualFor="let s of searchDescriptions  ; let i = index; odd as isOdd; even as isEven" class="datatable">
+                <!--| search: searchTerm-->
+              <div [class.Odd]="isOdd" [class.Even]="isEven"  >
+                <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
+                  <td class="ckbox">
+                    <input type="checkbox" [formControl]="searchInclude[i].controls.update">
+                      <!-- (click)="setMembership(c.committeeid)"> -->
+                  </td>
+                  <td class="vendordata">{{s.vendorname}}</td>
+                  <td class="invoicedata">{{s.invoicenumber}}</td>
+                  <td class="financialdata">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
+                  <td class="datedata">{{s.invoicedate  | date:'MMM-dd-yyyy'}}
+                  <td class="datedata">{{s.invoicepaiddate  | date:"MMM-dd-yyyy"}} </td>
+                  <td class="costcode">{{s.costcode}}</td>
+                  <td class="officedata">{{s.officelocation}}</td>
+                  <td class="descriptiondata">{{s.narrative}}</td>
+                <!-- </button> -->
+
               </div>
-            </cdk-virtual-scroll-viewport>
-          </tr>
+            </div>
+          </cdk-virtual-scroll-viewport>
+        </tr>
 
-        </tbody>
-      </table>
+      </tbody>
+    </table>
 
   </div>
 

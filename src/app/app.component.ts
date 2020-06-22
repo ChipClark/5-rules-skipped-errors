@@ -15,7 +15,7 @@ import { Vendor, VendorSearch, InvoiceCheck, InvoiceTransaction} from './datatab
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'AM-Vendors';
+  title = 'AM-Invoices';
   public vendors: Vendor[];
   public currentVendor: Vendor;
   public transactions: InvoiceTransaction[];
@@ -29,6 +29,7 @@ export class AppComponent {
   public searchTerm = null;
 
   private today = new Date;
+  public pageTitle = "Vendors";
   public vendorname;
   public vendoruno;
   public vendorsLoaded = false;
@@ -53,7 +54,9 @@ export class AppComponent {
   public searchInclude: FormGroup[] = [];
   public selectTrans = false;
   public modalTotal;
-  // private currentDate = this.datePipe.transform(this.today, 'yyyy-MM-dd');
+  
+  historyGroup: FormGroup;
+  historyController: FormControl;
 
   constructor(
     private apiService: ApiService,
@@ -61,9 +64,14 @@ export class AppComponent {
     private _route: Router,
     private transactionControls: FormBuilder,
     private modalService: NgbModal,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit() {
+    this.historyGroup = this.fb.group({
+      historyController: null
+    });
+
     this.accessParameters();
    }
 
@@ -96,6 +104,7 @@ export class AppComponent {
   //******************************************* */
 
   async displaySearch(): Promise<any> {
+    this.pageTitle = 'Search Results: ' + this.searchString;
     this.startDisplayResults = true;
     this.loadingIndicator = true;
     this.sortnameASC = false;
@@ -135,6 +144,7 @@ export class AppComponent {
 
 
   async getTransactions(uno: number): Promise<any> {
+    this.pageTitle = 'Vendor Transactions';
     this.loadingIndicator = true;
     this.vendorTransactions = [];
     this.displayTransactions = true;

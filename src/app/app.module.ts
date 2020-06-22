@@ -4,7 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule, MatSelect } from '@angular/material/select';
+import { MatCheckboxModule } from '@angular/material/checkbox'; 
+import { MatRadioModule } from '@angular/material/radio';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 //, MatCheckboxModule, MatSelectModule, MatTabsModule, MatRadioModule, MatMenuModule, MatTooltipModule
 
 import { AppRoutingModule } from './app-routing.module';
@@ -29,10 +36,12 @@ import { VendorsPipe } from './pipe/vendors.pipe';
   imports: [
     BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     ScrollingModule,
-    MatButtonModule,
+    MatButtonModule, MatCheckboxModule, MatRadioModule, MatTooltipModule, 
+    MatMenuModule, MatSelectModule, MatFormFieldModule,
     NgbModule,
     AppRoutingModule,
 
