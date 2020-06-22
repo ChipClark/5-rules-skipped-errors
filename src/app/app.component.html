@@ -9,15 +9,15 @@
         <h2 class="pagetitle">{{pageTitle}}</h2>
       </div>
       <div class="col-3">
-        <!-- <form  id="HistoryMenu" class="col-3">
-          <mat-form-field  id="history" [formGroup]="historyGroup"  >
-            <mat-select  placeholder="History" formControlName="historyController" [value]="3">
-              <mat-option  [value]="3">3 years</mat-option>
-              <mat-option  [value]="5" >5 years</mat-option>
-              <mat-option  [value]="All" >All</mat-option>
+        <form  id="HistoryMenu" class="col-3">
+          <!-- <mat-form-field  id="history" >
+            <mat-select  placeholder="History" [value]="recordHistory">
+              <mat-option  (click)="setRecordHistory(3);  addQueryParams({history: historyInYears});" value="3 years" >3 years</mat-option>
+              <mat-option  (click)="setRecordHistory(5);  addQueryParams({history: historyInYears});" value="5 years" >5 years</mat-option>
+              <mat-option  (click)="setRecordHistory(0);  addQueryParams({history: historyInYears});" value="All" >All</mat-option>
             </mat-select>
-          </mat-form-field>
-        </form> -->
+          </mat-form-field> -->
+        </form>
       </div>
         <!-- <button mat-raised-button (click)="displaySearch()">3 years</button>
         <button mat-raised-button (click)="displaySearch()">5 years</button>

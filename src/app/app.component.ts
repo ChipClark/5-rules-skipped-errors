@@ -32,6 +32,7 @@ export class AppComponent {
   public pageTitle = "Vendors";
   public vendorname;
   public vendoruno;
+  public currentuno;
   public vendorsLoaded = false;
   public parametersLoaded = false;
 
@@ -55,9 +56,9 @@ export class AppComponent {
   public selectTrans = false;
   public modalTotal;
   
-  historyGroup: FormGroup;
-  historyController: FormControl;
-
+  public recordHistory = '3 years';
+  public historyInYears = 3;
+  
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
@@ -68,10 +69,6 @@ export class AppComponent {
   ) { }
 
   ngOnInit() {
-    this.historyGroup = this.fb.group({
-      historyController: null
-    });
-
     this.accessParameters();
    }
 
@@ -80,7 +77,7 @@ export class AppComponent {
   ngAfterContentInit()
   {
     if ( this.vendorsLoaded == false ) {
-      this.loadVendorData();
+      this.loadVendorData(); 
     }
   }
 
@@ -90,7 +87,7 @@ export class AppComponent {
 
     if ( this.vendorsLoaded == false ) {
       this.loadingIndicator = true;
-      await this.apiService.getVendor().subscribe( vendors => {
+      await this.apiService.getVendor(this.historyInYears).subscribe( vendors => {
         this.vendors = vendors;
         if ( this.startDisplayResults == false ) this.loadingIndicator = false;
         this.vendorsLoaded = true;
@@ -115,7 +112,7 @@ export class AppComponent {
     this.displayVendors = false;
     if (this.apiService.debug == true) console.log(this.searchString);
 
-    await this.apiService.getVendorTransactionBySearch(this.searchString).subscribe( searchReturn => {
+    await this.apiService.getVendorTransactionBySearch(this.searchString, this.historyInYears).subscribe( searchReturn => {
       this.searchDescriptions = searchReturn.data;
       for ( let i = 0; i < this.searchDescriptions.length; i++ ) {
         this.searchInclude[i] = this.transactionControls.group({
@@ -144,6 +141,7 @@ export class AppComponent {
 
 
   async getTransactions(uno: number): Promise<any> {
+    this.currentuno = uno;
     this.pageTitle = 'Vendor Transactions';
     this.loadingIndicator = true;
     this.vendorTransactions = [];
@@ -153,7 +151,7 @@ export class AppComponent {
     this.datedirection = true;
     this.sortByDate = true;
 
-    await this.apiService.getInvoiceByUno(uno, 'date').toPromise().then( transactions => {
+    await this.apiService.getInvoiceByUno(uno, 'date', this.historyInYears).toPromise().then( transactions => {
       // if (this.apiService.debug == true) console.log("vendors should be done");
       this.vendorTransactions = transactions;
     })
@@ -176,6 +174,25 @@ export class AppComponent {
     this.loadingIndicator = false;
 
     return;
+  }
+
+  reloadData() {
+    if ( this.displayVendors ) {
+      this.vendorsLoaded = false;
+      this.loadVendorData();
+      window.location.reload();
+    }
+    else if ( this.displayTransactions ) {
+      this.getTransactions(this.currentuno);
+      window.location.reload();
+    }
+    else if ( this.displaySearchResults ) {
+      this.displaySearch();
+      window.location.reload();
+    }
+    else {
+      console.log("Something is wrong reloading data")
+    }
   }
 
   selectSearchedItems(): Promise<any> {
@@ -229,6 +246,21 @@ export class AppComponent {
       else {
         this.transInclude[i].controls.update.setValue(false);
       }
+    }
+  }
+
+  setRecordHistory(num: number): void {
+    this.historyInYears = num;
+    switch (num) {
+      case 3: 
+        this.recordHistory = "3 years";
+        break;
+      case 5: 
+        this.recordHistory = '5 years';
+        break;
+      case 0: 
+        this.recordHistory = 'All';
+        break;
     }
   }
 
@@ -468,6 +500,9 @@ export class AppComponent {
           this.searchString = q[1];
           console.log("in executeQueryParams() for search");
           this.displaySearch(); 
+          break;
+        case 'history': 
+          this.historyInYears = +q[1];
           break;
       }
     }

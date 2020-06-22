@@ -17,9 +17,12 @@ export class ApiService {
   
   private filter3Years = 'filter[where][lastpayment][gt]=Fri%20Jan%2001%202018%2007:00:00%20GMT-0700%20(Pacific%20Daylight%20Time)'
   private filter5Years = 'filter[where][lastpayment][gt]=Fri%20Jan%2001%202016%2007:00:00%20GMT-0700%20(Pacific%20Daylight%20Time)'
+  private invoicedate3Years = 'filter[where][invoicedate][gt]=Fri%20Jan%2001%202018%2007:00:00%20GMT-0700%20(Pacific%20Daylight%20Time)'
+  private invoicedate5Years = 'filter[where][invoicedate][gt]=Fri%20Jan%2001%202016%2007:00:00%20GMT-0700%20(Pacific%20Daylight%20Time)'
 
   private orderVendorName = 'filter[order]=vendorname%20ASC';
-  private orderInvoiceDate = 'filter[order]=invoicedate%20DESC';
+  private orderInvoiceDateDESC = 'filter[order]=invoicedate%20DESC';
+  private orderInvoiceDateASC = 'filter[order]=invoicedate%20ASC';
   private lastpaymentFilter = '{"where":{"lastpayment":{"gt":"2017-06-19T23:16:36.635Z"}}';
   private limitYears = ','
 
@@ -47,9 +50,21 @@ export class ApiService {
     }
   }
 
-  getVendor (): Observable<Vendor[]> {
-    // this.setDataLocation();
-    let url = this.baseURL + 'vwvendorinvoicesummaries?' + this.filter3Years + "&" + this.orderVendorName;
+  getVendor (num: number): Observable<Vendor[]> {
+    console.log("getVendor(" + num + ")");
+    var history;
+    switch (num) {
+      case 3: 
+        history = this.filter3Years + "&";
+        break;
+      case 5: 
+        history = this.filter5Years = "&";
+        break;
+      case 0: 
+        history = "";
+        break;
+    }
+    let url = this.baseURL + 'vwvendorinvoicesummaries?' + history + this.orderVendorName;
     if (this.debug == true) console.log(this.baseURL);
     return this.http.get<Vendor[]>(url)
       .pipe(
@@ -80,33 +95,46 @@ export class ApiService {
     return invoiceResults;
   }
 
-  getInvoiceByUno(uno: number, sort: string): Observable<InvoiceTransaction[]> {
+  getInvoiceByUno(uno: number, sort: string, num: number): Observable<InvoiceTransaction[]> {
 
     // ?filter[where][and][1][vendoruno]=8555&filter[where][and][1][transactionpostdate][gt]=2020-04-01T18:30:00.000Z
-    this.setDataLocation();
-    var orderFilter;
+    // this.setDataLocation();
+
+    var historyFilter, orderFilter;
+    switch (num) {
+      case 3: 
+        historyFilter = "&" + this.invoicedate3Years;
+        break;
+      case 5: 
+        historyFilter = "&" + this.invoicedate5Years;
+        break;
+      case 0: 
+        historyFilter = "";
+        break;
+    }
+
     switch (sort) {
       case 'date':
         this.datedirection = !this.datedirection;
         if ( this.datedirection == false ) {
-          orderFilter = 'transactionpostdate asc';
+          orderFilter = '&filter[order]=invoicedate%20ASC';
         }
         else {
-          orderFilter = 'transactionpostdate desc';
+          orderFilter = '&filter[order]=invoicedate%20DESC';
         }
         break;
       case 'amount':
         this.sortAmount = !this.sortAmount;
         if ( this.sortAmount == false ) {
-          orderFilter = 'invoiceamount asc';
+          orderFilter = '&filter[order]=invoiceamount%20ASC';
         }
         else {
-          orderFilter = 'invoiceamount desc';
+          orderFilter = '&filter[order]=invoiceamount%20DESC';
         }
         break;
     }
     let url = this.baseURL + 'invoicetransactions?' + 'filter[where][vendoruno]=' + uno;
-    url = url + '&[invoicedate][gt]=2017-01-01T18:30:00.000Z' + '&filter[order]=' + orderFilter;
+    url = url + historyFilter + orderFilter;
     // + uno + this.transactionFilter;
     if (this.debug == true) console.log(url);
     return this.http.get<InvoiceTransaction[]>(url)
@@ -116,12 +144,28 @@ export class ApiService {
       );
   }
 
-  getVendorTransactionBySearch(searchString: string): Observable<any> {
-    this.setDataLocation();
+  getVendorTransactionBySearch(searchString: string, num: number): Observable<any> {
+    // this.setDataLocation();
+
+    var historyFilter, orderFilter;
+    switch (num) {
+      case 3: 
+        historyFilter = "&" + this.invoicedate3Years;
+        break;
+      case 5: 
+        historyFilter = "&" + this.invoicedate5Years;
+        break;
+      case 0: 
+        historyFilter = "";
+        break;
+    }
+
+    orderFilter = '&filter[order]=invoicedate%20DESC';
+
     this.loadingIndicator = true;
     searchString = searchString.split(" ").join("%20");
     //  This url does NOT work
-    let url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString;
+    let url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + historyFilter + orderFilter;
     if (this.debug == true) console.log(url);
 
     let searchResults =  this.http.get<VendorSearch[]>(url).pipe(
