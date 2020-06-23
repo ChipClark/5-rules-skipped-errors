@@ -12,9 +12,9 @@
         <form  id="HistoryMenu" class="col-3">
           <mat-form-field  id="history" >
             <mat-select  placeholder="History" [value]="recordHistory">
-              <mat-option  (click)="setRecordHistory(3);  " value="3 years" >3 years</mat-option>
-              <mat-option  (click)="setRecordHistory(5);  " value="5 years" >5 years</mat-option>
-              <mat-option  (click)="setRecordHistory(0);  " value="All" >All</mat-option>
+              <mat-option  (click)="setRecordHistory(3);  addQueryParams({history: 3})" value="3 years" >3 years</mat-option>
+              <mat-option  (click)="setRecordHistory(5);  addQueryParams({history: 5})" value="5 years" >5 years</mat-option>
+              <mat-option  (click)="setRecordHistory(0);  addQueryParams({history: 0})" value="All" >All</mat-option>
             </mat-select>
           </mat-form-field>
         </form>

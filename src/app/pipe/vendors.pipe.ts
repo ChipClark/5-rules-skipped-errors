@@ -9,9 +9,10 @@ export class VendorsPipe implements PipeTransform {
     if (!items || !vendors) {
         return items;
     }
-    const regExp = new RegExp(vendors, 'gi');
+    const regExp = new RegExp(vendors, 'ig');
     const check = v => {
-        return regExp.test(v.vendorname) 
+        return regExp.test(v.vendorname) ||
+        regExp.test(v.vendorname) 
     };
     return items.filter(check);
 

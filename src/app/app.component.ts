@@ -451,7 +451,6 @@ export class AppComponent {
     this.route.queryParamMap.subscribe(params => {
       const queryStrings: any = this.route.queryParamMap;
       this.executeQueryParams(queryStrings.source.value).then( results => {
-        console.log('parameters loaded');
       });
       
     });
@@ -460,7 +459,7 @@ export class AppComponent {
   addQueryParams(query): void {
     const keys = Object.keys(query);
     const values = Object.values(query);
-    if (this.apiService.debug == true) console.log(query);
+    // if (this.apiService.debug == true) console.log(query);
     if (query === "") {
       query = null;
     }
@@ -489,7 +488,7 @@ export class AppComponent {
   async executeQueryParams(queryStrings): Promise<any> {
     const queries = Object.entries(queryStrings);
     this.clearFilters();
-    console.log("queries"); console.log(queries);
+    // console.log("queries"); console.log(queries);
     for (const q of queries) {
       switch (q[0]) {
         case 'vendors':
@@ -498,11 +497,11 @@ export class AppComponent {
           break;
         case 'search':
           this.searchString = q[1];
-          console.log("in executeQueryParams() for search");
           this.displaySearch(); 
           break;
         case 'history': 
           this.historyInYears = +q[1];
+          this.setRecordHistory(this.historyInYears);
           break;
       }
     }

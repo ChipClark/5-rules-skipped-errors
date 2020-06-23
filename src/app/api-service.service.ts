@@ -65,7 +65,7 @@ export class ApiService {
         break;
     }
     let url = this.baseURL + 'vwvendorinvoicesummaries?' + history + this.orderVendorName;
-    if (this.debug == true) console.log(this.baseURL);
+    if (this.debug == true) console.log(url);
     return this.http.get<Vendor[]>(url)
       .pipe(
         tap(people => {
