@@ -41,6 +41,7 @@ export class ApiService {
   public datedirection = true;
   public sortAmount = true;
   public loadingIndicator = true;
+  public horizondate: string;
 
   constructor( private http: HttpClient ) { }
 
@@ -154,13 +155,16 @@ export class ApiService {
     
     switch (num) {
       case 3: 
-        url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString ;
+        this.horizondate = '2018-01-01T00:00:00.000Z';
+        url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + "&horizondate=" + this.horizondate;
         break;
       case 5: 
-        url = this.baseURL + "vwvendorinvoicetransactions/search5?searchterm=" + searchString ;
+      this.horizondate = '2015-01-01T00:00:00.000Z';
+        url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + "&horizondate=" + this.horizondate ;
         break;
       case 0: 
-        url = this.baseURL + "vwvendorinvoicetransactions/searchall?searchterm=" + searchString ;
+        this.horizondate = '1900-01-01T00:00:00.000Z';
+        url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + "&horizondate=" + this.horizondate; ;
         break;
     }
     
