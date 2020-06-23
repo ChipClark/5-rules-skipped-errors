@@ -55,8 +55,12 @@ export class AppComponent {
   public searchInclude: FormGroup[] = [];
   public selectTrans = false;
   public modalTotal;
+
+  public threeyears = '2018';
+  public fiveyears = '2015'
+  public allyears = 'All'
   
-  public recordHistory = '3 years';
+  public recordHistory = this.threeyears;
   public historyInYears = 3;
   
   constructor(
@@ -113,7 +117,7 @@ export class AppComponent {
     this.displayVendors = false;
     if (this.apiService.debug == true) console.log(this.searchString);
 
-    await this.apiService.getVendorTransactionBySearch(this.searchString, this.historyInYears).subscribe( searchReturn => {
+    await this.apiService.getVendorTransactionBySearch(this.searchString, this.recordHistory).subscribe( searchReturn => {
       this.searchDescriptions = searchReturn.data;
       for ( let i = 0; i < this.searchDescriptions.length; i++ ) {
         this.searchInclude[i] = this.transactionControls.group({
@@ -252,13 +256,13 @@ export class AppComponent {
     this.historyInYears = num;
     switch (num) {
       case 3: 
-        this.recordHistory = "3 years";
+        this.recordHistory = this.threeyears;
         break;
       case 5: 
-        this.recordHistory = '5 years';
+        this.recordHistory = this.fiveyears;
         break;
       case 0: 
-        this.recordHistory = 'All';
+        this.recordHistory = this.allyears;
         break;
     }
     this.reloadData();

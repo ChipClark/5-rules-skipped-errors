@@ -36,7 +36,7 @@ export class ApiService {
   // http://am-web12:3035/api/v1/invoicetransactions?filter[where][vendoruno]=2047&filter[order]=transactionpostdate
   //http://am-web12:3035/api/v1/invoicetransactions?filter[where][vendoruno]=2047&filter[order]=transactionpostdate&filter[where][invoicedate][gt]==2017-01-01T18:30:00.000Z  
   // public vendorTransactionSearch = 'find({where: {or: [{invoicenarrative: 'search string'}, { vendorname: 'search string'}]}},'
-  public debug = true;
+  public debug = false;
   public datatype: string;
   public datedirection = true;
   public sortAmount = true;
@@ -52,7 +52,6 @@ export class ApiService {
   }
 
   getVendor (num: number): Observable<Vendor[]> {
-    console.log("getVendor(" + num + ")");
     var history;
     switch (num) {
       case 3: 
@@ -145,27 +144,21 @@ export class ApiService {
       );
   }
 
-  getVendorTransactionBySearch(searchString: string, num: number): Observable<any> {
+  getVendorTransactionBySearch(searchString: string, year: string): Observable<any> {
     this.loadingIndicator = true;
     var url;
     if ( !searchString ) { } 
     else {
       searchString = searchString.split(" ").join("%20");
     }
-    
-    switch (num) {
-      case 3: 
-        this.horizondate = '2018-01-01T00:00:00.000Z';
-        url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + "&horizondate=" + this.horizondate;
-        break;
-      case 5: 
-      this.horizondate = '2015-01-01T00:00:00.000Z';
-        url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + "&horizondate=" + this.horizondate ;
-        break;
-      case 0: 
-        this.horizondate = '1900-01-01T00:00:00.000Z';
-        url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + "&horizondate=" + this.horizondate; ;
-        break;
+
+    if ( year == 'all' ) {
+      this.horizondate = '1900-01-01T00:00:00.000Z';
+      url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + "&horizondate=" + this.horizondate;
+    }
+    else {
+      this.horizondate = year + '-01-01T00:00:00.000Z';
+      url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + "&horizondate=" + this.horizondate;
     }
     
     if (this.debug == true) console.log(url);
