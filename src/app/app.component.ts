@@ -86,7 +86,6 @@ export class AppComponent {
   }
 
   async loadVendorData(): Promise<any> {
-    console.log("recordHistory is " + this.historyInYears);
     this.apiService.debug = true;
     this.apiService.datatype = 'remote';
 
@@ -115,7 +114,7 @@ export class AppComponent {
     this.searchDescriptions = [];
     this.displaySearchResults = true;
     this.displayVendors = false;
-    if (this.apiService.debug == true) console.log(this.searchString);
+    // if (this.apiService.debug == true) console.log(this.searchString);
 
     await this.apiService.getVendorTransactionBySearch(this.searchString, this.recordHistory).subscribe( searchReturn => {
       this.searchDescriptions = searchReturn.data;
@@ -133,7 +132,6 @@ export class AppComponent {
         });
       }
       this.sortDate('date');
-      console.log("about to turn off indicator");
       this.loadingIndicator = false;
       this.startDisplayResults = false;
     });
@@ -160,10 +158,6 @@ export class AppComponent {
       // if (this.apiService.debug == true) console.log("vendors should be done");
       this.vendorTransactions = transactions;
     })
-    // this.vendorTransactions.sort((a, b) => (a.transactionpostdate < b.transactionpostdate) ? 1 : -1)
-    // this.vendorTransactions = await this.transactions.filter( t => {
-    //   return t.vendoruno === uno;
-    // })
     for ( let i = 0; i < this.vendorTransactions.length; i++ ) {
       this.transInclude[i] = this.transactionControls.group({
         vendortransactionid: new FormControl,

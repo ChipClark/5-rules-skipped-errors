@@ -65,7 +65,7 @@ export class ApiService {
         break;
     }
     let url = this.baseURL + 'vwvendorinvoicesummaries?' + history + this.orderVendorName;
-    if (this.debug == true) console.log(url);
+    // if ( this.debug == true ) console.log(url);
     return this.http.get<Vendor[]>(url)
       .pipe(
         tap(people => {
@@ -152,7 +152,7 @@ export class ApiService {
       searchString = searchString.split(" ").join("%20");
     }
 
-    if ( year == 'all' ) {
+    if ( year == 'All' ) {
       this.horizondate = '1900-01-01T00:00:00.000Z';
       url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + "&horizondate=" + this.horizondate;
     }
@@ -161,7 +161,7 @@ export class ApiService {
       url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + "&horizondate=" + this.horizondate;
     }
     
-    if (this.debug == true) console.log(url);
+    // if ( this.debug == true ) console.log(url);
 
     let searchResults =  this.http.get<VendorSearch[]>(url).pipe(
       tap(searchResults => {
