@@ -82,6 +82,7 @@ export class AppComponent {
   }
 
   async loadVendorData(): Promise<any> {
+    console.log("recordHistory is " + this.historyInYears);
     this.apiService.debug = true;
     this.apiService.datatype = 'remote';
 
@@ -177,18 +178,16 @@ export class AppComponent {
   }
 
   reloadData() {
+    this.loadingIndicator = true;
     if ( this.displayVendors ) {
       this.vendorsLoaded = false;
       this.loadVendorData();
-      window.location.reload();
     }
     else if ( this.displayTransactions ) {
       this.getTransactions(this.currentuno);
-      window.location.reload();
     }
     else if ( this.displaySearchResults ) {
       this.displaySearch();
-      window.location.reload();
     }
     else {
       console.log("Something is wrong reloading data")
@@ -262,6 +261,7 @@ export class AppComponent {
         this.recordHistory = 'All';
         break;
     }
+    this.reloadData();
   }
 
   setSearchAll() {

@@ -145,27 +145,25 @@ export class ApiService {
   }
 
   getVendorTransactionBySearch(searchString: string, num: number): Observable<any> {
-    // this.setDataLocation();
-
-    var historyFilter, orderFilter;
+    this.loadingIndicator = true;
+    var url;
+    if ( !searchString ) { } 
+    else {
+      searchString = searchString.split(" ").join("%20");
+    }
+    
     switch (num) {
       case 3: 
-        historyFilter = "&" + this.invoicedate3Years;
+        url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString ;
         break;
       case 5: 
-        historyFilter = "&" + this.invoicedate5Years;
+        url = this.baseURL + "vwvendorinvoicetransactions/search5?searchterm=" + searchString ;
         break;
       case 0: 
-        historyFilter = "";
+        url = this.baseURL + "vwvendorinvoicetransactions/searchall?searchterm=" + searchString ;
         break;
     }
-
-    orderFilter = '&filter[order]=invoicedate%20DESC';
-
-    this.loadingIndicator = true;
-    searchString = searchString.split(" ").join("%20");
-    //  This url does NOT work
-    let url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + historyFilter + orderFilter;
+    
     if (this.debug == true) console.log(url);
 
     let searchResults =  this.http.get<VendorSearch[]>(url).pipe(
