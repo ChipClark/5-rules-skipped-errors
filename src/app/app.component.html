@@ -5,11 +5,11 @@
 
   <div *ngIf="loadingIndicator" class="spinner"></div>
   <div id="titleBar" class="row">
-      <div class="col-8">
+      <div class="col-10">
         <h2 class="pagetitle">{{pageTitle}}</h2>
       </div>
-      <div class="col-3">
-        <form  id="HistoryMenu" class="col-3">
+      <div class="col-2">
+        <form  id="HistoryMenu" >
           <mat-form-field  id="history" >
             <mat-select  placeholder="History" [value]="recordHistory">
               <mat-option  (click)="setRecordHistory(3);  addQueryParams({history: 3})" value="3 years" >3 years</mat-option>
