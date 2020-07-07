@@ -4,9 +4,14 @@
     margin-right:0;
 }
 
+.cdk-virtual-scroll-orientation-vertical {
+  display: flex;
+  float: left;
+}
+
 .cdk-virtual-scroll-content-wrapper {
-    width: 100%;
-    float: left;
+  display: flex;
+  float: left;
 }
 
 .cdk-row {
@@ -24,10 +29,11 @@ h2 .pagetitle {
 
 
 .vendorrow {
-    border: none;
-    border-style: none;
-    background: transparent;
-    cursor: pointer;
+  display:flex;
+  border: none;
+  border-style: none;
+  background: transparent;
+  cursor: pointer;
 }
 
 .title {
@@ -44,34 +50,7 @@ h2 .pagetitle {
   padding-left: 10px;
 }
 
-.invoicedata, .datedata, .financialdata, .costcode, .officedata {
-  width: 8%;
-  display: inline-block;
-}
 
-.invoicedata{
-  text-align: left;
-}
-
-.costcode, .officedata {
-  text-align: center;
-}
-
-.datedata, .financialdata {
-  text-align: right;
-  padding-right: 20px;
-}
-
-.descriptiondata {
-  width: 20%;
-  display: inline-block;
-  text-align: left;
-  margin-left: 10px;
-}
-
-.vendorname {
-    text-align: left;
-}
 
 .button {
   border: none;
@@ -87,8 +66,8 @@ h2 .pagetitle {
 
 .Odd {
     background-color: #efefef;
-    display: flex;
     width: 100%;
+    display: flex;
     float: left;
     left: 30px;
 }
@@ -106,8 +85,8 @@ h2 .pagetitle {
 
 .Even {
     background-color: #dfdfdf;
-    display: flex;
     width: 100%;
+    display: flex;
     float: left;
     left: 30px;
 }
@@ -181,28 +160,54 @@ h2 .pagetitle {
 }
 
 .vendorname {
-    padding-left: 10px;
+  text-align: left;
+  width: 26%;
+  padding-left: 10px;
 }
 
-.invoice {
+.invoice, .address, .paymentdate, .invoiceamount, .invoicecount, .payments {
     background: transparent;
     display: inline-block;
-    /* text-align: center; */
+    width:8%;
 }
 
-.address {
-    text-align: center;
-    display: inline-block;
+.invoice, .address, .paymentdate, .invoicecount, .payments {
+  text-align: center;
 }
 
-.paymentdate {
-    text-align: center;
-    display: inline-block;
+.invoiceamount {
+  text-align: right;
 }
 
-.invoicecount {
-    text-align: center;
-    display: inline-block;
+.invoicedata, .financialdata, .costcode, .officedata {
+  background: transparent;
+  display: inline-block;
+  width: 8%;
+}
+
+.datedata {
+  width: 10%;
+  display: inline-block;
+}
+
+.invoicedata{
+  text-align: left;
+}
+
+.costcode, .officedata {
+  text-align: center;
+}
+
+.datedata, .financialdata {
+  text-align: right;
+  padding-right: 20px;
+}
+
+.descriptiondata {
+  width: 20%;
+  display: inline-block;
+  text-align: left;
+  margin-left: 10px;
 }
 
 .total {
@@ -211,18 +216,6 @@ h2 .pagetitle {
     max-width:130px;
 }
 
-.invoiceamount {
-    text-align: right;
-    display: inline-block;
-    padding-right:5px;
-    max-width:130px;
-}
-
-.payments {
-    display: inline-block;
-    padding-right: 10px;
-    padding-left: 0px;
-}
 
 .transdetail {
     border: none;
@@ -231,6 +224,7 @@ h2 .pagetitle {
     color: #002A5F;
     font-size: 10pt;
     padding-right: 20px;
+    width: 30%;
 }
 
 .transdetail:hover {

@@ -44,33 +44,27 @@
       </div>
     </div>
     <div class="row" id="idHeaders">
-      <div class="vendorname title col-4">Name </div>
-      <div class="invoice title col-1">Invoices</div>
-      <div class="title address col-2">City</div>
-      <div class="title col-2 paymentdate">Last Payment</div>
-      <div class="title total col-1">Total</div>
-      <div class="links title col-1"></div>
+      <div class="vendorname title">Name </div>
+      <div class="invoice title">Invoices</div>
+      <div class="title address">City</div>
+      <div class="title paymentdate">Last Payment</div>
+      <div class="title total">Total</div>
+      <div class="links title"></div>
     </div>
 
     <div class="row" id="dataTable">
       <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
-        <div *cdkVirtualFor="let vendor of vendors | vendors: searchTerm; let i = index; odd as isOdd; even as isEven" >
-          <div [class.Odd]="isOdd" [class.Even]="isEven" class="row" >
-              <button class="vendorrow col-11"  (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno); ">
-                <div class="row">
-                  <div class="col-4 vendorname">{{vendor.vendorname}}</div>
-                  <div class="col-2 invoicecount">{{vendor.invoices}}</div>
-                  <div class="col-2 address">{{vendor.city}}</div>
-                  <div class="col-2 paymentdate">{{vendor.lastpayment | date: "MMM-dd-yyyy"}}</div>
-                  <div class="col-1 invoiceamount">{{vendor.totalinvoiceamount  | currency :'USD':'symbol':'1.2-2' }}</div>
-                </div>
-              </button>
-              <div class="col-1 payments">
-                  <button class="transdetail" (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno)" >Payments</button>
-              </div>
+        <div *cdkVirtualFor="let vendor of vendors | vendors: searchTerm; let i = index; odd as isOdd; even as isEven"  >
+          <button [class.Odd]="isOdd" [class.Even]="isEven"  class="vendorrow" (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno); ">
+            <div class="vendorname">{{vendor.vendorname}}</div>
+            <div class="invoice">{{vendor.invoices}}</div>
+            <div class="address">{{vendor.city}}</div>
+            <div class="paymentdate">{{vendor.lastpayment | date: "MMM-dd-yyyy"}}</div>
+            <div class="invoiceamount">{{vendor.totalinvoiceamount  | currency :'USD':'symbol':'1.2-2' }}</div>
+            <div class="transdetail" (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno)" >Payments </div>
             <!-- </button> -->
 
-          </div>
+          </button>
         </div>
       </cdk-virtual-scroll-viewport>
     </div>
@@ -93,7 +87,7 @@
             </div>
             <div class="col-2" id="spacer">      </div>
             <div class="col-2" id="navigation">
-                <button mat-raised-button (click)="displayVendors = true; pageTitle= 'Vendors'; displayTransactions = false; currentVendor = null; ">&nbsp;Vendors&nbsp;</button>
+                <button mat-raised-button (click)="displayVendors = true; pageTitle= 'Vendors'; displayTransactions = false; currentVendor = null; ">&nbsp;Back&nbsp;</button>
             </div>
 
         </div>
@@ -188,7 +182,7 @@
       </div>
       <div class="col-3 searchbar">&nbsp;  </div>
 
-      <div class="col-1"><button mat-raised-button (click)="clearQueryParams(); pageTitle = 'Vendors'; this.startDisplayResults == false; loadVendorData(); displayVendors = true; displayTransactions = false; displaySearchResults = false;">&nbsp;Vendors&nbsp;</button></div>
+      <div class="col-1"><button mat-raised-button (click)="clearQueryParams(); pageTitle = 'Vendors'; this.startDisplayResults == false; loadVendorData(); displayVendors = true; displayTransactions = false; displaySearchResults = false;">&nbsp;Back&nbsp;</button></div>
       <div class="col-1">
         <button *ngIf="!this.selectTrans" mat-raised-button (click)="setSearchAll()">&nbsp;Select&nbsp;</button>
         <button *ngIf="this.selectTrans" mat-raised-button (click)="setSearchAll()">&nbsp;De-select&nbsp;</button>
@@ -200,55 +194,46 @@
       </div>
     </div>
 
-    <table class="container">
-      <tbody>
-        <tr class="titleheaders row" id="SearchHeaders" >
-          <th class="ckbox" ></th>
-          <th class="vendordata title vendorbutton" (click)="sortName()" >
-            Vendor<div *ngIf="sortnameASC && sortByName" class="arrow">&darr;</div><div *ngIf="!sortnameASC && sortByName" class="arrow">&uarr;</div>
-          </th>
-          <th class="invoicedata title ">Invoice</th>
-          <th class="righttitle financialdata button additionalpadding " (click)="sortAmount()" >
-            Amount<div *ngIf="amountdirection && sortByAmount" class="arrow">&darr;</div><div *ngIf="!amountdirection && sortByAmount" class="arrow">&uarr;</div>
-          </th>
-          <th class="datedata title datedata button " (click)="sortDate('date')">
-            Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
-          </th>
-          <th class="title datedata button" (click)="sortDate('paid')" >
-            Paid Date <div *ngIf="paiddirection && sortByPaid" class="arrow">&darr;</div><div *ngIf="!paiddirection && sortByPaid" class="arrow">&uarr;</div>
-          </th>
-          <th class="costcode centertitle ">Cost Code</th>
-          <th class="officedata centertitle ">Office</th>
-          <th class="descriptiondata title">Description</th>
-        </tr>
+    <div class="titleheaders row" id="SearchHeaders" >
+      <div class="ckbox" ></div>
+      <div class="vendordata title vendorbutton" (click)="sortName()" >Vendors
+        <div *ngIf="sortnameASC && sortByName" class="arrow">&darr;</div><div *ngIf="!sortnameASC && sortByName" class="arrow">&uarr;</div>
+      </div>
+      <div class="invoicedata title ">Invoice</div>
+      <div class="righttitle financialdata button additionalpadding " (click)="sortAmount()" >
+        Amount<div *ngIf="amountdirection && sortByAmount" class="arrow">&darr;</div><div *ngIf="!amountdirection && sortByAmount" class="arrow">&uarr;</div>
+      </div>
+      <div class="datedata title datedata button " (click)="sortDate('date')">
+        Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
+      </div>
+      <div class="title datedata button" (click)="sortDate('paid')" >
+        Paid Date <div *ngIf="paiddirection && sortByPaid" class="arrow">&darr;</div><div *ngIf="!paiddirection && sortByPaid" class="arrow">&uarr;</div>
+      </div>
+      <div class="costcode centertitle ">Cost Code</div>
+      <div class="officedata centertitle ">Office</div>
+      <div class="descriptiondata title">Description</div>
+    </div>
 
-        <tr class="row" id="dataTable">
-          <cdk-virtual-scroll-viewport itemSize="20" id="vendorpage" class="vendorpage">
-            <div *cdkVirtualFor="let s of searchDescriptions  ; let i = index; odd as isOdd; even as isEven" class="datatable">
-                <!--| search: searchTerm-->
-              <div [class.Odd]="isOdd" [class.Even]="isEven"  >
-                <!-- <button class="vendor"  (click)="setVendor(vendors); openWindow(addMemberToCommitteesModal)" > -->
-                  <td class="ckbox">
-                    <input type="checkbox" [formControl]="searchInclude[i].controls.update">
-                      <!-- (click)="setMembership(c.committeeid)"> -->
-                  </td>
-                  <td class="vendordata">{{s.vendorname}}</td>
-                  <td class="invoicedata">{{s.invoicenumber}}</td>
-                  <td class="financialdata">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
-                  <td class="datedata">{{s.invoicedate  | date:'MMM-dd-yyyy'}}
-                  <td class="datedata">{{s.invoicepaiddate  | date:"MMM-dd-yyyy"}} </td>
-                  <td class="costcode">{{s.costcode}}</td>
-                  <td class="officedata">{{s.officelocation}}</td>
-                  <td class="descriptiondata">{{s.narrative}}</td>
-                <!-- </button> -->
-
-              </div>
+    <div class="row" id="dataTable">
+      <cdk-virtual-scroll-viewport itemSize="20" id="searchresultsrpage" class="datatable">
+        <div *cdkVirtualFor="let s of searchDescriptions; let i = index; odd as isOdd; even as isEven" class="vendorrow">
+          <div [class.Odd]="isOdd" [class.Even]="isEven" class="vendorrow"  >
+            <div class="ckbox">
+              <input type="checkbox" [formControl]="searchInclude[i].controls.update">
             </div>
-          </cdk-virtual-scroll-viewport>
-        </tr>
+            <div class="vendordata">{{s.vendorname}}</div>
+            <div class="invoicedata">{{s.invoicenumber}}</div>
+            <div class="financialdata">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</div>
+            <div class="datedata">{{s.invoicedate  | date:'MMM-dd-yyyy'}}</div>
+            <div class="datedata">{{s.invoicepaiddate  | date:"MMM-dd-yyyy"}} </div>
+            <div class="costcode">{{s.costcode}}</div>
+            <div class="officedata">{{s.officelocation}}</div>
+            <div class="descriptiondata">{{s.narrative}}</div>
+          </div>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
 
-      </tbody>
-    </table>
 
   </div>
 
@@ -270,7 +255,7 @@
     <table class="container">
       <tbody>
         <tr class="modalheaders row" id="idHeaders" >
-          <th class="vendor title col-5">Vendor</th>
+          <th class="vendor title col-5">Back</th>
           <th class="invoice title col-2">Invoice</th>
           <th class="title col-2" >Date</th>
           <!-- <div class="links title col-1"></div> -->
