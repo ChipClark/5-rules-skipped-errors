@@ -35,6 +35,7 @@ export class InvoiceTransaction {
   invoiceamount: number;
   invoicedate: string;
   invoicepaiddate: string;
+  invoicenarrative: string;
   transactionpostdate: Date;
   invoiceStatus: string;
   aptypecode: string;
@@ -42,10 +43,6 @@ export class InvoiceTransaction {
   transactionnameUno: number;
   transactioncancelled: string;
   note: string;
-  active: boolean;
-  activefromdate: Date;
-  modifieddate: Date;
-  modifiedBy: string;
 }
 
 export class InvoiceCheck {

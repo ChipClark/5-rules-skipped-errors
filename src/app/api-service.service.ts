@@ -137,11 +137,12 @@ export class ApiService {
     url = url + historyFilter + orderFilter;
     // + uno + this.transactionFilter;
     if (this.debug == true) console.log(url);
-    return this.http.get<InvoiceTransaction[]>(url)
+    let transactions =  this.http.get<InvoiceTransaction[]>(url)
       .pipe(
         tap(transactions => console.log("API data retrieved successully")),
         catchError(this.handleError('Invoice data', [])),
       );
+    return transactions;
   }
 
   getVendorTransactionBySearch(searchString: string, year: string): Observable<any> {

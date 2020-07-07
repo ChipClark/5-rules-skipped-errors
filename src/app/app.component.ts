@@ -134,8 +134,9 @@ export class AppComponent {
       this.sortDate('date');
       this.loadingIndicator = false;
       this.startDisplayResults = false;
-    });
+      // console.log(this.searchDescriptions);
 
+    });
 
 
     return;
@@ -171,6 +172,8 @@ export class AppComponent {
     }
     this.sortTransaction('date');
     this.loadingIndicator = false;
+
+    // console.log(this.vendorTransactions);
 
     return;
   }
