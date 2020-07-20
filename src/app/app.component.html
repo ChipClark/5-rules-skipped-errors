@@ -29,13 +29,13 @@
   <div *ngIf="displayVendors" class="filtercontrols" id="Vendor filtercontrols">
     <div class="row"  id="searchbar">
       <div class="col-4 searchbar">
-          <input class="form-control searchbar" id="SearchBar" placeholder="Search Vendor ONLY" value="" 
+          <input class="form-control searchbar" id="SearchBar" placeholder="Search Vendor ONLY" value="" autofocus 
           [(ngModel)]="searchTerm" (input)="searchTerm ? addQueryParams({vendors: searchTerm}) : addQueryParams({vendors: null})"><br>
       </div>
       <div class="col-1" id="navigation"></div>
       <div class="col-4 searchbar">
         <input class="form-control searchbar" placeholder="Search by vendor or description" value="" 
-          [(ngModel)]="searchString" autofocus (keydown.enter)="displaySearch(); addQueryParams({search: searchString})" ><br>
+          [(ngModel)]="searchString" (keydown.enter)="displaySearch(); addQueryParams({search: searchString})" ><br>
       </div>
       <div class="col-1" id="navigation">
           <button mat-raised-button (click)="displaySearch(); addQueryParams({search: searchString})">&nbsp;Search&nbsp;</button>
