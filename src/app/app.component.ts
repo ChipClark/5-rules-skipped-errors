@@ -144,6 +144,7 @@ export class AppComponent {
 
 
 
+
   async getTransactions(uno: number): Promise<any> {
     this.currentuno = uno;
     this.pageTitle = 'Vendor Transactions';
