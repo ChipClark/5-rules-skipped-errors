@@ -42,6 +42,14 @@ h2 {
     display:block;
 }
 
+tables {
+    table-layout:fixed
+}
+
+td {
+    word-wrap:break-word;
+}
+
 
 .name-title, .committee-title, .location-title {
     font-weight: bold;
