@@ -134,7 +134,7 @@ export class AppComponent {
       this.sortDate('date');
       this.loadingIndicator = false;
       this.startDisplayResults = false;
-      // console.log(this.searchDescriptions);
+      // if (this.apiService.debug == true) console.log(this.searchDescriptions);
 
     });
 
@@ -177,7 +177,7 @@ export class AppComponent {
     this.sortTransaction('date');
     this.loadingIndicator = false;
 
-    // console.log(this.vendorTransactions);
+    // if (this.apiService.debug == true) console.log(this.vendorTransactions);
 
     return;
   }
@@ -215,7 +215,7 @@ export class AppComponent {
         }
       }
     }
-    // console.log(this.modalTotal);
+    // if (this.apiService.debug == true) console.log(this.modalTotal);
     tempSearches = this.selectedSearches;
     return tempSearches;
   }
@@ -236,7 +236,7 @@ export class AppComponent {
         }
       }
     }
-    // console.log(this.modalTotal);
+    // if (this.apiService.debug == true) console.log(this.modalTotal);
     tempTransactions = this.selectedTransactions;
     return tempTransactions;
   }
@@ -287,7 +287,7 @@ export class AppComponent {
     this.sortByName = false;
     this.selectedSearches = this.searchDescriptions;
     this.searchDescriptions = [];
-    console.log("amountdirection is " + this.amountdirection);
+    // if (this.apiService.debug == true) console.log("amountdirection is " + this.amountdirection);
 
     this.amountdirection = !this.amountdirection;
     if ( this.amountdirection == false ) {
@@ -358,7 +358,7 @@ export class AppComponent {
     this.searchDescriptions = [];
 
     this.sortnameASC = !this.sortnameASC;
-    console.log("sortnameASC is " + this.sortnameASC);
+    // if (this.apiService.debug == true) console.log("sortnameASC is " + this.sortnameASC);
     if ( this.sortnameASC == false ) {
       this.selectedSearches.sort( function(a, b) {
         let key1 = a.vendorname;
@@ -461,7 +461,7 @@ export class AppComponent {
   addQueryParams(query): void {
     const keys = Object.keys(query);
     const values = Object.values(query);
-    // if (this.apiService.debug == true) console.log(query);
+    // if (this.apiService.debug == true) if (this.apiService.debug == true) console.log(query);
     if (query === "") {
       query = null;
     }
@@ -490,7 +490,7 @@ export class AppComponent {
   async executeQueryParams(queryStrings): Promise<any> {
     const queries = Object.entries(queryStrings);
     this.clearFilters();
-    // console.log("queries"); console.log(queries);
+    // if (this.apiService.debug == true) console.log("queries"); console.log(queries);
     for (const q of queries) {
       switch (q[0]) {
         case 'vendors':
