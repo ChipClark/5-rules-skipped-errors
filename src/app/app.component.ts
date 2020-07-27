@@ -167,7 +167,10 @@ export class AppComponent {
         lastpayment: new FormControl,
         invoiceamount: new FormControl,
         invoicenumber: new FormControl,
-        invoicenarrative: new FormControl,
+        transactionpostdate: new FormControl,
+        costcode: new FormControl,
+        officelocation: new FormControl,
+        narrative: new FormControl,
         update: new FormControl
       });
     }
@@ -437,9 +440,6 @@ export class AppComponent {
       this.vendorTransactions.push(this.selectedTransactions[i]);
     }
     this.selectedTransactions = [];
-
-
-
     return;
 
   }

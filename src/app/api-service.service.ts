@@ -12,8 +12,8 @@ import { Vendor, VendorSearch, InvoiceTransaction, InvoiceCheck } from './datata
 })
 export class ApiService {
 
-  public baseURL = 'http://am-web12:3035/api/v1/';  // Test Server  
-  // public baseURL = 'http://am-web05:3060/api/v1/';  // Production server
+  // public baseURL = 'http://am-web12:3035/api/v1/';  // Test Server  
+  public baseURL = 'http://am-web05:3060/api/v1/';  // Production server
   public tempDATA = '/assets/';
   
   private filter3Years = 'filter[where][lastpayment][gt]=Fri%20Jan%2001%202018%2007:00:00%20GMT-0700%20(Pacific%20Daylight%20Time)'
@@ -131,7 +131,7 @@ export class ApiService {
         }
         break;
     }
-    let url = this.baseURL + 'invoicetransactions?' + 'filter[where][vendoruno]=' + uno;
+    let url = this.baseURL + 'vwvendorinvoicetransactions?' + 'filter[where][vendoruno]=' + uno;
     url = url + historyFilter + orderFilter;
     // + uno + this.transactionFilter;
     if (this.debug == true) console.log(url);

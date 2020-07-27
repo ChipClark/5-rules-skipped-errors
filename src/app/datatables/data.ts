@@ -29,12 +29,15 @@ export class VendorSearch {
 export class InvoiceTransaction {
   invoicetransactionid: number;
   invoicetransactionuno: number;
-  vendoruno: number;
   vendorname: string;
-  invoicenumber: string;
+  vendoruno: number;
   invoiceamount: number;
-  invoicedate: string;
-  invoicepaiddate: string;
+  invoicenumber: string;
+  invoicedate: Date;
+  invoicepaiddate: Date;
+  officelocation: string;
+  costcode: string;
+  narrative: string;
   invoicenarrative: string;
   transactionpostdate: Date;
   invoiceStatus: string;

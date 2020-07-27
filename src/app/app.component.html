@@ -60,7 +60,7 @@
             <div class="vendorname">{{vendor.vendorname}}</div>
             <div class="invoice">{{vendor.invoices}}</div>
             <div class="address">{{vendor.city}}</div>
-            <div class="paymentdate">{{vendor.lastpayment | date: "MMM-dd-yyyy"}}</div>
+            <div class="paymentdate">{{vendor.lastpayment | date: "MMM-dd-yyyy": 'GMT+11:00'}}</div>
             <div class="invoiceamount">{{vendor.totalinvoiceamount  | currency :'USD':'symbol':'1.2-2' }}</div>
             <div class="transdetail" (click)="vendorname = vendor.vendorname; currentVendor = vendor; getTransactions(vendor.vendoruno)" >Payments </div>
             <!-- </button> -->
@@ -138,11 +138,11 @@
                     <td class="vendordata">{{vendorname}}</td>
                     <td class="invoicedata">{{t.invoicenumber}}</td>
                     <td class="financialdata">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
-                    <td class="datedata">{{t.invoicedate  | date:'MMM-dd-yyyy'}}</td>
-                    <td class="datedata">{{t.invoicepaiddate  | date:'MMM-dd-yyyy'}}</td>
+                    <td class="datedata">{{t.invoicedate | date:'MMM-dd-yyyy': 'GMT+11:00'}}</td>  <!--{{t.invoicedate  | date:'MMM-dd-yyyy'}}-->
+                    <td class="datedata">{{t.invoicepaiddate | date:'MMM-dd-yyyy': 'GMT+11:00'}}</td>
                     <td class="costcode">{{t.costcode}}</td>
                     <td class="officedata">{{t.officelocation}}</td>
-                    <td class="descriptiondata">{{t.invoicenarrative}}</td>
+                    <td class="descriptiondata">{{t.narrative}}  </td>
                   </div>
                 </div>
               </cdk-virtual-scroll-viewport>
@@ -214,8 +214,8 @@
                 <td class="vendordata">{{s.vendorname}}</td>
                 <td class="invoicedata">{{s.invoicenumber}}</td>
                 <td class="financialdata">{{s.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
-                <td class="datedata">{{s.invoicedate  | date:'MMM-dd-yyyy'}}</td>
-                <td class="datedata">{{s.invoicepaiddate  | date:"MMM-dd-yyyy"}} </td>
+                <td class="datedata">{{s.invoicedate  | date:'MMM-dd-yyyy': 'GMT+11:00'}}</td>
+                <td class="datedata">{{s.invoicepaiddate  | date:"MMM-dd-yyyy": 'GMT+11:00'}} </td>
                 <td class="costcode">{{s.costcode}}</td>
                 <td class="officedata">{{s.officelocation}}</td>
                 <td class="descriptiondata">{{s.narrative}}</td>
@@ -266,8 +266,8 @@
                   <td class="vendordata col-5">{{vendorname}}</td>
                   <td class="col-2 invoicedata">{{t.invoicenumber}}</td>
                   <td class="col-2 datedata">
-                      {{t.invoicedate  | date:'MMM-dd-yyyy'}}<br>
-                      paid: {{t.invoicepaiddate  | date:'MMM-dd-yyyy'}}
+                      {{t.invoicedate  | date:'MMM-dd-yyyy': 'GMT+11:00'}}<br>
+                      paid: {{t.invoicepaiddate  | date:'MMM-dd-yyyy': 'GMT+11:00'}}
                   </td>
                   <td class="col-2 columndata financial">{{t.invoiceamount | currency :'USD':'symbol':'1.2-2' }}</td>
                 <!-- </button> -->
