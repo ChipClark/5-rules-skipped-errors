@@ -20,15 +20,13 @@ app.use(express.static(__dirname + '/dist/am-invoices'));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ limit: '50mb',extended: true }))
 
-
 // parse application/json
 app.use(bodyParser.json({limit: '50mb', extended: true}))
 app.get('/*', (req,res) => res.sendFile(path.join(__dirname)));
 
-
 app.all('/*', function(req, res, next) {
     // Just send the index.html for other files to support HTML5Mode
-    res.sendFile('/dist/am-committees/index.html', { root: __dirname });
+    res.sendFile('/dist/am-invoices/index.html', { root: __dirname });
 });
 
 // Handle 404
