@@ -12,10 +12,10 @@ import { Vendor, VendorSearch, InvoiceTransaction, InvoiceCheck } from './datata
 })
 export class ApiService {
 
-  // public baseURL = 'http://am-web12:3035/api/v1/';  // Test Server  
-  public baseURL = 'http://am-web05:3060/api/v1/';  // Production server
+  // public baseURL = 'http://am-web12:3035/api/v1/';  // Test Server
+  public baseURL = 'http://am-web05:3030/api/v1/';  // Production server
   public tempDATA = '/assets/';
-  
+
   private filter3Years = 'filter[where][lastpayment][gt]=Fri%20Jan%2001%202018%2007:00:00%20GMT-0700%20(Pacific%20Daylight%20Time)'
   private filter5Years = 'filter[where][lastpayment][gt]=Fri%20Jan%2001%202016%2007:00:00%20GMT-0700%20(Pacific%20Daylight%20Time)'
   private invoicedate3Years = 'filter[where][invoicedate][gt]=Fri%20Jan%2001%202018%2007:00:00%20GMT-0700%20(Pacific%20Daylight%20Time)'
@@ -31,9 +31,9 @@ export class ApiService {
   // private threeYearsAgo = this.today - (this.today.getFullYear() - 3);
   private fiveYearsAgo = this.today.getFullYear() - 5;
 
-  
+
   public transactionFilter = "filter[where][lastpayment][gt]=2017-01-01T18:30:00.000Z"
-  
+
   public debug = false;
   public datatype: string;
   public datedirection = true;
@@ -52,13 +52,13 @@ export class ApiService {
   getVendor (num: number): Observable<Vendor[]> {
     var history;
     switch (num) {
-      case 3: 
+      case 3:
         history = this.filter3Years + "&";
         break;
-      case 5: 
+      case 5:
         history = this.filter5Years = "&";
         break;
-      case 0: 
+      case 0:
         history = "";
         break;
     }
@@ -75,7 +75,7 @@ export class ApiService {
   }
 
   //   *****************
-  //   CURRENTLY NOT IN USE  
+  //   CURRENTLY NOT IN USE
   //   *****************
   getInvoice(): Observable<InvoiceTransaction[]> {
     // this.setDataLocation();
@@ -100,13 +100,13 @@ export class ApiService {
 
     var historyFilter, orderFilter;
     switch (num) {
-      case 3: 
+      case 3:
         historyFilter = "&" + this.invoicedate3Years;
         break;
-      case 5: 
+      case 5:
         historyFilter = "&" + this.invoicedate5Years;
         break;
-      case 0: 
+      case 0:
         historyFilter = "";
         break;
     }
@@ -146,7 +146,7 @@ export class ApiService {
   getVendorTransactionBySearch(searchString: string, year: string): Observable<any> {
     this.loadingIndicator = true;
     var url;
-    if ( !searchString ) { } 
+    if ( !searchString ) { }
     else {
       searchString = searchString.split(" ").join("%20");
     }
@@ -159,7 +159,7 @@ export class ApiService {
       this.horizondate = year + '-01-01T00:00:00.000Z';
       url = this.baseURL + "vwvendorinvoicetransactions/search?searchterm=" + searchString + "&horizondate=" + this.horizondate;
     }
-    
+
     // if ( this.debug == true ) console.log(url);
 
     let searchResults =  this.http.get<VendorSearch[]>(url).pipe(
