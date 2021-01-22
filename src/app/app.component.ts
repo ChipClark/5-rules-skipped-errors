@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable, ViewChildren, Output, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule, FormGroup, FormArray, FormControl, ReactiveFormsModule, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray, FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 import { ApiService } from './api-service.service';
 import { Vendor, VendorSearch, InvoiceCheck, InvoiceTransaction} from './datatables/data';
@@ -24,7 +24,7 @@ export class AppComponent {
   public searchDescriptions: VendorSearch[];
   public selectedSearches: VendorSearch[];
   public checks: InvoiceCheck[];
-  
+
   public searchString: any;
   public searchTerm = null;
 
@@ -59,10 +59,10 @@ export class AppComponent {
   public threeyears = '2018';
   public fiveyears = '2015'
   public allyears = 'All'
-  
+
   public recordHistory = this.threeyears;
   public historyInYears = 3;
-  
+
   constructor(
     private apiService: ApiService,
     private route: ActivatedRoute,
@@ -81,7 +81,7 @@ export class AppComponent {
   ngAfterContentInit()
   {
     if ( this.vendorsLoaded == false ) {
-      this.loadVendorData(); 
+      this.loadVendorData();
     }
   }
 
@@ -256,13 +256,13 @@ export class AppComponent {
   setRecordHistory(num: number): void {
     this.historyInYears = num;
     switch (num) {
-      case 3: 
+      case 3:
         this.recordHistory = this.threeyears;
         break;
-      case 5: 
+      case 5:
         this.recordHistory = this.fiveyears;
         break;
-      case 0: 
+      case 0:
         this.recordHistory = this.allyears;
         break;
     }
@@ -314,7 +314,7 @@ export class AppComponent {
   }
 
   sortDate(sortby: string) {
-      
+
       this.sortByAmount = false;
       this.sortByName = false;
       this.selectedSearches = this.searchDescriptions;
@@ -344,7 +344,7 @@ export class AppComponent {
         }
       }
 
-    
+
     for ( let i = 0; i < this.selectedSearches.length; i++ ) {
       this.searchDescriptions.push(this.selectedSearches[i]);
     }
@@ -454,7 +454,7 @@ export class AppComponent {
       const queryStrings: any = this.route.queryParamMap;
       this.executeQueryParams(queryStrings.source.value).then( results => {
       });
-      
+
     });
   }
 
@@ -499,9 +499,9 @@ export class AppComponent {
           break;
         case 'search':
           this.searchString = q[1];
-          this.displaySearch(); 
+          this.displaySearch();
           break;
-        case 'history': 
+        case 'history':
           this.historyInYears = +q[1];
           this.setRecordHistory(this.historyInYears);
           break;

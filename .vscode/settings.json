@@ -7,9 +7,6 @@
         "activityBar.inactiveForeground": "#e7e7e799",
         "activityBarBadge.background": "#037d08",
         "activityBarBadge.foreground": "#e7e7e7",
-        "editorGroup.border": "#620602",
-        "panel.border": "#620602",
-        "sideBar.border": "#620602",
         "statusBar.background": "#300301",
         "statusBar.foreground": "#e7e7e7",
         "statusBarItem.hoverBackground": "#620602",
@@ -18,5 +15,6 @@
         "titleBar.inactiveBackground": "#30030199",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "typescript.tsdk": "node_modules\\typescript\\lib"
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    "peacock.color": "#300301"
 }
