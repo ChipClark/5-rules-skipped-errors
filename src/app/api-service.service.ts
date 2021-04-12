@@ -95,9 +95,6 @@ export class ApiService {
 
   getInvoiceByUno(uno: number, sort: string, num: number): Observable<InvoiceTransaction[]> {
 
-    // ?filter[where][and][1][vendoruno]=8555&filter[where][and][1][transactionpostdate][gt]=2020-04-01T18:30:00.000Z
-    // this.setDataLocation();
-
     var historyFilter, orderFilter;
     switch (num) {
       case 3:
