@@ -2,70 +2,78 @@ import { ɵangular_packages_platform_browser_dynamic_platform_browser_dynamic_a 
 import { Component } from '@angular/core';
 
 export class Vendor {
-  vendorinvoicesummaryid: number;
-  vendorname: string;
-  vendoruno: number;
-  invoices: string;
-  address1: string;
-  city: string;
-  citystatezip: string;
-  lastpayment: Date;
-  toalinvoiceamount: number;
+  VendorInvoiceSummaryID: number;
+  VendorID: number;
+  VendorName: string;
+  VendorUno: number;
+  VendorTypeCode: string;
+  Invoices: number;
+  Address1: string;
+  Address2: string;
+  City: string;
+  CityStateZip: string;
+  State: string;
+  PostalCode: string;
+  LastPayment: Date;
+  TotalInvoiceAmount: number;
+  InvoiceTransaction: InvoiceTransaction[];
 }
 
 export class VendorSearch {
-  vendorinvoicetransactionid: number;
-  vendorname: string;
-  vendoruno: number;
-  invoiceamount: number;
-  invoicenumber: string;
-  invoicedate: Date;
-  invoicepaiddate: Date;
-  officelocation: string;
-  costcode: string;
-  narrative: string;
+  vendorInvoiceTransactionid: number;
+  VendorName: string;
+  VendorUno: number;
+  InvoiceAmount: number;
+  InvoiceNumber: string;
+  InvoiceDate: Date;
+  InvoicePaidDate: Date;
+  OfficeLocation: string;
+  Costcode: string;
+  Narrative: string;
 }
 
 export class InvoiceTransaction {
-  invoicetransactionid: number;
-  invoicetransactionuno: number;
-  vendorname: string;
-  vendoruno: number;
-  invoiceamount: number;
-  invoicenumber: string;
-  invoicedate: Date;
-  invoicepaiddate: Date;
-  officelocation: string;
-  costcode: string;
-  narrative: string;
-  invoicenarrative: string;
-  transactionpostdate: Date;
-  invoiceStatus: string;
-  aptypecode: string;
-  transactiontype: string;
-  transactionnameUno: number;
-  transactioncancelled: string;
-  note: string;
+  InvoiceTransactionID: number;
+  InvoiceTransactionUno: number;
+  VendorName: string;
+  VendorUno: number;
+  InvoiceAmount: number;
+  InvoiceNumber: string;
+  InvoiceDate: Date;
+  InvoicePaidDate: Date;
+  DisbursementAmount: number;
+  OfficeLocation: string;
+  Costcode: string;
+  Narrative: string;
+  InvoiceNarrative: string;
+  TransactionPostDate: Date;
+  InvoiceStatus: string;
+  APTypeCode: string;
+  Transactiontype: string;
+  TransactionNameUno: number;
+  TransactionCancelled: string;
+  Note: string;
+  InvoiceAmountFixed: string;
 }
 
 export class InvoiceCheck {
-  invoicecheckid: number;
-  checktransactionuno: number;
-  vendoruno: number;
-  invoicetransactionUno: number;
-  invoiceamount: Float32Array;
-  checknumber: number;
-  checkdate: Date;
-  invoicetransactiondate: Date;
-  documenttype: string;
-  checkStatus: string;
-  checknameuno: number;
-  wirenumber: string;
-  paymenttype: string;
-  note: string;
-  active: boolean;
-  activefromdate: Date;
-  modifieddate: Date;
-  modifiedBy: string;
+  InvoiceCheckID: number;
+  CheckTransactionUno: number;
+  VendorUno: number;
+  InvoiceTransactionUno: number;
+  InvoiceAmount: Float32Array;
+  CheckNumber: number;
+  CheckDate: Date;
+  InvoiceTransactionDate: Date;
+  DocumentType: string;
+  CheckStatus: string;
+  CheckNameUno: number;
+  WireNumber: string;
+  PaymentType: string;
+  Note: string;
+  Active: boolean;
+  ActiveFromDate: Date;
+  ModifiedDate: Date;
+  ModifiedBy: string;
 }
 

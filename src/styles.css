@@ -1,95 +1,285 @@
 /* You can add global styles to this file, and also import other style files */
-@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";  
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import './assets/allenmatkins-theme.css';
 
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    zoom: .75;
+}
+
 .main-body {
-    float: center;
-    text-align: center;
-    min-height: 500px;
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:10px;
+    padding-bottom:10px;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
+    width: 100%;
+    /* max-height: 500px; */
+}
+
+.blank-body {
+  position: relative;
+  background-color: #fff;
+  height: 100%;
+  width: 100%;
+  z-index:999;
 }
 
 .container {
-    width: 100%;
-    margin-left: 10px;
-    margin-right: 10px;
-    /* min-width: 1400px; */
-}
-  
-h2 {
-    text-align: left;
+  width: 96%;
+  max-width: 1800px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
-.vendorpage {
+.row {
+  max-width: 18200px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  height: auto;
+}
+
+.general-content {
+  padding: 0px;
+  min-height:600px;
+}
+
+.app-root {
+    width: 100%;
+    padding-left:0px;
+    padding-right:0px;
+}
+
+.footer-bar {
+    padding:10px;
+    background: #002a5f;
+    text-align: left;
+    color:#ccc;
+    font-size:10pt;
+}
+
+.align-right {
+    float: right;
+}
+
+body, input[text], button {
+    color: #666666;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:12pt;
+  }
+
+  a.header-tag, a.header-tag:hover {
+    display: inline-block;
+    top: 10px;
+    opacity: 0.8;
+    color:#002a5f;
+    font-size: 36pt;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 200;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+  }
+
+  .person-scrollbar {
     height: 500px;
 }
 
-.row, .headerrow, .footerrow {
-    margin-left: 0;
-    margin-right: 0;
-    width: 1005;
+.person-detail {
+    display: inline-block;
 }
 
-.PaginationBar {
-    width: 100%;
-    display: block;
+.lightgray {
+    background-color: #f9f9f9;
 }
 
-.pagecontrols {
-    float: left;
+.generalbtn {
+    display: inline-block;
+    padding-right: 5px;
 }
 
-.table-header {
-    display:block;
-}
-
-tables {
-    table-layout:fixed
-}
-
-td {
-    word-wrap:break-word;
-}
-
-
-.name-title, .committee-title, .location-title {
-    font-weight: bold;
+.large-font {
     font-size: 14pt;
-    display: inline-block;
 }
 
-.name {
-    vertical-align: top;
-    font-weight: 500;
-    display: inline-block;
-    text-align: left;
+.normal-font {
+    font-size: 12pt;
 }
 
-.name a {
-    color: #666;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.name:hover {
-    color: #002a5f;
-    font-weight: 500;
-    text-decoration: none;
-}
-
-.location {
+.med-font {
     font-size: 10pt;
-    display: inline-block;
 }
 
-.committee {
-    display: inline-block;
-}
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; font-size: 11pt;}
+.small-font {
+    font-size: 8pt;
+  }
 
-@media (min-width: 1200px) {
-    .container {
-        width: 98%;
-        max-width: 2100px;
-    }
+.xsmall-font {
+    font-size: 4pt;
 }
+
+.btn {
+    padding: 0;
+    border: none;
+    /*font: inherit;*/
+    color: inherit;
+    background-color: transparent;
+    /* show a hand cursor on hover; some argue that we
+    should keep the default arrow cursor for buttons */
+    cursor: pointer;
+}
+
+.inMenuBar {
+  position: absolute;
+  width: 100%;
+  max-height: 40px;
+  /* padding-left: 300px; */
+  top: 90px;
+  display: block;
+  z-index: 200;
+}
+
+.historyMenu {
+  top: -10px;
+}
+
+.white {
+  color: #fff;
+}
+
+.ltgrey {
+  color: #ccc;
+}
+
+.mat-select-arrow-wrapper, .mat-select, .mat-select-value, .mat-option-text, .mat-select-placeholder {
+  color: #fff !important;
+}
+
+.narrowrow {
+  max-height: 40px;
+}
+
+.hidden-col {
+  z-index: 1;
+}
+
+.searchBar {
+  width: 400px;
+  display: inline-block;
+  padding-right: 15px;
+  padding-left: 5px;
+}
+
+.mat-tab-header, .mat-tab-label, .mat-tab-label-content {
+  display: none;
+  height: 0px;
+}
+
+.modal-dialog {
+  min-width: 1000px;
+}
+
+.modal-lg {
+  width: 800px;
+}
+
+.modal-xl {
+  width: 1200px;
+}
+
+.missingData{
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+
+
+.modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  top: 50px;
+  pointer-events: auto;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: .3rem;
+  outline: 0;
+  box-shadow: none !important;
+}
+
+.modal-backdrop.show {
+    opacity: .2;
+    background-color: #002A5F;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-header {
+  background-image: linear-gradient(to right, #0e4f9e, #002A5F);
+  color: #fff;
+  border: 2px solid #eee;
+}
+
+.modal-header .close {
+  color: #ddd;
+  font-size: 2rem;
+  font-weight: 100;
+  line-height: 1;
+  /* text-shadow: 0 1px 0 #bbb; */
+  /* opacity: .5; */
+}
+
+.modal-header-error {
+  background-image: linear-gradient(to right, #ec5721, #9f2a00);
+  background-color: #9f2a00;
+  padding-left: 10px;
+}
+
+.modal-title {
+  color: #fff;
+}
+
+.modal-error-title {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  width:100%;
+  height: 30px;
+}
+
+
+
+.close {
+  color: #fff;
+}
+
+.error-close {
+  color: #000;
+  vertical-align: top;
+  float: right;
+}
+
+@media screen and (max-width: 1000px) {
+  .inMenuBar {
+    position: absolute;
+    width: 100%;
+    padding-left: 200px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .inMenuBar {
+    position: absolute;
+    width: 100%;
+    padding-left: 100px;
+  }
+}
+
+
+
+
+

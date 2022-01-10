@@ -1,0 +1,96 @@
+.icon-image {
+  font-weight: 100;
+}
+
+.menuBar {
+  background-color: #225582;
+  height: 60px;
+  z-index: 2;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.hamburger-icon {
+  position:relative;
+  display: inline-block;
+  padding-top: 10px;
+  left: 10px;
+  z-index: 250;
+  color:#fff;
+  width:50px;
+}
+
+.menu {
+  position:relative;
+  display: inline-block;
+  top: 45px;
+  left: 5px;
+  z-index: 20;
+  color:#fff;
+}
+
+.hamburger-menu {
+  visibility: hidden;
+  position: absolute;
+  animation: 1s fadeOut;
+  animation-fill-mode: forwards;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  line-height: 18pt;
+  width: 180px;
+  /* background-color: #225582; */
+  background-color:  #225582; opacity: 0.8;
+  top: 45px;
+  padding: 10px;
+  z-index: 1;
+  color:#fff;
+  text-decoration: none;
+}
+
+@keyframes fadeIn {
+  99% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+    z-index: 100;
+  }
+}
+
+@keyframes fadeOut {
+  5% {
+    visibility: visible;
+  }
+  100% {
+    visibility: hidden;
+    z-index: 100;
+  }
+}
+
+a.menu-item {
+  visibility: hidden;
+  animation: 1s fadeOut;
+  animation-fill-mode: forwards;
+  color:#fff;
+  text-decoration: none;
+  opacity: 1;
+}
+
+.hamburger-icon:hover a.menu-item,  .hamburger-menu:hover a.menu-item{
+  animation: 1s fadeIn;
+  animation-fill-mode: forwards;
+  visibility: visible;
+}
+
+.hamburger-icon:hover .hamburger-menu {
+  animation: 1s fadeIn;
+  animation-fill-mode: forwards;
+  visibility: visible;
+  z-index: 150;
+}
+
+.hamburger-icon:hover + .hamburger-menu,  .hamburger-icon:hover + a.menu-item{
+  animation: 1s fadeIn;
+  animation-fill-mode: forwards;
+  visibility: visible;
+  z-index: 150;
+}

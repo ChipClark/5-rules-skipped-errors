@@ -1,14 +1,8 @@
-<div class="header-bar container" >
-    <div class="row headerrow">
-      <div class="col-2">
-        <a href="/" ><img class="header-img" alt="Allen Matkins" src="../../assets/AMStackedLogo.png"></a>
-      </div>
-      <div class="header-tag col-7">
-        <h1>Invoices</h1>
-      </div>
-      <div class="col-3">
-        <span class="confidential">Firm Confidential</span><br>
-        <span class="bugcontact">Is there an error? <a href="mailto:ML_Other_Tools@allenmatkins.com?subject=Issue with Vendor App" target="_blank">Tell Us</a></span>
-      </div>
-    </div>
+<div class="header-bar"  >
+  <!-- *ngIf="chrome" -->
+  <div class="header-left" ><a href="/" ><img class="header-img" alt="Allen Matkins" src="../../assets/allen_matkins_logo.png"></a></div>
+  <div class="header-center" id="pageTitle">
+        <div [innerHTML]="getTitle(pagetitle)"></div>
+  </div>
+  <div class="header-right confidential">Firm Confidential</div>
 </div>
