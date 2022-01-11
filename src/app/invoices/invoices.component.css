@@ -144,11 +144,6 @@ text-align: right;
   padding-top: 15px;
 }
 
-.searchbarwrapper, .searchbar {
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
 .spinner {
 border: 16px solid silver;
 border-top: 16px solid #002A5f;
@@ -159,6 +154,43 @@ animation: spin 1200ms linear infinite;
 top: 50%;
 left: 50%;
 position: absolute;
+}
+
+.sb-example-1 .search {
+  width:100%;
+  position: relative;
+  display: inline-block;
+}
+.searchbarwrapper, .searchbar {
+  width:85%;
+  padding-left: 0px;
+  padding-right: 0px;
+  display: inline-block;
+}
+
+
+.sb-example-1 .searchTerm {
+  width: 100%;
+  border: 1px solid #002A5F;
+  border-right: none;
+  padding: 2px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+.sb-example-1 .searchTerm:focus{
+  color: #004BA7;
+}
+.searchButton {
+  width: 40px;
+  height: 450x;
+  border: 3px solid #002A5F;
+  background: #002A5F;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
 }
 
 @keyframes spin {

@@ -1,14 +1,25 @@
 <div class="inMenuBar" id="inMenuBar"  >
   <div class="row">
-    <div class="col-2 hidden-col"></div>
+    <div class="col-1 hidden-col"></div>
     <div class="col-4">
-      <input *ngIf="searchVendorOnly" class="form-control searchbar" id="SearchBar" placeholder="Search Vendor ONLY" value="" autofocus
-        (keyup)="keyPressed($event)" [(ngModel)]="searchVendors" >
-        <!--(input)="searchVendors ? addQueryParams({vendors: searchVendors}) : addQueryParams({vendors: null})">-->
-        <input *ngIf="!searchVendorOnly" class="form-control searchbar" placeholder="Search by vendor or description" value=""
-        (keyup)="keyPressed($event)" [(ngModel)]="searchString" ><br>
-        <!--(keydown.enter)="displayRobustSearch(); addQueryParams({search: searchString})" -->
-        <br>
+
+      <div class="sb-example-1">
+        <div class="search">
+          <input *ngIf="searchVendorOnly" class="form-control searchbar" id="SearchBar" placeholder="Search Vendor ONLY" value="" autofocus
+            (keyup)="keyPressed($event)" [(ngModel)]="searchVendors" >
+            <button  *ngIf="searchVendorOnly" type="submit" class="searchButton" (click)="displayVendorSearch(searchVendors)">
+              <i class="fa fa-search"></i>
+            </button>
+            <!--(input)="searchVendors ? addQueryParams({vendors: searchVendors}) : addQueryParams({vendors: null})">-->
+          <input *ngIf="!searchVendorOnly" class="form-control searchbar" placeholder="Search by vendor or description" value=""
+            (keyup)="keyPressed($event)" [(ngModel)]="searchString" >
+            <button  *ngIf="!searchVendorOnly" type="submit" class="searchButton" (click)="displayRobustSearch(searchString)">
+              <i class="fa fa-search"></i>
+            </button>
+            <!--(keydown.enter)="displayRobustSearch(); addQueryParams({search: searchString})" -->
+            <br>
+        </div>
+      </div>
     </div>
     <div class="col-2 hidden-col">
       <button  *ngIf="!searchVendorOnly" mat-raised-button (click)="switchSearch()">Search Vendors Only</button>
