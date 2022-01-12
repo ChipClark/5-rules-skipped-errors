@@ -164,7 +164,7 @@ export class InvoicesComponent {
       this.sortDate('date');
       this.loadingIndicator = false;
       this.startDisplayResults = false;
-      // if (this.apiService.debug == true) console.log(this.searchDescriptions);
+      if (this.apiService.debug == true) console.log(this.searchDescriptions);
     });
     return;
   }
@@ -181,7 +181,7 @@ export class InvoicesComponent {
     this.apiService.changePageTitle(this.pageTitle);
     this.loadingIndicator = true;
     const tempArray = [];
-    if (this.apiService.debug) { console.log(search); }
+    if (this.apiService.debug) { console.log('search: ' + search + " horizon: " + this.horizon); }
     this.apiService.getVendorBySearch(search, this.horizon).toPromise().then( v => {
       if (this.apiService.debug == true) console.log("vendors should be done");
       for ( let i = 0; i < Object.values(v).length; i++ ) {
