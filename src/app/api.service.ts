@@ -17,7 +17,7 @@ export class ApiService {
   // public baseURL = 'http://am-web11:3070/api/'; // new API server
   public baseURL = 'http://am-web05:3080/api/';  // AM-WEB05 Production server
   public tempDATA = '/assets/';
-  public debug = true;
+  public debug = false;
 
   public summary = 'summary/transactions/';
   public summaryTransactions = 'summary/transactions/';
@@ -105,13 +105,13 @@ export class ApiService {
     if (horizon) {
       url = url + "&year=" + horizon;
     }
-    if (this.debug === true) console.log(url);
+    // if (this.debug === true) { console.log(url); }
     let invoiceResults = this.http.get<InvoiceTransaction[]>(url)
       .pipe(
         tap(invoices => {
           console.log("API Invoice data retrieved")
           this.loadingIndicator = false
-          if (this.debug == true) console.log(invoices);
+          // if (this.debug == true) { console.log(invoices); }
         }),
         catchError(this.handleError('Invoice data', [])),
       );
@@ -136,7 +136,7 @@ export class ApiService {
     } else {
       url = this.baseURL + this.vendors + "?year=" + 1900 + "&search=" + searchString;
     }
-    if ( this.debug === true ) { console.log(url); }
+    // if ( this.debug === true ) { console.log(url); }
 
     let searchResults =  this.http.get<VendorSearch[]>(url).pipe(
       tap(searchResults => {
@@ -162,7 +162,7 @@ export class ApiService {
       url = this.baseURL + this.vendors + "?year=" + 1900 + "&search=" + searchString;
     }
 
-    if ( this.debug == true ) console.log(url);
+    // if ( this.debug == true ) { console.log(url); }
     let searchResults =  this.http.get<InvoiceTransaction[]>(url).pipe(
       tap(searchResults => {
         console.log("searchResults retrieved successully")

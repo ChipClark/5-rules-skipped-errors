@@ -78,7 +78,7 @@ export class InvoicesComponent {
     this.horizon = 2020;
     this.apiService.changePageTitle('Invoices');
 
-    if ( this.apiService.debug) { console.log("Horizon is: " + this.horizon); }
+    // if ( this.apiService.debug) { console.log("Horizon is: " + this.horizon); }
     this.accessParameters();
    }
 
@@ -137,8 +137,8 @@ export class InvoicesComponent {
         tempArray.push(Object.values(v)[i]);
       }
       this.searchDescriptions = tempArray[0];
-      if (this.apiService.debug == true) { console.log(tempArray[0]); }
-      if (this.apiService.debug == true) { console.log("vendors should be done"); }
+      // if (this.apiService.debug === true) { console.log(tempArray[0]); }
+      // if (this.apiService.debug === true) { console.log("vendors should be done"); }
       for ( let i = 0; i < this.searchDescriptions.length; i++ ) {
         let end = this.searchDescriptions[i].InvoiceNumber.length;
         for ( let j = 0; j < this.searchDescriptions[i].InvoiceNumber.length; j++ ) {
@@ -164,7 +164,7 @@ export class InvoicesComponent {
       this.sortDate('date');
       this.loadingIndicator = false;
       this.startDisplayResults = false;
-      if (this.apiService.debug == true) console.log(this.searchDescriptions);
+      // if (this.apiService.debug == true)  { console.log(this.searchDescriptions); }
     });
     return;
   }
@@ -181,9 +181,9 @@ export class InvoicesComponent {
     this.apiService.changePageTitle(this.pageTitle);
     this.loadingIndicator = true;
     const tempArray = [];
-    if (this.apiService.debug) { console.log('search: ' + search + " horizon: " + this.horizon); }
+    // if (this.apiService.debug) { console.log('search: ' + search + " horizon: " + this.horizon); }
     this.apiService.getVendorBySearch(search, this.horizon).toPromise().then( v => {
-      if (this.apiService.debug == true) console.log("vendors should be done");
+      // if (this.apiService.debug == true) { console.log("vendors should be done"); }
       for ( let i = 0; i < Object.values(v).length; i++ ) {
         tempArray.push(Object.values(v)[i]);
       }
@@ -211,7 +211,7 @@ export class InvoicesComponent {
 
     if (currentVendor) {
       this.vendorTransactions = currentVendor.InvoiceTransaction;
-      console.log(this.vendorTransactions);
+      // console.log(this.vendorTransactions);
       this.pageTitle = 'Vendor Transactions';
       this.apiService.changePageTitle(this.pageTitle);
       this.loadingIndicator = true;
@@ -223,7 +223,7 @@ export class InvoicesComponent {
       this.selectTrans = false;
       this.datedirection = true;
       this.sortByDate = true;
-      if (this.apiService.debug) { console.log(this.vendorTransactions); }
+      // if (this.apiService.debug) { console.log(this.vendorTransactions); }
       for ( let i = 0; i < this.vendorTransactions.length; i++ ) {
         let end = this.vendorTransactions[i].InvoiceNumber.length;
         for ( let j = 0; j < this.vendorTransactions[i].InvoiceNumber.length; j++ ) {
@@ -268,14 +268,14 @@ export class InvoicesComponent {
     }
 
 
-    // if (this.apiService.debug == true) console.log(this.vendorTransactions);
+    // if (this.apiService.debug == true) { console.log(this.vendorTransactions); }
     return;
   }
 
   switchSearch() {
     this.searchVendorOnly = !this.searchVendorOnly;
     if (this.searchVendorOnly) {
-      console.log("in switchSeach \nsearchVendorOnly:" + this.searchVendorOnly);
+      // console.log("in switchSeach \nsearchVendorOnly:" + this.searchVendorOnly);
       if (this.searchString) {
         this.searchVendors = this.searchString;
         this.addQueryParams({vendors: this.searchVendors, search: null});
@@ -286,7 +286,7 @@ export class InvoicesComponent {
       this.pageTitle = "Vendor Search: ";
 
     } else {
-      console.log("in switchSeach \nsearchVendorOnly:" + this.searchVendorOnly);
+      // console.log("in switchSeach \nsearchVendorOnly:" + this.searchVendorOnly);
       if (this.searchVendors) {
         this.searchString = this.searchVendors;
         this.addQueryParams({vendors: null, search: this.searchString});
@@ -342,18 +342,18 @@ export class InvoicesComponent {
     for ( let i = 0; i < this.searchInclude.length; i++ ) {
       if ( this.searchInclude[i].value.Update == true ) {
         this.selectedSearches.push(this.searchDescriptions[i]);
-        console.log(this.searchDescriptions[i]);
+        // console.log(this.searchDescriptions[i]);
         if ( this.searchDescriptions[i].InvoiceAmount ) {
           const tempAmount = Number(this.searchDescriptions[i].InvoiceAmount);
           this.searchDescriptions[i].InvoiceAmountFixed = tempAmount.toFixed(2);
           this.modalTotal = this.modalTotal + tempAmount;
       } else {
-          console.log("no transaction amount");
-          console.log(this.searchDescriptions[i]);
+          // console.log("no transaction amount");
+          // console.log(this.searchDescriptions[i]);
         }
       }
     }
-    if (this.apiService.debug == true) console.log(this.modalTotal);
+    // if (this.apiService.debug == true) { console.log(this.modalTotal); }
     tempSearches = this.selectedSearches;
     return tempSearches;
   }
@@ -371,12 +371,12 @@ export class InvoicesComponent {
           this.modalTotal = this.modalTotal + tempAmount;
         }
         else {
-          console.log("no transaction amount");
-          console.log(this.vendorTransactions[i]);
+          // console.log("no transaction amount");
+          // console.log(this.vendorTransactions[i]);
         }
       }
     }
-    if (this.apiService.debug == true) console.log(this.modalTotal);
+    // if (this.apiService.debug == true) { console.log(this.modalTotal); }
     tempTransactions = this.selectedTransactions;
     return tempTransactions;
   }
@@ -395,7 +395,7 @@ export class InvoicesComponent {
 
   setHistory(setHorizon: number): number {
     this.horizon = this.today.getFullYear() - setHorizon;
-    console.log(this.horizon)
+    // console.log(this.horizon)
     return this.horizon;
   }
 
