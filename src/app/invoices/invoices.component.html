@@ -13,10 +13,10 @@
             <!--(input)="searchVendors ? addQueryParams({vendors: searchVendors}) : addQueryParams({vendors: null})">-->
           <input *ngIf="!searchVendorOnly" class="form-control searchbar" placeholder="Search by vendor or description" value=""
             (keyup)="keyPressed($event)" [(ngModel)]="searchString" >
-            <button  *ngIf="!searchVendorOnly" type="submit" class="searchButton" (click)="displayRobustSearch(searchString)">
+            <button  *ngIf="!searchVendorOnly" type="submit" class="searchButton" (click)="displayDescriptionSearch(searchString)">
               <i class="fa fa-search"></i>
             </button>
-            <!--(keydown.enter)="displayRobustSearch(); addQueryParams({search: searchString})" -->
+            <!--(keydown.enter)="displayDescriptionSearch(); addQueryParams({search: searchString})" -->
             <br>
         </div>
       </div>
@@ -136,14 +136,16 @@
                 Amount<div *ngIf="amountdirection && sortByAmount" class="arrow">&darr;</div><div *ngIf="!amountdirection && sortByAmount" class="arrow">&uarr;</div>
               </th>
               <th class="title datedata button col-1" (click)="sortTransaction('date')" >
-                  Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
+                  Invoice Date <div *ngIf="datedirection && sortByDate && !sortByAmount" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate && !sortByAmount" class="arrow">&darr;</div>
               </th>
               <th class="title datedata button col-1" (click)="sortTransaction('paid')" >
                 Paid Date <div *ngIf="paiddirection && sortByPaid" class="arrow">&uarr;</div><div *ngIf="!paiddirection && sortByPaid" class="arrow">&darr;</div>
               </th>
               <th class="costcode title col-1">Cost Code</th>
               <th class="officedata title col-1">Office</th>
-              <th class="description title col-3">Description</th>
+              <th class="description title col-3"(click)="sortTransaction('description')" >
+                Description <div *ngIf="descriptionDirection && sortByDescription" class="arrow">&uarr;</div><div *ngIf="!descriptionDirection && sortByDescription" class="arrow">&darr;</div>
+              </th>
             </tr>
 
             <tr class="row" id="dataTable">
@@ -157,7 +159,7 @@
                       <span *ngIf="t.InvoiceNumber.length <= 6">{{t.InvoiceNumber}}</span>
                     </td>
                     <td class="financialdata col-1">{{t.InvoiceAmountFixed | currency :'USD':'symbol':'1.2-2' }}</td>
-                    <td class="datedata col-1">{{t.Invoicedate | date:'MMM-dd-yyyy': 'GMT+11:00'}}</td>
+                    <td class="datedata col-1">{{t.InvoiceDate | date:'MMM-dd-yyyy': 'GMT+11:00'}}</td>
                     <td class="datedata col-1">{{t.InvoicePaidDate | date:'MMM-dd-yyyy': 'GMT+11:00'}}</td>
                     <td class="costcode col-1">{{t.CostCode}}</td>
                     <td class="officedata col-1">{{t.OfficeLocation}}</td>
@@ -195,22 +197,24 @@
       <tbody>
         <tr class="titleheaders row" id="SearchResultsHeaders" >
           <th class="ckbox" ></th>
-          <th class="vendortitle title vendorbutton col-2" (click)="sortName()" >Vendors
+          <th class="vendortitle title button col-2" (click)="sortSearchDescriptions('name')" >Vendors
             <div *ngIf="sortnameASC && sortByName" class="arrow">&darr;</div><div *ngIf="!sortnameASC && sortByName" class="arrow">&uarr;</div>
           </th>
           <th class="title col-1">Invoice</th>
-          <th class="title financialdata button col-1" (click)="sortAmount()" >
+          <th class="title financialdata button col-1" (click)="sortSearchDescriptions('amount')" >
             Amount<div *ngIf="amountdirection && sortByAmount" class="arrow">&darr;</div><div *ngIf="!amountdirection && sortByAmount" class="arrow">&uarr;</div>
           </th>
-          <th class="title datedata button col-1" (click)="sortDate('date')">
+          <th class="title datedata button col-1" (click)="sortSearchDescriptions('date')">
             Invoice Date <div *ngIf="datedirection && sortByDate" class="arrow">&uarr;</div><div *ngIf="!datedirection && sortByDate" class="arrow">&darr;</div>
           </th>
-          <th class="title datedata button col-1" (click)="sortDate('paid')" >
+          <th class="title datedata button col-1" (click)="sortSearchDescriptions('paid')" >
             Paid Date <div *ngIf="paiddirection && sortByPaid" class="arrow">&darr;</div><div *ngIf="!paiddirection && sortByPaid" class="arrow">&uarr;</div>
           </th>
           <th class="costcode title col-1">Cost Code</th>
           <th class="officedata title col-1">Office</th>
-          <th class="descriptiondata title col-3">Description</th>
+          <th class="descriptiondata title col-3"  (click)="sortSearchDescriptions('description')" >Description
+            <div *ngIf="descriptionDirection && sortByDescription" class="arrow">&darr;</div><div *ngIf="!descriptionDirection && sortByDescription" class="arrow">&uarr;</div>
+          </th>
         </tr>
 
         <tr class="row" id="dataTable">

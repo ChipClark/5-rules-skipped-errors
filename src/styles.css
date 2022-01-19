@@ -68,22 +68,22 @@ body, input[text], button {
     color: #666666;
     font-family: Arial, Helvetica, sans-serif;
     font-size:12pt;
-  }
+}
 
-  a.header-tag, a.header-tag:hover {
-    display: inline-block;
-    top: 10px;
-    opacity: 0.8;
-    color:#002a5f;
-    font-size: 36pt;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: 200;
-    text-align: center;
-    vertical-align: middle;
-    text-decoration: none;
-  }
+a.header-tag, a.header-tag:hover {
+  display: inline-block;
+  top: 10px;
+  opacity: 0.8;
+  color:#002a5f;
+  font-size: 36pt;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 200;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+}
 
-  .person-scrollbar {
+.person-scrollbar {
     height: 500px;
 }
 
@@ -118,6 +118,10 @@ body, input[text], button {
 
 .xsmall-font {
     font-size: 4pt;
+}
+
+.button {
+  cursor: pointer;
 }
 
 .btn {

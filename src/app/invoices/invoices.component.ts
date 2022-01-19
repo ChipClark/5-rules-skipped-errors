@@ -45,8 +45,10 @@ export class InvoicesComponent {
   public datedirection = false;
   public paiddirection = false;
   public amountdirection = false;
+  public descriptionDirection = false;
   public sortnameASC: boolean;
   public sortByName = true;
+  public sortByDescription = false;
   public sortByDate = false;
   public sortByPaid = false;
   public sortByAmount = false;
@@ -110,7 +112,7 @@ export class InvoicesComponent {
   //   Maniuplating data
   //******************************************* */
 
-  async displayRobustSearch(search: string): Promise<any> {
+  async displayDescriptionSearch(search: string): Promise<any> {
     this.loadingIndicator = true;
     this.pageTitle = 'Invoice Search: ' + search;
     this.searchString = search;
@@ -118,9 +120,6 @@ export class InvoicesComponent {
 
     this.startDisplayResults = true;
     this.loadingIndicator = true;
-    this.sortnameASC = false;
-    this.amountdirection = false;
-    this.datedirection = true;
     this.searchDescriptions = [];
     this.displaySearchResults = true;
     this.displayVendors = false;
@@ -161,7 +160,7 @@ export class InvoicesComponent {
         });
 
       }
-      this.sortDate('date');
+      this.sortSearchDescriptions('description');
       this.loadingIndicator = false;
       this.startDisplayResults = false;
       // if (this.apiService.debug == true)  { console.log(this.searchDescriptions); }
@@ -207,8 +206,6 @@ export class InvoicesComponent {
     const currentVendor = this.vendors.find( v => {
       return v.VendorUno === uno;
     })
-
-
     if (currentVendor) {
       this.vendorTransactions = currentVendor.InvoiceTransaction;
       // console.log(this.vendorTransactions);
@@ -221,8 +218,6 @@ export class InvoicesComponent {
       this.displayVendors = false;
       this.selectSearches = false;
       this.selectTrans = false;
-      this.datedirection = true;
-      this.sortByDate = true;
       // if (this.apiService.debug) { console.log(this.vendorTransactions); }
       for ( let i = 0; i < this.vendorTransactions.length; i++ ) {
         let end = this.vendorTransactions[i].InvoiceNumber.length;
@@ -262,8 +257,8 @@ export class InvoicesComponent {
           });
         }
       }
-      // if (this.apiService.debug) { console.log(this.vendorTransactions); }
-      this.sortTransaction('date');
+      if (this.apiService.debug) { console.log(this.vendorTransactions); }
+      this.sortTransaction('description');
       this.loadingIndicator = false;
     }
 
@@ -292,7 +287,7 @@ export class InvoicesComponent {
         this.addQueryParams({vendors: null, search: this.searchString});
         this.displayVendors = false;
         this.displaySearchResults = true;
-        this.displayRobustSearch(this.searchString);
+        this.displayDescriptionSearch(this.searchString);
       }
       this.pageTitle = "Invoice Search: ";
 
@@ -309,7 +304,7 @@ export class InvoicesComponent {
         this.displayVendorSearch(event.target.value);
         this.addQueryParams({vendors: event.target.value});
       } else {
-        this.displayRobustSearch(event.target.value);
+        this.displayDescriptionSearch(event.target.value);
         this.addQueryParams({search: event.target.value});
 
       }
@@ -328,7 +323,7 @@ export class InvoicesComponent {
       this.getTransactions(this.currentuno);
     }
     else if ( this.searchString ) {
-      this.displayRobustSearch(this.searchString);
+      this.displayDescriptionSearch(this.searchString);
     }
     else {
       console.log("Something is wrong reloading data")
@@ -411,60 +406,92 @@ export class InvoicesComponent {
     }
   }
 
-  sortAmount() {
-    this.sortByDate = false;
-    this.sortByAmount = true;
-    this.sortByName = false;
-    this.selectedSearches = this.searchDescriptions;
-    this.searchDescriptions = [];
-    // if (this.apiService.debug == true) console.log("amountdirection is " + this.amountdirection);
-
-    this.amountdirection = !this.amountdirection;
-    if ( this.amountdirection == false ) {
-      this.selectedSearches.sort( function(a, b) {
-      let key1 = a.InvoiceAmount;
-      let key2 = b.InvoiceAmount;
-        if ( key1 > key2 ) return 1;
-        else if ( key1 == key2 ) return 0;
-        else return -1;
-      })
-    }
-    else {
-      this.selectedSearches.sort( function(a, b) {
-        let key1 = a.InvoiceAmount;
-        let key2 = b.InvoiceAmount;
-        if ( key1 > key2 ) return -1;
-        else if ( key1 == key2 ) return 0;
-        else return 1;
-      })
-    }
-    for ( let i = 0; i < this.selectedSearches.length; i++ ) {
-      this.searchDescriptions.push(this.selectedSearches[i]);
-    }
+  convertToNum(input: unknown): number {
+    let tempNum: number;
+    let tempUnk: string;
+    tempUnk = input as string;
+    tempNum = parseInt(tempUnk);
+    return tempNum;
   }
 
-  sortDate(sortby: string) {
+  getVendorName(invoice: any): string {
+    let tempName: string = "";
+    if (invoice.Vendor) {
+      tempName = invoice.Vendor.VendorName;
+    }
+    return tempName;
+  }
 
-      this.sortByAmount = false;
-      this.sortByName = false;
-      this.selectedSearches = this.searchDescriptions;
-      this.searchDescriptions = [];
+  sortSearchDescriptions(sortby: string) {
+    this.sortByAmount = false;
+    this.sortByDate = false;
+    this.sortByDescription = false;
+    this.sortByName = false;
+    this.sortByPaid = false;
+    this.selectedSearches = this.searchDescriptions;
+    this.searchDescriptions = [];
 
-      if ( sortby == "date" ) {
+    switch (sortby) {
+      case 'amount':
+        this.sortByAmount = true;
+        this.amountdirection = !this.amountdirection;
+        this.datedirection = false;
+        this.descriptionDirection = false;
+        this.paiddirection = false
+        this.sortnameASC = false;
+        if ( this.amountdirection ) {
+          this.selectedSearches.sort((a, b) => (this.convertToNum(a.InvoiceAmount)  < this.convertToNum(b.InvoiceAmount) ) ? -1 : 1)
+        }
+        else {
+          this.selectedSearches.sort((a, b) => (this.convertToNum(a.InvoiceAmount)  > this.convertToNum(b.InvoiceAmount) ) ? -1 : 1)
+        }
+        break;
+      case 'date':
         this.sortByDate = true;
-        this.sortByPaid = false;
         this.datedirection = !this.datedirection;
-        this.paiddirection = false;
+        this.amountdirection = false;
+        this.descriptionDirection = false;
+        this.paiddirection = false
+        this.sortnameASC = false;
         if ( this.datedirection == false ) {
           this.selectedSearches.sort((a, b) => (a.InvoicePaidDate  > b.InvoicePaidDate ) ? -1 : 1)
         }
         else {
           this.selectedSearches.sort((a, b) => (a.InvoicePaidDate  < b.InvoicePaidDate ) ? -1 : 1)
         }
-      }
-      else {
-        this.sortByDate = false;
+        break;
+      case 'description':
+        this.sortByDescription = true;
+        this.descriptionDirection = !this.descriptionDirection;
+        this.amountdirection = false;
+        this.datedirection = false;
+        this.paiddirection = false
+        this.sortnameASC = false;
+        if ( this.descriptionDirection == false ) {
+          this.selectedSearches.sort((a, b) => (a.CombinedNarrative.slice(0,50)  > b.CombinedNarrative.slice(0,50) ) ? -1 : 1)
+        }
+        else {
+          this.selectedSearches.sort((a, b) => (a.CombinedNarrative.slice(0,50)  < b.CombinedNarrative.slice(0,50) ) ? -1 : 1)
+        }
+        break;
+      case 'name':
+        this.amountdirection = false;
+        this.datedirection = false;
+        this.descriptionDirection = false;
+        this.paiddirection = false
+        this.sortnameASC = !this.sortnameASC;
+        if ( this.sortnameASC == false ) {
+          this.selectedSearches.sort((a, b) => (this.getVendorName(a) < this.getVendorName(b)) ? -1 : 1)
+        }
+        else {
+          this.selectedSearches.sort((a, b) => (this.getVendorName(a) > this.getVendorName(b)) ? -1 : 1)
+        }
+      case 'paid':
         this.sortByPaid = true;
+        this.descriptionDirection = false;
+        this.amountdirection = false;
+        this.datedirection = false;
+        this.sortnameASC = false;
         this.paiddirection = !this.paiddirection;
         if ( this.paiddirection == false ) {
           this.selectedSearches.sort((a, b) => (a.InvoicePaidDate < b.InvoicePaidDate) ? -1 : 1)
@@ -472,99 +499,66 @@ export class InvoicesComponent {
         else {
           this.selectedSearches.sort((a, b) => (a.InvoicePaidDate > b.InvoicePaidDate) ? -1 : 1)
         }
-      }
-
-
+        break;
+    }
     for ( let i = 0; i < this.selectedSearches.length; i++ ) {
       this.searchDescriptions.push(this.selectedSearches[i]);
     }
-  }
-
-  sortName() {
-    this.sortByDate = false;
-    this.sortByAmount = false;
-    this.sortByName = true;
-    this.selectedSearches = this.searchDescriptions;
-    this.searchDescriptions = [];
-
-    this.sortnameASC = !this.sortnameASC;
-    // if (this.apiService.debug == true) console.log("sortnameASC is " + this.sortnameASC);
-    if ( this.sortnameASC == false ) {
-      this.selectedSearches.sort( function(a, b) {
-        let key1 = a.VendorName;
-        let key2 = b.VendorName;
-        if ( key1 > key2 ) return 1;
-        else if ( key1 == key2 ) return 0;
-        else return -1;
-      })
-    }
-    else {
-      this.selectedSearches.sort( function(a, b) {
-        let key1 = a.VendorName;
-        let key2 = b.VendorName;
-        if ( key1 > key2 ) return -1;
-        else if ( key1 == key2 ) return 0;
-        else return 1;
-      })
-    }
-
-
-    for ( let i = 0; i < this.selectedSearches.length; i++ ) {
-      this.searchDescriptions.push(this.selectedSearches[i]);
-    }
+    if (this.apiService.debug) { console.log(this.searchDescriptions); }
   }
 
   sortTransaction(sortby: string) {
+    this.sortByAmount = false;
+    this.sortByDate = false;
+    this.sortByDescription = false;
+    this.sortByPaid = false;
     this.selectedTransactions = this.vendorTransactions;
     this.vendorTransactions = [];
-    if ( sortby == "date" ) {
-      this.datedirection = !this.datedirection;
-      this.sortByDate = true;
-      this.sortByPaid = false;
-      this.sortByAmount = false;
-      if ( this.datedirection == false ) {
-        this.selectedTransactions.sort((a, b) => (a.InvoiceDate > b.InvoiceDate) ? -1 : 1)
+    if (this.apiService.debug) {console.log('sortby: ' + sortby); }
+    switch (sortby) {
+      case "amount":
+        if (this.apiService.debug) {console.log('in amount: \n   amountdirection: ' + this.amountdirection + '\n   sortByAmount: ' + this.sortByAmount); }
+        this.amountdirection = !this.amountdirection;
+        this.sortByAmount = true;
+        if (this.apiService.debug) {console.log('in amount: \n   amountdirection: ' + this.amountdirection + '\n   sortByAmount: ' + this.sortByAmount); }
+        if (this.apiService.debug) {console.log('\n   datedirection: ' + this.datedirection + '\n   sortByDate: ' + this.sortByDate); }
+        if ( this.amountdirection == false ) {
+          this.selectedTransactions.sort((a, b) => (this.convertToNum(a.InvoiceAmount) < this.convertToNum(b.InvoiceAmount)) ? -1 : 1)
+        }
+        else {
+          this.selectedTransactions.sort((a, b) => (this.convertToNum(a.InvoiceAmount) > this.convertToNum(b.InvoiceAmount)) ? -1 : 1)
+        }
+      case "date":
+        this.datedirection = !this.datedirection;
+        this.sortByDate = true;
+        if ( this.datedirection == false ) {
+          this.selectedTransactions.sort((a, b) => (a.InvoiceDate > b.InvoiceDate) ? -1 : 1)
+        }
+        else {
+          this.selectedTransactions.sort((a, b) => (a.InvoiceDate < b.InvoiceDate) ? -1 : 1)
+        }
+        break;
+      case "description":
+        this.descriptionDirection = !this.descriptionDirection;
+        this.sortByDescription = true;
+        if ( this.descriptionDirection ) {
+          this.selectedTransactions.sort((a, b) => (a.CombinedNarrative.slice(0,50) < b.CombinedNarrative.slice(0,50)) ? -1 : 1)
+        }
+        else {
+          this.selectedTransactions.sort((a, b) => (a.CombinedNarrative.slice(0,50) > b.CombinedNarrative.slice(0,50)) ? -1 : 1)
+        }
+        break;
+      case "paid":
+        this.paiddirection = !this.paiddirection;
+        this.sortByPaid = true;
+        if ( this.paiddirection == false ) {
+          this.selectedTransactions.sort((a, b) => (a.InvoicePaidDate > b.InvoicePaidDate) ? -1 : 1)
+        }
+        else {
+          this.selectedTransactions.sort((a, b) => (a.InvoicePaidDate < b.InvoicePaidDate) ? -1 : 1)
+        }
+        break;
       }
-      else {
-        this.selectedTransactions.sort((a, b) => (a.InvoiceDate < b.InvoiceDate) ? -1 : 1)
-      }
-    }
-    else if ( sortby == "paid" ) {
-      this.paiddirection = !this.paiddirection;
-      this.sortByPaid = true;
-      this.sortByAmount = false;
-      this.sortByDate = false;
-      if ( this.paiddirection == false ) {
-        this.selectedTransactions.sort((a, b) => (a.InvoicePaidDate > b.InvoicePaidDate) ? -1 : 1)
-      }
-      else {
-        this.selectedTransactions.sort((a, b) => (a.InvoicePaidDate < b.InvoicePaidDate) ? -1 : 1)
-      }
-    }
-    else if ( sortby == "amount" ) {
-      this.amountdirection = !this.amountdirection;
-      this.sortByAmount = true;
-      this.sortByDate = false;
-      this.sortByPaid = false;
-      if ( this.amountdirection == false ) {
-        this.selectedTransactions.sort( function(a, b) {
-        let key1 = a.InvoiceAmount;
-        let key2 = b.InvoiceAmount;
-          if ( key1 > key2 ) return 1;
-          else if ( key1 == key2 ) return 0;
-          else return -1;
-        })
-      }
-      else {
-        this.selectedTransactions.sort( function(a, b) {
-          let key1 = a.InvoiceAmount;
-          let key2 = b.InvoiceAmount;
-          if ( key1 > key2 ) return -1;
-          else if ( key1 == key2 ) return 0;
-          else return 1;
-        })
-      }
-    }
 
     for ( let i = 0; i < this.selectedTransactions.length; i++ ) {
       this.vendorTransactions.push(this.selectedTransactions[i]);
@@ -639,7 +633,7 @@ export class InvoicesComponent {
         case 'search':
           this.searchString = q[1];
           this.searchVendorOnly = false;
-          this.displayRobustSearch(this.searchString);
+          this.displayDescriptionSearch(this.searchString);
           break;
         case 'horizon':
           this.horizon = +q[1];

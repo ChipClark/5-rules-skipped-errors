@@ -44,7 +44,7 @@ export class InvoiceTransaction {
   DisbursementAmount: number;
   OfficeLocation: string;
   Costcode: string;
-  Narrative: string;
+  CombinedNarrative: string;
   InvoiceNarrative: string;
   TransactionPostDate: Date;
   InvoiceStatus: string;
