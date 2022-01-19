@@ -46,7 +46,7 @@ export class InvoicesComponent {
   public paiddirection = false;
   public amountdirection = false;
   public descriptionDirection = false;
-  public sortnameASC: boolean;
+  public sortnameASC = false;
   public sortByName = true;
   public sortByDescription = false;
   public sortByDate = false;
@@ -437,8 +437,8 @@ export class InvoicesComponent {
         this.amountdirection = !this.amountdirection;
         this.datedirection = false;
         this.descriptionDirection = false;
-        this.paiddirection = false
         this.sortnameASC = false;
+        this.paiddirection = false
         if ( this.amountdirection ) {
           this.selectedSearches.sort((a, b) => (this.convertToNum(a.InvoiceAmount)  < this.convertToNum(b.InvoiceAmount) ) ? -1 : 1)
         }
@@ -451,8 +451,8 @@ export class InvoicesComponent {
         this.datedirection = !this.datedirection;
         this.amountdirection = false;
         this.descriptionDirection = false;
-        this.paiddirection = false
         this.sortnameASC = false;
+        this.paiddirection = false
         if ( this.datedirection == false ) {
           this.selectedSearches.sort((a, b) => (a.InvoicePaidDate  > b.InvoicePaidDate ) ? -1 : 1)
         }
@@ -465,8 +465,8 @@ export class InvoicesComponent {
         this.descriptionDirection = !this.descriptionDirection;
         this.amountdirection = false;
         this.datedirection = false;
-        this.paiddirection = false
         this.sortnameASC = false;
+        this.paiddirection = false
         if ( this.descriptionDirection == false ) {
           this.selectedSearches.sort((a, b) => (a.CombinedNarrative.slice(0,50)  > b.CombinedNarrative.slice(0,50) ) ? -1 : 1)
         }
@@ -475,17 +475,19 @@ export class InvoicesComponent {
         }
         break;
       case 'name':
+        this.sortByName = true;
         this.amountdirection = false;
         this.datedirection = false;
         this.descriptionDirection = false;
-        this.paiddirection = false
+        this.paiddirection = false;
         this.sortnameASC = !this.sortnameASC;
         if ( this.sortnameASC == false ) {
-          this.selectedSearches.sort((a, b) => (this.getVendorName(a) < this.getVendorName(b)) ? -1 : 1)
-        }
-        else {
           this.selectedSearches.sort((a, b) => (this.getVendorName(a) > this.getVendorName(b)) ? -1 : 1)
         }
+        else {
+          this.selectedSearches.sort((a, b) => (this.getVendorName(a) < this.getVendorName(b)) ? -1 : 1)
+        }
+        break;
       case 'paid':
         this.sortByPaid = true;
         this.descriptionDirection = false;
@@ -517,11 +519,11 @@ export class InvoicesComponent {
     if (this.apiService.debug) {console.log('sortby: ' + sortby); }
     switch (sortby) {
       case "amount":
-        if (this.apiService.debug) {console.log('in amount: \n   amountdirection: ' + this.amountdirection + '\n   sortByAmount: ' + this.sortByAmount); }
+        // if (this.apiService.debug) {console.log('in amount: \n   amountdirection: ' + this.amountdirection + '\n   sortByAmount: ' + this.sortByAmount); }
         this.amountdirection = !this.amountdirection;
         this.sortByAmount = true;
-        if (this.apiService.debug) {console.log('in amount: \n   amountdirection: ' + this.amountdirection + '\n   sortByAmount: ' + this.sortByAmount); }
-        if (this.apiService.debug) {console.log('\n   datedirection: ' + this.datedirection + '\n   sortByDate: ' + this.sortByDate); }
+        // if (this.apiService.debug) {console.log('in amount: \n   amountdirection: ' + this.amountdirection + '\n   sortByAmount: ' + this.sortByAmount); }
+        // if (this.apiService.debug) {console.log('\n   datedirection: ' + this.datedirection + '\n   sortByDate: ' + this.sortByDate); }
         if ( this.amountdirection == false ) {
           this.selectedTransactions.sort((a, b) => (this.convertToNum(a.InvoiceAmount) < this.convertToNum(b.InvoiceAmount)) ? -1 : 1)
         }

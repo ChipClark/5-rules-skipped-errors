@@ -17,7 +17,7 @@ export class ApiService {
   // public baseURL = 'http://am-web11:3070/api/'; // new API server
   public baseURL = 'http://am-web05:3080/api/';  // AM-WEB05 Production server
   public tempDATA = '/assets/';
-  public debug = true;
+  public debug = false;
 
   public summary = 'summary/transactions/';
   public summaryTransactions = 'summary/transactions/';
