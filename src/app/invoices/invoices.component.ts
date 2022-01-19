@@ -196,6 +196,8 @@ export class InvoicesComponent {
           this.vendors[i].TotalInvoiceAmount = this.vendors[i].TotalInvoiceAmount + Number(this.vendors[i].InvoiceTransaction[j].InvoiceAmount);
         }
       }
+      this.vendors = this.vendors.sort()
+      this.vendors.sort((a, b) => (a.VendorName < b.VendorName ) ? -1 : 1)
       this.loadingIndicator = false;
     })
   }
