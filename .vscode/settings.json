@@ -13,7 +13,10 @@
         "titleBar.activeBackground": "#300301",
         "titleBar.activeForeground": "#e7e7e7",
         "titleBar.inactiveBackground": "#30030199",
-        "titleBar.inactiveForeground": "#e7e7e799"
+        "titleBar.inactiveForeground": "#e7e7e799",
+        "sash.hoverBorder": "#620602",
+        "statusBarItem.remoteBackground": "#300301",
+        "statusBarItem.remoteForeground": "#e7e7e7"
     },
     "typescript.tsdk": "node_modules\\typescript\\lib",
     "peacock.color": "#300301"

@@ -1,1 +1,0 @@
-AM-Invoices server running on port: \\.\pipe\a370e957-87b5-4850-a464-bb4e105e8549
