@@ -12,8 +12,6 @@ import { Vendor, VendorSearch, InvoiceTransaction, InvoiceCheck } from './datata
 })
 export class ApiService {
 
-  // public baseURL = 'http://am-web12:3035/api/v1/';  // Test Server
-  // public baseURL = 'http://am-web05:3030/api/v1/';  // AM-WEB05 Production server
   // public baseURL = 'http://am-web11:3070/api/'; // new API server
   public baseURL = 'http://am-web05:3080/api/';  // AM-WEB05 Production server
   public tempDATA = '/assets/';

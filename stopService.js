@@ -4,7 +4,7 @@ var Service = require('node-windows').Service;
 var svc = new Service({
   name:'AM-Invoices',
   description: 'AM Invoices',
-  script: 'C:\\sites\\am-vendors\\server.js'
+  script: 'C:\\Sites\\AM-Frontend-Admins\\AM-Invoices\\server.js'
   
 });
  
