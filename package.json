@@ -24,6 +24,8 @@
     "@angular/router": "^9.1.11",
     "@ng-bootstrap/ng-bootstrap": "^6.1.0",
     "@schematics/angular": "^9.1.12",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.10",
     "bootstrap": "^4.5.0",
     "rxjs": "^6.6.3",
     "zone.js": "^0.10.3"
