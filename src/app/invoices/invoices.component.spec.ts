@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import '@types/jest';
 import { InvoicesComponent } from './invoices.component';
 
 describe('InvoicesComponent', () => {
@@ -21,5 +21,6 @@ describe('InvoicesComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    expect(component.title).toEqual('Invoices');
   });
 });
