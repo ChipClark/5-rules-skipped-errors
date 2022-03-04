@@ -15,9 +15,9 @@ export class HeaderComponent implements OnInit {
     protected sanitizer: DomSanitizer
   ) { }
 
-  @Input() chrome: boolean;
-  public pagetitle: string;
-  public searchTerm;
+  @Input() chrome!: boolean;
+  public pagetitle!: string;
+  public searchTerm: any;
 
   ngOnInit() {
     this.setTitle();

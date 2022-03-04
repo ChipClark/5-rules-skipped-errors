@@ -9,12 +9,12 @@ export class SearchPipe implements PipeTransform {
     if (!items || !search) {
         return items;
     }
-    console.log("in search");
+
     const regExp = new RegExp(search, 'gi');
-    const check = v => {
+    const check = (v: { VendorName: string; City: string; }) => {
         // if (this.checkPhone(p, regExp)) { return true; }
-        return regExp.test(v.vendorname) ||
-            regExp.test(v.city) 
+        return regExp.test(v.VendorName) ||
+            regExp.test(v.City)
     };
     return items.filter(check);
 

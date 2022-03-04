@@ -37,7 +37,7 @@
             <mat-option  (click)="setHistory(2);  addQueryParams({history: horizon})" value="2" >2 years</mat-option>
             <mat-option  (click)="setHistory(3);  addQueryParams({history: horizon})" value="3" >3 years</mat-option>
             <mat-option  (click)="setHistory(5);  addQueryParams({history: horizon})" value="5" >5 years</mat-option>
-            <mat-option  (click)="setHistory(0);  addQueryParams({history: horizon})" value="0" >All records</mat-option>
+            <mat-option (click)="setHistory(0);  addQueryParams({history: horizon})" value="0" >All records</mat-option>
           </mat-select>
         </mat-form-field>
       </form>

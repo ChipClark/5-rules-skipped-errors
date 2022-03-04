@@ -4,41 +4,37 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, FormBuilder, FormArray, FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { ApiService } from './../api.service';
-import { Vendor, VendorSearch, InvoiceCheck, InvoiceTransaction} from './../datatables/data';
-
+import { Vendor, InvoiceCheck, InvoiceTransaction} from './../datatables/data';
 
 @Input()
 
 @Component({
   selector: 'app-root',
   templateUrl: './invoices.component.html',
-  styleUrls: ['./invoices.component.css']
+  styleUrls: ['./invoices.component.css'],
 })
 export class InvoicesComponent {
   title = 'AM-Invoices';
-  public vendors: Vendor[];
-  public currentVendor: Vendor;
-  public transactions: InvoiceTransaction[];
-  public vendorTransactions: InvoiceTransaction[];
-  public selectedTransactions: InvoiceTransaction[];
-  public searchDescriptions: InvoiceTransaction[];
-  public selectedSearches: InvoiceTransaction[];
-  public checks: InvoiceCheck[];
+  public vendors: Vendor[] = [];
+  public currentVendor: Vendor = new Vendor;
+  public transactions: InvoiceTransaction[] = [];
+  public vendorTransactions: InvoiceTransaction[] = [];
+  public selectedTransactions: InvoiceTransaction[] = [];
+  public searchDescriptions: InvoiceTransaction[] = [];
+  public selectedSearches: InvoiceTransaction[] = [];
+  public checks: InvoiceCheck[] = [];
 
   public searchString: any;
-  public searchVendors = null;
+  public searchVendors: string = '';
   public searchVendorOnly = true;
 
   private today = new Date();
   private twoYearsAgo = this.today.getFullYear() - 2;
-  private threeYearsAgo = this.today.getFullYear() - 3;
-  private fiveYearsAgo = this.today.getFullYear() - 5;
-  private allRecords = this.today.getFullYear() - 50;
   public horizon: number = this.twoYearsAgo;
   public pageTitle = "Vendors";
-  public currentvendorname;
-  public vendoruno;
-  public currentuno;
+  public currentvendorname!: string;
+  public vendoruno: any;
+  public currentuno!: number;
   public vendorsLoaded = false;
   public parametersLoaded = false;
 
@@ -63,9 +59,9 @@ export class InvoicesComponent {
   public searchInclude: FormGroup[] = [];
   public selectSearches = false;
   public selectTrans = false;
-  public modalTotal;
+  public modalTotal!: number;
 
-  public historyInYears: number;
+  public historyInYears!: number;
 
   constructor(
     private apiService: ApiService,
@@ -127,22 +123,20 @@ export class InvoicesComponent {
       // console.log(this.searchString);
       // console.log(this.horizon);
     }
-    const tempArray = [];
+    const tempInvoice: InvoiceTransaction[][] = [];
       // if (this.apiService.debug) { console.log(tempArray[0][0]); }
-      this.vendors = tempArray[0];
-    await this.apiService.getInvoiceBySearch(search, this.horizon).subscribe( v => {
-
-      for ( let i = 0; i < Object.values(v).length; i++ ) {
-        tempArray.push(Object.values(v)[i]);
+    this.apiService.getInvoiceBySearch(search, this.horizon).subscribe(v => {
+      for (let i = 0; i < Object.values(v).length; i++) {
+        tempInvoice.push(Object.values(v)[i]);
       }
-      this.searchDescriptions = tempArray[0];
-      // if (this.apiService.debug === true) { console.log(tempArray[0]); }
+      this.searchDescriptions = tempInvoice[0];
+      // if (this.apiService.debug === true) { console.log(tempInvoice[0]); }
       // if (this.apiService.debug === true) { console.log("vendors should be done"); }
-      for ( let i = 0; i < this.searchDescriptions.length; i++ ) {
+      for (let i = 0; i < this.searchDescriptions.length; i++) {
         let end = this.searchDescriptions[i].InvoiceNumber.length;
-        for ( let j = 0; j < this.searchDescriptions[i].InvoiceNumber.length; j++ ) {
+        for (let j = 0; j < this.searchDescriptions[i].InvoiceNumber.length; j++) {
           if (this.searchDescriptions[i].InvoiceNumber[j] === " ") {
-            this.searchDescriptions[i].InvoiceNumber = this.searchDescriptions[i].InvoiceNumber.slice(0,j);
+            this.searchDescriptions[i].InvoiceNumber = this.searchDescriptions[i].InvoiceNumber.slice(0, j);
             j = end;
           }
         }
@@ -179,7 +173,7 @@ export class InvoicesComponent {
     }
     this.apiService.changePageTitle(this.pageTitle);
     this.loadingIndicator = true;
-    const tempArray = [];
+    const tempArray: any[] = [];
     // if (this.apiService.debug) { console.log('search: ' + search + " horizon: " + this.horizon); }
     this.apiService.getVendorBySearch(search, this.horizon).toPromise().then( v => {
       // if (this.apiService.debug == true) { console.log("vendors should be done"); }
@@ -333,7 +327,7 @@ export class InvoicesComponent {
   }
 
   selectSearchedItems(): Promise<any> {
-    let tempSearches;
+    let tempSearches: any;
     this.modalTotal = 0;
     this.selectedSearches = [];
     for ( let i = 0; i < this.searchInclude.length; i++ ) {
@@ -356,7 +350,7 @@ export class InvoicesComponent {
   }
 
   selectTransactions(): Promise<any> {
-    let tempTransactions;
+    let tempTransactions: any;
     this.modalTotal = 0;
     this.selectedTransactions = [];
     for ( let i = 0; i < this.transInclude.length; i++ ) {
@@ -586,7 +580,7 @@ export class InvoicesComponent {
     });
   }
 
-  addQueryParams(query): void {
+  addQueryParams(query: string | { [s: string]: any; } | ArrayLike<any> | null | any): void {
     const keys = Object.keys(query);
     const values = Object.values(query);
     // if (this.apiService.debug == true) if (this.apiService.debug == true) console.log(query);
@@ -612,7 +606,7 @@ export class InvoicesComponent {
 
   clearFilters() {
     this.searchVendorOnly = true;
-    this.searchVendors = null;
+    this.searchVendors = '';
     this.searchString = null;
     this.displayVendors = false;
     this.displayTransactions = false;
@@ -623,14 +617,15 @@ export class InvoicesComponent {
     this.loadingIndicator = false;
   }
 
-  async executeQueryParams(queryStrings): Promise<any> {
+  async executeQueryParams(queryStrings: ArrayLike<unknown> | { [s: string]: unknown; }): Promise<any> {
     const queries = Object.entries(queryStrings);
     this.clearFilters();
     // if (this.apiService.debug == true) console.log("queries"); console.log(queries);
     for (const q of queries) {
       switch (q[0]) {
         case 'vendors':
-          this.searchVendors = q[1];
+          const tempQ: any = q[1];
+          this.searchVendors = tempQ;
           this.searchVendorOnly = true;
           this.displayVendorSearch(this.searchVendors);
           break;
@@ -640,14 +635,15 @@ export class InvoicesComponent {
           this.displayDescriptionSearch(this.searchString);
           break;
         case 'horizon':
-          this.horizon = +q[1];
+          const tempQNum: any = q[1];
+          this.horizon = +tempQNum;
           break;
       }
     }
     return;
   }
 
-  openWindow(content): void {
+  openWindow(content: any): void {
     this.modalService.open(content, { size: 'xl'});
   }
 

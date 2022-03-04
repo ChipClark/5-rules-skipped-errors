@@ -1,3 +1,4 @@
+import { InvoicesComponent } from './invoices/invoices.component';
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -18,10 +19,10 @@ import { RouterLink, ActivatedRoute } from '@angular/router';
 export class AppComponent  implements OnInit {
   public TabIndex = 0;
   public title = new BehaviorSubject(this.apiService.pagetitle);
-  public pagetitle;
-  public chrome: boolean;
+  public pagetitle: string = 'AM-Invoices';
+  public chrome: boolean = true;
 
-  router: RouterLink;
+  public router!: RouterLink;
 
   constructor (
     private apiService: ApiService,
@@ -47,7 +48,7 @@ export class AppComponent  implements OnInit {
     console.log('chrome is set to ' + this.chrome + ' in app.component');
   }
 
-  executeQueryParams(queryStrings): void {
+  executeQueryParams(queryStrings: any): void {
     const queries = Object.entries(queryStrings);
     for (const q of queries) {
       switch (q[0]) {

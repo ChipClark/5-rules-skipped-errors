@@ -15,10 +15,11 @@ export class FooterComponent implements OnInit {
     private datePipe: DatePipe
   ) { }
 
-  @Input() chrome: boolean;
-  public pagetitle: string;
-  public myDate: Date;
-  public currentYear: string;
+  @Input()
+  chrome!: boolean;
+  public pagetitle!: string;
+  public myDate!: Date;
+  public currentYear!: string;
 
   ngOnInit() {
     this.setDate();
@@ -27,7 +28,12 @@ export class FooterComponent implements OnInit {
 
   setDate(): void {
     this.myDate = new Date();
-    this.currentYear = this.datePipe.transform(this.myDate, 'yyyy');
+    const tempYear = this.datePipe.transform(this.myDate, 'yyyy');
+    if (tempYear) {
+      this.currentYear = tempYear;
+    } else {
+      this.currentYear = "2018";
+    }
   }
 
   setTitle(): void {

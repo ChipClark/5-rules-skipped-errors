@@ -15,8 +15,8 @@ export class NavigationComponent implements OnInit {
 
   // TabIndex:number = 0;
 
-  @Input() chrome: boolean;
-  public pagetitle: string;
+  @Input() chrome!: boolean;
+  public pagetitle!: string;
 
   ngOnInit() {
     this.setTitle();

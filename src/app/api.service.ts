@@ -26,14 +26,12 @@ export class ApiService {
   public transactionFilter = "filter[where][lastpayment][gt]=2017-01-01T18:30:00.000Z"
   public pagetitle = 'Invoices';
 
-  public chrome;
+  public chrome: any;
 
-  public datatype: string;
+  public datatype: string = '';
   public datedirection = true;
   public sortAmount = true;
   public loadingIndicator = true;
-  public recordHistory: string;
-  public horizondate: string;
   public titleSource = new  BehaviorSubject(this.pagetitle);
 
 
@@ -97,14 +95,14 @@ export class ApiService {
     return transactions;
   }
 
-  getInvoiceBySearch(search: string, horizon?: number): Observable<InvoiceTransaction[]> {
+  getInvoiceBySearch(search: string, horizon?: number): Observable<any[]> {
     // this.setDataLocation();
     let url = this.baseURL + 'invoices/?search='+ search;
     if (horizon) {
       url = url + "&year=" + horizon;
     }
     // if (this.debug === true) { console.log(url); }
-    let invoiceResults = this.http.get<InvoiceTransaction[]>(url)
+    let invoiceResults$ = this.http.get<InvoiceTransaction[]>(url)
       .pipe(
         tap(invoices => {
           console.log("API Invoice data retrieved")
@@ -114,7 +112,7 @@ export class ApiService {
         catchError(this.handleError('Invoice data', [])),
       );
 
-    return invoiceResults;
+    return invoiceResults$;
   }
 
   getVendorBySearch(searchString: string, year?: number): Observable<any> {

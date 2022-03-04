@@ -1,6 +1,24 @@
-# AMVendors
+# AM-Invoices
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
+This project was generated with:
+Angular: 12.2.16
+
+Package                           Version
+-----------------------------------------------------------
+@angular-devkit/architect         0.1202.16
+@angular-devkit/build-angular     12.2.16
+@angular-devkit/build-optimizer   0.1202.16
+@angular-devkit/build-webpack     0.1202.16
+@angular-devkit/core              12.2.16
+@angular-devkit/schematics        12.2.16
+@angular/cdk                      12.2.13
+@angular/material                 12.2.13
+@ngtools/webpack                  12.2.16
+@schematics/angular               12.2.16
+@schematics/update                0.1102.18
+rxjs                              6.6.3
+typescript                        4.3.5
+webpack                           5.70.0
 
 ## Development server
 
@@ -12,7 +30,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--configuration production` flag for a production build.
 
 ## Running unit tests
 
