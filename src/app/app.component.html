@@ -1,11 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<app-header *ngIf="chrome" [chrome]="chrome"></app-header>
-<app-navigation *ngIf="chrome" (TabIndex)='setTab($event)'></app-navigation>
 <div class="main-body">
     <div class="router-body">
       <router-outlet ></router-outlet>
     </div>
 </div>
-<app-footer *ngIf="chrome" ></app-footer>
 
 
